@@ -1,6 +1,10 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
+using Unity.VisualScripting;
+using UnityEditor.Overlays;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class GantryPositioningManager : MonoBehaviour
 {
@@ -41,6 +45,9 @@ public class GantryPositioningManager : MonoBehaviour
 
     //저장/불러오기에 사용할 데이터 이름 (확장자 제외)
     public string dataName = "PositionData";
+
+    //저장 폴더 (Assets 폴더 기준 하위 경로, 예: Data/Positions). 비워두면 Assets 폴더 바로 아래.
+    public string saveFolder = "";
 
     //UI 버튼을 눌렀을 때 데이터 추가.
     public void AddData()
@@ -89,7 +96,7 @@ public class GantryPositioningManager : MonoBehaviour
     //지정한 이름으로 저장 (InputField 등에서 이름을 넘겨받을 때 사용)
     public void SaveData(string name)
     {
-        string path = Path.Combine(Application.dataPath, name + ".csv");
+        string path = Path.Combine(Application.dataPath, saveFolder, name + ".csv");
 
         string[] csvDatas = new string[positionList.Count + 1];
         csvDatas[0] = "Position ID, Axis 1, Axis 2, Axis 3, Axis 4";
@@ -101,6 +108,9 @@ public class GantryPositioningManager : MonoBehaviour
                 positionList[i].axis3.ToString() + ',' +
                 positionList[i].axis4.ToString();
         }
+
+        //폴더가 없으면 만든다.
+        Directory.CreateDirectory(Path.GetDirectoryName(path));
 
         //해당 파일 경로로 저장하기
         File.WriteAllLines(path, csvDatas);
@@ -115,7 +125,7 @@ public class GantryPositioningManager : MonoBehaviour
     //지정한 이름으로 불러오기 (InputField 등에서 이름을 넘겨받을 때 사용)
     public void LoadData(string name)
     {
-        string path = Path.Combine(Application.dataPath, name + ".csv");
+        string path = Path.Combine(Application.dataPath, saveFolder, name + ".csv");
         if (!File.Exists(path))
         {
             Debug.LogError("파일이 존재하지 않아 불러올 수 없습니다.");
