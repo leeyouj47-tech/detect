@@ -7,11 +7,13 @@ public class GantryConnector : MXObject
     public ServoPositioningData data;
     public float feedbackTime;
 
-    public DeviceAddress plcReadyAddress = new DeviceAddress("PLC Ready");
-    public DeviceAddress moduleReady = new DeviceAddress("Module Ready");
+    //각 1,2 / 3,4 동일한 내역
+    public DeviceAddress plcReadyAddress = new DeviceAddress("PLC Ready");  //X0 or M226
+    public DeviceAddress moduleReady = new DeviceAddress("Module Ready");   //M226
     public DeviceAddress servoAllOnAddress = new DeviceAddress("Servo All On 신호");
     public DeviceAddress servoAllReadyAddress = new DeviceAddress("Servo All Ready");
-
+    
+    //IOCHECK 한번 테스트 진행하고, 공정에서는 진행하지 X
     public DeviceAddress axis1JogFWDAddress = new DeviceAddress("1축 JOG 전진 신호");
     public DeviceAddress axis1JogRVSAddress = new DeviceAddress("1축 JOG 후진 신호");
     public DeviceAddress axis2JogFWDAddress = new DeviceAddress("2축 JOG 전진 신호");
@@ -20,7 +22,7 @@ public class GantryConnector : MXObject
     public DeviceAddress axis3JogRVSAddress = new DeviceAddress("3축 JOG 후진 신호");
     public DeviceAddress axis4JogFWDAddress = new DeviceAddress("4축 JOG 전진 신호");
     public DeviceAddress axis4JogRVSAddress = new DeviceAddress("4축 JOG 후진 신호");
-
+    
     public DeviceAddress axis1PosAddress = new DeviceAddress("1축 위치 결정 기동 신호");
     public DeviceAddress axis2PosAddress = new DeviceAddress("2축 위치 결정 기동 신호");
     public DeviceAddress axis3PosAddress = new DeviceAddress("3축 위치 결정 기동 신호");
@@ -31,11 +33,13 @@ public class GantryConnector : MXObject
     public DeviceAddress axis3PosNumAddress = new DeviceAddress("3축 위치 결정 번호");
     public DeviceAddress axis4PosNumAddress = new DeviceAddress("4축 위치 결정 번호");
 
+    //IOCHECK 한번 테스트 진행하고, 공정에서는 진행하지 X
     public DeviceAddress axis1StopAddress = new DeviceAddress("1축 정지 신호");
     public DeviceAddress axis2StopAddress = new DeviceAddress("2축 정지 신호");
     public DeviceAddress axis3StopAddress = new DeviceAddress("3축 정지 신호");
     public DeviceAddress axis4StopAddress = new DeviceAddress("4축 정지 신호");
-
+    
+    //IOCHECK 한번 테스트 진행하고, 공정에서는 진행하지 X
     public DeviceAddress axis1RstAddress = new DeviceAddress("1축 리셋 신호");
     public DeviceAddress axis2RstAddress = new DeviceAddress("2축 리셋 신호");
     public DeviceAddress axis3RstAddress = new DeviceAddress("3축 리셋 신호");
@@ -46,11 +50,13 @@ public class GantryConnector : MXObject
     public DeviceAddress axis3ReceivedAddress = new DeviceAddress("3축 기동 완료 피드백");
     public DeviceAddress axis4ReceivedAddress = new DeviceAddress("4축 기동 완료 피드백");
 
+    //있으면 좋고, 필수사용X
     public DeviceAddress axis1BusyAddress = new DeviceAddress("1축 BUSY 피드백");
     public DeviceAddress axis2BusyAddress = new DeviceAddress("2축 BUSY 피드백");
     public DeviceAddress axis3BusyAddress = new DeviceAddress("3축 BUSY 피드백");
     public DeviceAddress axis4BusyAddress = new DeviceAddress("4축 BUSY 피드백");
 
+    //있으면 좋고, 필수사용X
     public DeviceAddress axis1ErrorAddress = new DeviceAddress("1축 ERROR 피드백");
     public DeviceAddress axis2ErrorAddress = new DeviceAddress("2축 ERROR 피드백");
     public DeviceAddress axis3ErrorAddress = new DeviceAddress("3축 ERROR 피드백");

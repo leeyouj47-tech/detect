@@ -26064,6 +26064,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1118505432}
   - component: {fileID: 1118505431}
+  - component: {fileID: 1118505433}
   m_Layer: 0
   m_Name: Gantry FEM
   m_TagString: Untagged
@@ -26114,6 +26115,392 @@ Transform:
   - {fileID: 1657662127}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1118505433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1118505430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52eba81e7d460504f873e4c12433f66d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GantryConnector
+  axis1: {fileID: 0}
+  axis2: {fileID: 0}
+  axis3: {fileID: 0}
+  axis4: {fileID: 0}
+  data: {fileID: 0}
+  feedbackTime: 0
+  plcReadyAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: PLC Ready
+    comment: '
+
+
+
+'
+  moduleReady:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: Module Ready
+    comment: '
+
+
+
+'
+  servoAllOnAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "Servo All On \uC2E0\uD638"
+    comment: '
+
+
+
+'
+  servoAllReadyAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: Servo All Ready
+    comment: '
+
+
+
+'
+  axis1JogFWDAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "1\uCD95 JOG \uC804\uC9C4 \uC2E0\uD638"
+    comment: 
+  axis1JogRVSAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "1\uCD95 JOG \uD6C4\uC9C4 \uC2E0\uD638"
+    comment: 
+  axis2JogFWDAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "2\uCD95 JOG \uC804\uC9C4 \uC2E0\uD638"
+    comment: 
+  axis2JogRVSAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "2\uCD95 JOG \uD6C4\uC9C4 \uC2E0\uD638"
+    comment: 
+  axis3JogFWDAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "3\uCD95 JOG \uC804\uC9C4 \uC2E0\uD638"
+    comment: 
+  axis3JogRVSAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "3\uCD95 JOG \uD6C4\uC9C4 \uC2E0\uD638"
+    comment: 
+  axis4JogFWDAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "4\uCD95 JOG \uC804\uC9C4 \uC2E0\uD638"
+    comment: 
+  axis4JogRVSAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "4\uCD95 JOG \uD6C4\uC9C4 \uC2E0\uD638"
+    comment: 
+  axis1PosAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "1\uCD95 \uC704\uCE58 \uACB0\uC815 \uAE30\uB3D9 \uC2E0\uD638"
+    comment: 
+  axis2PosAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "2\uCD95 \uC704\uCE58 \uACB0\uC815 \uAE30\uB3D9 \uC2E0\uD638"
+    comment: 
+  axis3PosAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "3\uCD95 \uC704\uCE58 \uACB0\uC815 \uAE30\uB3D9 \uC2E0\uD638"
+    comment: 
+  axis4PosAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "4\uCD95 \uC704\uCE58 \uACB0\uC815 \uAE30\uB3D9 \uC2E0\uD638"
+    comment: 
+  axis1PosNumAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "1\uCD95 \uC704\uCE58 \uACB0\uC815 \uBC88\uD638"
+    comment: 
+  axis2PosNumAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "2\uCD95 \uC704\uCE58 \uACB0\uC815 \uBC88\uD638"
+    comment: 
+  axis3PosNumAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "3\uCD95 \uC704\uCE58 \uACB0\uC815 \uBC88\uD638"
+    comment: 
+  axis4PosNumAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "4\uCD95 \uC704\uCE58 \uACB0\uC815 \uBC88\uD638"
+    comment: 
+  axis1StopAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "1\uCD95 \uC815\uC9C0 \uC2E0\uD638"
+    comment: 
+  axis2StopAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "2\uCD95 \uC815\uC9C0 \uC2E0\uD638"
+    comment: 
+  axis3StopAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "3\uCD95 \uC815\uC9C0 \uC2E0\uD638"
+    comment: 
+  axis4StopAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "4\uCD95 \uC815\uC9C0 \uC2E0\uD638"
+    comment: 
+  axis1RstAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "1\uCD95 \uB9AC\uC14B \uC2E0\uD638"
+    comment: 
+  axis2RstAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "2\uCD95 \uB9AC\uC14B \uC2E0\uD638"
+    comment: 
+  axis3RstAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "3\uCD95 \uB9AC\uC14B \uC2E0\uD638"
+    comment: 
+  axis4RstAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "4\uCD95 \uB9AC\uC14B \uC2E0\uD638"
+    comment: 
+  axis1ReceivedAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "1\uCD95 \uAE30\uB3D9 \uC644\uB8CC \uD53C\uB4DC\uBC31"
+    comment: 
+  axis2ReceivedAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "2\uCD95 \uAE30\uB3D9 \uC644\uB8CC \uD53C\uB4DC\uBC31"
+    comment: 
+  axis3ReceivedAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "3\uCD95 \uAE30\uB3D9 \uC644\uB8CC \uD53C\uB4DC\uBC31"
+    comment: 
+  axis4ReceivedAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "4\uCD95 \uAE30\uB3D9 \uC644\uB8CC \uD53C\uB4DC\uBC31"
+    comment: 
+  axis1BusyAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "1\uCD95 BUSY \uD53C\uB4DC\uBC31"
+    comment: 
+  axis2BusyAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "2\uCD95 BUSY \uD53C\uB4DC\uBC31"
+    comment: 
+  axis3BusyAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "3\uCD95 BUSY \uD53C\uB4DC\uBC31"
+    comment: 
+  axis4BusyAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "4\uCD95 BUSY \uD53C\uB4DC\uBC31"
+    comment: 
+  axis1ErrorAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "1\uCD95 ERROR \uD53C\uB4DC\uBC31"
+    comment: 
+  axis2ErrorAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "2\uCD95 ERROR \uD53C\uB4DC\uBC31"
+    comment: 
+  axis3ErrorAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "3\uCD95 ERROR \uD53C\uB4DC\uBC31"
+    comment: 
+  axis4ErrorAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "4\uCD95 ERROR \uD53C\uB4DC\uBC31"
+    comment: 
+  axis1CompletedAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "1\uCD95 \uC704\uCE58 \uACB0\uC815 \uC644\uB8CC \uD53C\uB4DC\uBC31"
+    comment: 
+  axis2CompletedAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "2\uCD95 \uC704\uCE58 \uACB0\uC815 \uC644\uB8CC \uD53C\uB4DC\uBC31"
+    comment: 
+  axis3CompletedAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "3\uCD95 \uC704\uCE58 \uACB0\uC815 \uC644\uB8CC \uD53C\uB4DC\uBC31"
+    comment: 
+  axis4CompletedAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "4\uCD95 \uC704\uCE58 \uACB0\uC815 \uC644\uB8CC \uD53C\uB4DC\uBC31"
+    comment: 
 --- !u!1 &1123311835
 GameObject:
   m_ObjectHideFlags: 0
@@ -34792,72 +35179,72 @@ MonoBehaviour:
   _poseObserver:
     _flange:
       _value:
-        e00: 0.8859204
-        e01: -0.22497827
-        e02: 0.40562287
-        e03: -1.7309552
+        e00: 0.60782427
+        e01: 0.1343441
+        e02: -0.7826246
+        e03: 2.4547696
         e10: -0.12385608
         e11: -0.9574822
         e12: -0.26055253
         e13: -0.31152576
-        e20: 0.44699532
-        e21: 0.18058991
-        e22: -0.8761179
-        e23: 2.8371785
+        e20: -0.78435284
+        e21: 0.25530294
+        e22: -0.56534153
+        e23: 2.2405117
         e30: 0
         e31: 0
         e32: 0
         e33: 1
     _toolCenterPointBase:
       _value:
-        e00: 0.8859204
-        e01: -0.22497827
-        e02: 0.40562287
-        e03: -1.7309552
+        e00: 0.60782427
+        e01: 0.1343441
+        e02: -0.7826246
+        e03: 2.4547696
         e10: -0.12385608
         e11: -0.9574822
         e12: -0.26055253
         e13: -0.31152576
-        e20: 0.44699532
-        e21: 0.18058991
-        e22: -0.8761179
-        e23: 2.8371785
+        e20: -0.78435284
+        e21: 0.25530294
+        e22: -0.56534153
+        e23: 2.2405117
         e30: 0
         e31: 0
         e32: 0
         e33: 1
     _toolCenterPointWorld:
       _value:
-        e00: 0.8859204
-        e01: -0.22497827
-        e02: 0.40562287
-        e03: 12.509045
+        e00: 0.60782427
+        e01: 0.1343441
+        e02: -0.7826246
+        e03: 16.694769
         e10: -0.12385608
         e11: -0.9574822
         e12: -0.26055253
         e13: -0.31152576
-        e20: 0.44699532
-        e21: 0.18058991
-        e22: -0.8761179
-        e23: 8.737179
+        e20: -0.78435284
+        e21: 0.25530294
+        e22: -0.56534153
+        e23: 8.1405115
         e30: 0
         e31: 0
         e32: 0
         e33: 1
     _toolCenterPointFrame:
       _value:
-        e00: 0.8859204
-        e01: -0.22497827
-        e02: 0.40562287
-        e03: -1.7309551
+        e00: 0.60782427
+        e01: 0.1343441
+        e02: -0.7826246
+        e03: 2.4547691
         e10: -0.12385608
         e11: -0.9574822
         e12: -0.26055253
         e13: -0.31152576
-        e20: 0.44699532
-        e21: 0.18058991
-        e22: -0.8761179
-        e23: 2.8371787
+        e20: -0.78435284
+        e21: 0.25530294
+        e22: -0.56534153
+        e23: 2.2405114
         e30: 0
         e31: 0
         e32: 0
