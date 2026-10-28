@@ -15,11 +15,23 @@ MonoBehaviour:
   axes:
   - axisName: Axis 1
     stepDataList:
-    - pattern: 1
+    - pattern: 0
       method: 0
-      positioningAddress: 0
-      commandSpeed: 0
+      positioningAddress: 300
+      commandSpeed: 100
       dwellTime: 0
+      mCode: 0
+    - pattern: 2
+      method: 1
+      positioningAddress: -50
+      commandSpeed: 20
+      dwellTime: 1
+      mCode: 0
+    - pattern: 0
+      method: 1
+      positioningAddress: -150
+      commandSpeed: 20
+      dwellTime: 30
       mCode: 0
   - axisName: Axis 2
     stepDataList:
@@ -30,6 +42,18 @@ MonoBehaviour:
       dwellTime: 0
       mCode: 0
   - axisName: Axis 3
-    stepDataList: []
+    stepDataList:
+    - pattern: 0
+      method: 0
+      positioningAddress: 0
+      commandSpeed: 0
+      dwellTime: 0
+      mCode: 0
   - axisName: Axis 4
-    stepDataList: []
+    stepDataList:
+    - pattern: 0
+      method: 0
+      positioningAddress: 0
+      commandSpeed: 0
+      dwellTime: 0
+      mCode: 0
