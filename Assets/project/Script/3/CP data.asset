@@ -1,0 +1,137 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a65817953a38c8048ad4d97cc08868c4, type: 3}
+  m_Name: CP data
+  m_EditorClassIdentifier: Assembly-CSharp::ServoPositioningData
+  axes:
+  - axisName: Axis 1
+    stepDataList:
+    - pattern: 0
+      method: 0
+      positioningAddress: 350
+      commandSpeed: 100
+      dwellTime: 0
+      mCode: 0
+    - pattern: 0
+      method: 0
+      positioningAddress: 508
+      commandSpeed: 100
+      dwellTime: 0
+      mCode: 0
+    - pattern: 0
+      method: 0
+      positioningAddress: 610
+      commandSpeed: 30
+      dwellTime: 0
+      mCode: 0
+    - pattern: 0
+      method: 0
+      positioningAddress: 2539
+      commandSpeed: 200
+      dwellTime: 0
+      mCode: 0
+    - pattern: 0
+      method: 0
+      positioningAddress: 2945.2
+      commandSpeed: 100
+      dwellTime: 0
+      mCode: 0
+    - pattern: 0
+      method: 0
+      positioningAddress: 2583
+      commandSpeed: 100
+      dwellTime: 0
+      mCode: 0
+  - axisName: Axis 2
+    stepDataList:
+    - pattern: 0
+      method: 0
+      positioningAddress: 1088
+      commandSpeed: 0
+      dwellTime: 0
+      mCode: 0
+    - pattern: 0
+      method: 0
+      positioningAddress: 1810
+      commandSpeed: 0
+      dwellTime: 0
+      mCode: 0
+    - pattern: 0
+      method: 0
+      positioningAddress: 2900
+      commandSpeed: 0
+      dwellTime: 0
+      mCode: 0
+    - pattern: 0
+      method: 0
+      positioningAddress: 1522
+      commandSpeed: 0
+      dwellTime: 0
+      mCode: 0
+  - axisName: Axis 3
+    stepDataList:
+    - pattern: 0
+      method: 0
+      positioningAddress: 2656
+      commandSpeed: 0
+      dwellTime: 0
+      mCode: 0
+    - pattern: 0
+      method: 0
+      positioningAddress: 2540
+      commandSpeed: 0
+      dwellTime: 0
+      mCode: 0
+    - pattern: 0
+      method: 0
+      positioningAddress: 2520
+      commandSpeed: 0
+      dwellTime: 0
+      mCode: 0
+    - pattern: 0
+      method: 0
+      positioningAddress: 2350
+      commandSpeed: 0
+      dwellTime: 0
+      mCode: 0
+    - pattern: 0
+      method: 0
+      positioningAddress: 2590
+      commandSpeed: 0
+      dwellTime: 0
+      mCode: 0
+    - pattern: 0
+      method: 0
+      positioningAddress: 2600
+      commandSpeed: 0
+      dwellTime: 0
+      mCode: 0
+  - axisName: Axis 4
+    stepDataList:
+    - pattern: 0
+      method: 0
+      positioningAddress: 0
+      commandSpeed: 0
+      dwellTime: 0
+      mCode: 0
+    - pattern: 0
+      method: 0
+      positioningAddress: 910
+      commandSpeed: 0
+      dwellTime: 0
+      mCode: 0
+    - pattern: 0
+      method: 0
+      positioningAddress: 75
+      commandSpeed: 0
+      dwellTime: 0
+      mCode: 0
