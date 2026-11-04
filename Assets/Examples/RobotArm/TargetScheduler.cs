@@ -208,7 +208,7 @@ namespace Preliy.Flange
             _controller.MechanicalGroup.LoadState();
 
             // 2. [매우 중요] 로봇이 홈 자세가 된 후의 TCP(끝단) 위치를 스케줄러로 가져와야 합니다.
-            Matrix4x4 lastPose;
+            Matrix4x4 lastPose = _controller.transform.GetMatrix();
             if (currentAttachedTool != null)
             {
                 Transform tcp = currentAttachedTool.Point;
@@ -216,7 +216,7 @@ namespace Preliy.Flange
             }
             else
             {
-                lastPose = _controller.MechanicalGroup.ComputeForward();
+                lastPose *= _controller.MechanicalGroup.ComputeForward();
                 // Matrix4x4에서 위치(Position)와 회전(Rotation)을 추출합니다.
                 Vector3 homePos = lastPose.GetColumn(3); // 4번째 열이 Position
 
