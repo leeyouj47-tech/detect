@@ -321,7 +321,8 @@ namespace Preliy.Flange
             toolIndexToConnect = 0;
 
             //3. 가장 마지막 조인트의 TCP위치,회전값 동기화.
-            Matrix4x4 lastPose = _controller.MechanicalGroup.ComputeForward();
+            Matrix4x4 lastPose = _controller.transform.GetMatrix();
+            lastPose *= _controller.MechanicalGroup.ComputeForward();
             Vector3 pEnd = lastPose.GetColumn(3); // 4번째 열이 Position
                                                   // Matrix에서 회전값 추출 (Unity 표준 수학 연산)
             Vector3 forward = lastPose.GetColumn(2);
