@@ -39,7 +39,11 @@ namespace Preliy.Flange
         public List<ToolParent> availableTools = new List<ToolParent>();
         [Tooltip("현재 로봇에 연결된 툴입니다.")]
         public ToolParent currentAttachedTool = null;
+        [Tooltip("체크하면 툴 분리 시 부착 전의 부모로 되돌립니다. 해제하면 씬 최상단(null)으로 분리합니다.")]
+        public bool returnToOriginalParent = false;
+        private Transform _originalToolParent; // 부착 직전의 부모 저장용
         [HideInInspector] public int toolIndexToConnect = 0; // 에디터에서 입력받을 인덱스
+
 
         [Header("Settings")]
         [SerializeField]
@@ -273,6 +277,9 @@ namespace Preliy.Flange
 
             ToolParent toolToConnect = availableTools[index];
 
+            // 부착 전 부모 저장
+            _originalToolParent = toolToConnect.transform.parent;
+
             // 1. 유니티 계층구조상 로봇 끝단의 자식으로 설정하여 함께 움직이도록 함
             toolToConnect.transform.SetParent(mountPoint);
 
@@ -299,7 +306,12 @@ namespace Preliy.Flange
             if (currentAttachedTool != null)
             {
                 string toolName = currentAttachedTool.gameObject.name;
-                currentAttachedTool.transform.SetParent(null);
+
+                // 옵션이 켜져 있으면 원래 부모로, 아니면 최상단(null)으로 분리
+                Transform newParent = returnToOriginalParent ? _originalToolParent : null;
+                currentAttachedTool.transform.SetParent(newParent);
+                _originalToolParent = null;
+
                 Debug.LogWarning($"[{toolName}] 툴이 로봇에서 분리되었습니다.");
             }
 
