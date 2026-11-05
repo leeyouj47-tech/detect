@@ -10599,7 +10599,6 @@ GameObject:
   - component: {fileID: 961739752}
   - component: {fileID: 961739751}
   - component: {fileID: 961739750}
-  - component: {fileID: 961739754}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -10718,30 +10717,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 961739749}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.33396024, y: -0.35706127, z: 0.13844752, w: 0.86128396}
-  m_LocalPosition: {x: 39.533623, y: 17.65698, z: -33.33082}
+  m_LocalRotation: {x: 0.39795327, y: -0.2788392, z: 0.12835437, w: 0.8645271}
+  m_LocalPosition: {x: 35.94975, y: 27.422163, z: -41.717308}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
---- !u!114 &961739754
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 961739749}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 618b0e3f6c65dd247a4a016150006c57, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.RenderPipelines.Core.Runtime::UnityEngine.Rendering.FreeCamera
-  m_LookSpeedController: 120
-  m_LookSpeedMouse: 4
-  m_MoveSpeed: 10
-  m_MoveSpeedIncrement: 2.5
-  m_Turbo: 10
 --- !u!1 &974493268
 GameObject:
   m_ObjectHideFlags: 0
@@ -17214,6 +17196,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1596955115}
   - component: {fileID: 1596955116}
+  - component: {fileID: 1596955117}
   m_Layer: 0
   m_Name: WayPoint
   m_TagString: Untagged
@@ -17249,11 +17232,30 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1596955114}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eec8d10be5575374e85953f49ddf970d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RouteManager
+  allWaypoints:
+  - {fileID: 470890532}
+  - {fileID: 1898978402}
+  - {fileID: 1769375877}
+  - {fileID: 1824150115}
+  - {fileID: 1406627602}
+  - {fileID: 301624023}
+--- !u!114 &1596955117
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1596955114}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23261e6eacf09b64b8103b4e04f94772, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Pr1Route
   allWaypoints:
   - {fileID: 470890532}
   - {fileID: 1898978402}
@@ -24459,6 +24461,7 @@ GameObject:
   - component: {fileID: 3469287837229609615}
   - component: {fileID: 1711813855383356997}
   - component: {fileID: 3469287837229609617}
+  - component: {fileID: 3469287837229609618}
   - component: {fileID: 3469287837229609616}
   m_Layer: 0
   m_Name: AGV
@@ -26428,7 +26431,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2200feb23bb05545949e92ae60443e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Pr1Connector
-  agvController: {fileID: 0}
+  agvController: {fileID: 3469287837229609618}
   firstDefectWaypoint: 1
   batteryLineWaypoint: 2
   assemblyWaypoint: 3
@@ -26744,12 +26747,43 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 919132149441374096}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f512fd989e919a047a61d75ad0924a4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AGVController
   manager: {fileID: 1596955116}
+  routes: []
+  speed: 1
+  rotateSpeed: 90
+  onCompleteMove:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3469287837229609616}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &3469287837229609618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132149441374096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48337415af2a96a419dee72e25c6f6ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Pr1Controller
+  manager: {fileID: 1596955117}
   routes: []
   speed: 1
   rotateSpeed: 90

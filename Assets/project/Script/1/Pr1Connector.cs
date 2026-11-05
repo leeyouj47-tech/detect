@@ -6,7 +6,7 @@ using UnityEngine.Events;
 public class Pr1Connector : MXObject
 {
     [Header("AGV 관련")]
-    public AGVController agvController;
+    public Pr1Controller agvController;
 
     [Header("AGV 이동 Waypoint ID")]
     public int firstDefectWaypoint = 1;       // M500
@@ -120,52 +120,70 @@ public class Pr1Connector : MXObject
     // ==========================================
     // AGV 이동 공통 처리
     // ==========================================
-
     private void MoveCommand(
         short value,
         int commandIndex,
         int waypointID,
         DeviceAddress arrivedAddress)
     {
+        // PLC 명령 OFF 시 재수신 가능하도록 초기화
         if (value == 0)
         {
             moveCommandReceived[commandIndex] = false;
             return;
         }
 
+        // 이미 처리한 명령이면 무시
         if (moveCommandReceived[commandIndex])
-            return;
-
-        // Waypoint가 아직 지정되지 않은 경우
-        if (waypointID < 0)
         {
-            moveCommandReceived[commandIndex] = true;
-
-            Debug.LogWarning(
-                $"[Pr1Connector] Waypoint가 지정되지 않았습니다. 명령 번호: {commandIndex}");
-
+            Debug.Log($"[AGV] 이미 처리한 명령입니다. Index: {commandIndex}");
             return;
         }
 
-        // 다른 AGV 이동이 진행 중인 경우
+        // 목적지 확인
+        if (waypointID < 0)
+        {
+            Debug.LogWarning("[AGV] 목적지 Waypoint가 지정되지 않았습니다.");
+            return;
+        }
+
+        // AGV 이동 중인지 확인
         if (agvBusy)
+        {
+            Debug.LogWarning(
+                $"[AGV] 이미 이동 중입니다. 명령 무시 / 목적지: {waypointID}");
             return;
+        }
 
+        // Controller 연결 확인
         if (agvController == null)
+        {
+            Debug.LogError("[AGV] Pr1Controller가 연결되지 않았습니다.");
             return;
+        }
 
+        Debug.Log($"[AGV] 이동 명령 시작 / 목적지: Waypoint {waypointID}");
+
+        // 경로 탐색 및 이동 명령
+        bool success = agvController.Go(waypointID);
+
+        Debug.Log($"[AGV] Go 실행 결과: {success}");
+
+        if (!success)
+        {
+            Debug.LogError(
+                $"[AGV] 경로 탐색 실패 / 목적지: Waypoint {waypointID}");
+            return;
+        }
+
+        // 이동 명령 성공 후 상태 변경
         moveCommandReceived[commandIndex] = true;
         agvBusy = true;
-
         currentArrivedAddress = arrivedAddress;
 
         Debug.Log(
-            $"[Pr1Connector] AGV 이동 시작 / Waypoint ID: {waypointID}");
-
-        agvController.Go(waypointID);
+            $"[AGV] 이동 시작 완료 / 목적지: Waypoint {waypointID}");
     }
-
-
     // ==========================================
     // AGV 이동 명령별 처리
     // ==========================================
@@ -178,15 +196,15 @@ public class Pr1Connector : MXObject
             firstDefectArrivedAddress);
     }
 
+    //190~205 줄은 추후에 M503의 위치가 정해지고, 주석처리 풀기
     // M502 : 배터리팩 조립라인 이동
-    private void BatteryLineMove(short value)
+    /*private void BatteryLineMove(short value)
     {
         MoveCommand(
             value, 1, batteryLineWaypoint,
             batteryLineArrivedAddress);
-    }
+    }*/
 
-    //배터리팩 커버 이동위치 정하지 않아 주석처리
     // M503 : 커버 조립라인 이동 (Waypoint 미정)
     /*private void CoverLineMove(short value)
     {
@@ -194,6 +212,42 @@ public class Pr1Connector : MXObject
             value, 2, coverLineWaypoint,
             coverLineArrivedAddress);
     }*/
+
+    //208~237은 M503위치 정해지면 주석처리 하기
+    // M502 : 배터리팩 조립라인 이동
+    private void BatteryLineMove(short value)
+    {
+        Debug.Log($"[PLC 수신] M502 = {value}");
+
+        Debug.Log($"[AGV 상태] Busy = {agvBusy}");
+        Debug.Log($"[Waypoint 설정] BatteryLineWaypoint = {batteryLineWaypoint}");
+        Debug.Log($"[Controller 연결] {agvController != null}");
+
+        MoveCommand(
+            value,
+            1,
+            batteryLineWaypoint,
+            batteryLineArrivedAddress
+        );
+    }
+    //배터리팩 커버 이동위치 정하지 않아 수정한 소스
+    // M503 : 커버 조립라인 이동 (Waypoint 미정)
+    private void CoverLineMove(short value)
+    {
+        if (value == 0)
+        {
+            moveCommandReceived[2] = false;
+            return;
+        }
+
+        if (moveCommandReceived[2])
+            return;
+
+        moveCommandReceived[2] = true;
+
+        Debug.Log(
+            "[Pr1Connector] M503 수신 - Waypoint 미정으로 이동 보류");
+    }
 
     // M505 : 조립공정 이동
     private void AssemblyMove(short value)

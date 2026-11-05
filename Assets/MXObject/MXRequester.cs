@@ -286,8 +286,14 @@ public class MXRequester : MonoBehaviour
         _updated = false;
     }
 
-    internal void AddSetDeviceRequest(string address, int v)
+    //test를 위해 주석처리
+    /*internal void AddSetDeviceRequest(string address, int v)
     {
         throw new NotImplementedException();
+    }*/
+    //test를 위해서 위 코드를 아래처럼 수정
+    internal void AddSetDeviceRequest(string address, int v)
+    {
+        AddSetDeviceRequest(address, (short)v);
     }
 }
