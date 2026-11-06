@@ -1,0 +1,625 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3910256219283997404
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2326585175934763196}
+  - component: {fileID: 1238748832650523352}
+  - component: {fileID: 7292222449712208980}
+  - component: {fileID: 3801899521719287178}
+  - component: {fileID: 4894332527685785237}
+  - component: {fileID: 129958466094754647}
+  - component: {fileID: 7864247136126100821}
+  - component: {fileID: 7073010920251934132}
+  m_Layer: 0
+  m_Name: AGV
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2326585175934763196
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3910256219283997404}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 21, y: -0, z: -38}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1512850345409667217}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &1238748832650523352
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3910256219283997404}
+  m_Mesh: {fileID: -3028652618374685060, guid: fde62f3731da5564a842e298c3040644, type: 3}
+--- !u!23 &7292222449712208980
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3910256219283997404}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &3801899521719287178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3910256219283997404}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f512fd989e919a047a61d75ad0924a4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AGVController
+  manager: {fileID: 0}
+  routes: []
+  speed: 1
+  rotateSpeed: 90
+  onCompleteMove:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 129958466094754647}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &4894332527685785237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3910256219283997404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48337415af2a96a419dee72e25c6f6ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Pr1Controller
+  manager: {fileID: 0}
+  routes:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  speed: 1
+  rotateSpeed: 90
+  onCompleteMove:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 129958466094754647}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &129958466094754647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3910256219283997404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2200feb23bb05545949e92ae60443e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Pr1Connector
+  agvController: {fileID: 4894332527685785237}
+  firstDefectWaypoint: 1
+  batteryLineWaypoint: 2
+  assemblyWaypoint: 3
+  secondDefectWaypoint: 4
+  secondProcessWaypoint: 5
+  firstDefectMoveAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 1
+    label: 
+    address: M500
+    description: "AGV 1\uCC28 \uBD88\uB7C9\uD310\uC815 \uC704\uCE58\uC774\uB3D9"
+    comment: 
+  batteryLineMoveAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 1
+    label: 
+    address: M502
+    description: "AGV \uBC30\uD130\uB9AC\uD329 \uC870\uB9BD\uB77C\uC778 \uC774\uB3D9"
+    comment: 
+  coverLineMoveAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 1
+    label: 
+    address: M503
+    description: "\uBC30\uD130\uB9AC\uD329 \uCEE4\uBC84 \uC870\uB9BD\uB77C\uC778
+      \uC774\uB3D9"
+    comment: 
+  assemblyMoveAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 1
+    label: 
+    address: M505
+    description: "AGV \uC870\uB9BD\uACF5\uC815 \uC774\uB3D9"
+    comment: 
+  secondDefectMoveAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 1
+    label: 
+    address: M507
+    description: "AGV 2\uCC28 \uBD88\uB7C9\uD310\uC815 \uC704\uCE58 \uC774\uB3D9"
+    comment: 
+  secondProcessMoveAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 1
+    label: 
+    address: M509
+    description: "AGV 2\uCC28 \uACF5\uC815 \uC774\uB3D9"
+    comment: 
+  firstInspectionAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 1
+    label: 
+    address: M501
+    description: "1\uCC28 \uBD88\uB7C9\uD310\uC815 \uC2E4\uD589"
+    comment: 
+  coverAssemblyAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 1
+    label: 
+    address: M504
+    description: "\uB85C\uBD07\uD314 \uCEE4\uBC84 \uC870\uB9BD"
+    comment: 
+  batteryAssemblyAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 1
+    label: 
+    address: M506
+    description: "\uB85C\uBD07\uD314 \uBC30\uD130\uB9AC\uD329 \uC870\uB9BD"
+    comment: 
+  secondInspectionAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 1
+    label: 
+    address: M508
+    description: "2\uCC28 \uBD88\uB7C9\uD310\uC815 \uC2E4\uD589"
+    comment: 
+  onFirstInspection:
+    m_PersistentCalls:
+      m_Calls: []
+  onCoverAssembly:
+    m_PersistentCalls:
+      m_Calls: []
+  onBatteryAssembly:
+    m_PersistentCalls:
+      m_Calls: []
+  onSecondInspection:
+    m_PersistentCalls:
+      m_Calls: []
+  firstDefectArrivedAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 1
+    label: 
+    address: M520
+    description: "1\uCC28 \uBD88\uB7C9\uD310\uC815 \uC704\uCE58 \uB3C4\uCC29"
+    comment: 
+  firstInspectionCompletedAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 1
+    label: 
+    address: M521
+    description: "1\uCC28 \uBD88\uB7C9\uD310\uC815 \uC644\uB8CC"
+    comment: 
+  batteryLineArrivedAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 1
+    label: 
+    address: M522
+    description: "AGV \uBC30\uD130\uB9AC\uD329 \uC870\uB9BD\uB77C\uC778 \uB3C4\uCC29"
+    comment: 
+  coverLineArrivedAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 1
+    label: 
+    address: M523
+    description: "\uCEE4\uBC84 \uD314\uB808\uD2B8 \uC870\uB9BD\uB77C\uC778 \uB3C4\uCC29
+      \uC644\uB8CC"
+    comment: 
+  coverAssemblyCompletedAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 1
+    label: 
+    address: M524
+    description: "\uCEE4\uBC84 \uC870\uB9BD \uC644\uB8CC"
+    comment: 
+  assemblyArrivedAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 1
+    label: 
+    address: M525
+    description: "AGV \uC870\uB9BD\uACF5\uC815 \uB3C4\uCC29"
+    comment: 
+  batteryAssemblyCompletedAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 1
+    label: 
+    address: M526
+    description: "\uBC30\uD130\uB9AC\uD329 \uC870\uB9BD \uC644\uB8CC"
+    comment: 
+  secondDefectArrivedAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 1
+    label: 
+    address: M527
+    description: "2\uCC28 \uBD88\uB7C9\uD310\uC815 \uC704\uCE58 \uB3C4\uCC29"
+    comment: 
+  secondInspectionCompletedAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 1
+    label: 
+    address: M528
+    description: "2\uCC28 \uBD88\uB7C9\uD310\uC815 \uC644\uB8CC"
+    comment: 
+  secondProcessArrivedAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 1
+    label: 
+    address: M529
+    description: "AGV 2\uCC28 \uACF5\uC815 \uB3C4\uCC29"
+    comment: 
+  firstGoodAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 1
+    label: 
+    address: M530
+    description: "1\uCC28 \uC815\uC0C1\uD488"
+    comment: 
+  firstBadAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 1
+    label: 
+    address: M531
+    description: "1\uCC28 \uBD88\uB7C9\uD488"
+    comment: 
+  secondGoodAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 1
+    label: 
+    address: M533
+    description: "2\uCC28 \uC815\uC0C1\uD488"
+    comment: 
+  secondBadAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 1
+    label: 
+    address: M534
+    description: "2\uCC28 \uBD88\uB7C9\uD488"
+    comment: 
+  processStartAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 1
+    label: 
+    address: M480
+    description: "1\uCC28 \uACF5\uC815 \uC2DC\uC791 \uC694\uCCAD"
+    comment: 
+  autoRunAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 1
+    label: 
+    address: M481
+    description: "\uC790\uB3D9\uC6B4\uC804 \uC0C1\uD0DC"
+    comment: 
+  processResetAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 1
+    label: 
+    address: M482
+    description: "\uACF5\uC815 \uCD08\uAE30\uD654 \uC694\uCCAD"
+    comment: 
+  processPauseAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 1
+    label: 
+    address: M483
+    description: "\uACF5\uC815 \uC77C\uC2DC\uC815\uC9C0"
+    comment: 
+  processErrorAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 1
+    label: 
+    address: M484
+    description: "\uACF5\uC815 \uC774\uC0C1\uBC1C\uC0DD"
+    comment: 
+  processCompletedAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 1
+    label: 
+    address: M485
+    description: "1\uCC28 \uACF5\uC815 \uC644\uB8CC"
+    comment: 
+  goodStatusAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 1
+    label: 
+    address: M486
+    description: "\uC815\uC0C1\uD488 \uD310\uC815 \uC0C1\uD0DC"
+    comment: 
+  badStatusAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 1
+    label: 
+    address: M487
+    description: "\uBD88\uB7C9\uD488 \uD310\uC815 \uC0C1\uD0DC"
+    comment: 
+  autoPermitAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 1
+    label: 
+    address: M488
+    description: "\uC790\uB3D9\uC6B4\uC804 \uC2DC\uC791 \uBC0F \uD5C8\uAC00"
+    comment: 
+  resetCompletedAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 1
+    label: 
+    address: M489
+    description: "\uACF5\uC815 \uCD08\uAE30\uD654 \uC644\uB8CC"
+    comment: 
+  safetyAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 1
+    label: 
+    address: M490
+    description: "\uBE44\uC0C1\uC815\uC9C0 \uBC0F \uC548\uC804\uC870\uAC74 \uC815\uC0C1"
+    comment: 
+  simulationReadyAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 1
+    label: 
+    address: M491
+    description: "Unity \uD1B5\uC2E0 \uBC0F \uC2DC\uBBAC \uC900\uBE44 \uC644\uB8CC"
+    comment: 
+  feedbackTime: 0.3
+--- !u!65 &7864247136126100821
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3910256219283997404}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.39, y: 0.7400019, z: 3.392881}
+  m_Center: {x: 0, y: 0.36999905, z: 0.000000059604645}
+--- !u!54 &7073010920251934132
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3910256219283997404}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!1 &6097453157073834460
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1512850345409667217}
+  - component: {fileID: 922350001320693380}
+  - component: {fileID: 1916410232591610841}
+  m_Layer: 0
+  m_Name: Battery pack
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1512850345409667217
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6097453157073834460}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.74, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2326585175934763196}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &922350001320693380
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6097453157073834460}
+  m_Mesh: {fileID: 6308348912206636344, guid: 21fa4043a3c04af4b85060fc3e507686, type: 3}
+--- !u!23 &1916410232591610841
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6097453157073834460}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  m_AdditionalVertexStreams: {fileID: 0}

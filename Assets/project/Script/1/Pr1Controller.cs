@@ -18,6 +18,9 @@ public class Pr1Controller : MonoBehaviour
 
     private bool isRotating = false;
 
+    // 이동 명령을 받아야 움직일 수 있음
+    private bool canMove = false;
+
     [Header("이동 완료 이벤트")]
     public UnityEvent onCompleteMove = new UnityEvent();
 
@@ -34,11 +37,10 @@ public class Pr1Controller : MonoBehaviour
                 "[Pr1Controller] Pr1Route가 연결되지 않았습니다.");
         }
 
-        if (routes == null || routes.Count == 0)
-            return;
-
+        // 초기 routes가 설정되어 있어도 자동 이동하지 않음
+        canMove = false;
+        isRotating = false;
         routeIndex = 0;
-        isRotating = true;
     }
 
 
@@ -48,8 +50,15 @@ public class Pr1Controller : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (routes == null || routes.Count == 0)
+        // 이동 명령을 받기 전에는 정지
+        if (!canMove)
             return;
+
+        if (routes == null || routes.Count == 0)
+        {
+            canMove = false;
+            return;
+        }
 
         if (routeIndex >= routes.Count)
             return;
@@ -59,7 +68,7 @@ public class Pr1Controller : MonoBehaviour
             Debug.LogError(
                 $"[Pr1Controller] Waypoint가 null입니다. Index: {routeIndex}");
 
-            routes = null;
+            StopMovement();
             return;
         }
 
@@ -128,9 +137,7 @@ public class Pr1Controller : MonoBehaviour
             // 4. 최종 목적지 도착
             if (routeIndex >= routes.Count)
             {
-                routes = null;
-                routeIndex = 0;
-                isRotating = false;
+                StopMovement();
 
                 Debug.Log(
                     $"[{gameObject.name}] 최종 목적지에 도착했습니다.");
@@ -138,6 +145,19 @@ public class Pr1Controller : MonoBehaviour
                 onCompleteMove?.Invoke();
             }
         }
+    }
+
+
+    // ==========================================
+    // 이동 정지
+    // ==========================================
+
+    private void StopMovement()
+    {
+        canMove = false;
+        routes = null;
+        routeIndex = 0;
+        isRotating = false;
     }
 
 
@@ -152,23 +172,32 @@ public class Pr1Controller : MonoBehaviour
             Debug.LogError(
                 "[Pr1Controller] 전달받은 경로가 비어 있습니다.");
 
-            routes = null;
+            StopMovement();
             return;
         }
 
-        routes = newRoutes;
+        routes = new List<WayPoint>(newRoutes);
         routeIndex = 0;
         isRotating = true;
 
-        Debug.Log($"[Pr1Controller] 경로 설정 완료 / 경유 Waypoint 수: {routes.Count}");
-        Debug.Log($"[Pr1Controller] 첫 번째 이동 Waypoint: {routes[0].id}");
-        Debug.Log($"[Pr1Controller] 최종 목적지 Waypoint: {routes[routes.Count - 1].id}");
+        // 경로 설정이 완료된 경우에만 이동 허용
+        canMove = true;
+
+        Debug.Log(
+            $"[Pr1Controller] 경로 설정 완료 / 경유 Waypoint 수: {routes.Count}");
+
+        Debug.Log(
+            $"[Pr1Controller] 첫 번째 이동 Waypoint: {routes[0].id}");
+
+        Debug.Log(
+            $"[Pr1Controller] 최종 목적지 Waypoint: {routes[routes.Count - 1].id}");
     }
 
 
     // ==========================================
     // 목적지 이동 명령
     // ==========================================
+
     public bool Go(int destinationID)
     {
         Debug.Log(
@@ -198,5 +227,4 @@ public class Pr1Controller : MonoBehaviour
 
         return manager.GetRoutes(this, startID, destinationID);
     }
-
 }

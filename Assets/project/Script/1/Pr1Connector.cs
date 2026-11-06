@@ -5,8 +5,16 @@ using UnityEngine.Events;
 
 public class Pr1Connector : MXObject
 {
+    public AGVFiller filler;
     [Header("AGV 관련")]
     public Pr1Controller agvController;
+
+    [Header("PLC -> Unity : 다음 제품 투입")]
+    public DeviceAddress nextProductInputAddress = new DeviceAddress("다음 제품 투입 완료");
+    // 신호 중복 수신 방지
+    private bool previousNextProductSignal;
+    // 이전 제품 공정 완료 여부
+    private bool previousProcessCompleted;
 
     [Header("AGV 이동 Waypoint ID")]
     public int firstDefectWaypoint = 1;       // M500
@@ -77,7 +85,6 @@ public class Pr1Connector : MXObject
     [Header("공통 설정")]
     public float feedbackTime = 0.3f;
 
-
     // ==========================================
     // 초기 설정
     // ==========================================
@@ -99,8 +106,7 @@ public class Pr1Connector : MXObject
         MXRequester.Get.AddDeviceAddress(firstDefectMoveAddress.address, FirstDefectMove);
         MXRequester.Get.AddDeviceAddress(batteryLineMoveAddress.address, BatteryLineMove);
         //배터리팩 커버 이동위치 정하지 않아 주석처리
-        /*MXRequester.Get.AddDeviceAddress(
-            coverLineMoveAddress.address, CoverLineMove);*/
+        /*MXRequester.Get.AddDeviceAddress(coverLineMoveAddress.address, CoverLineMove);*/
         MXRequester.Get.AddDeviceAddress(assemblyMoveAddress.address, AssemblyMove);
         MXRequester.Get.AddDeviceAddress(secondDefectMoveAddress.address, SecondDefectMove);
         MXRequester.Get.AddDeviceAddress(secondProcessMoveAddress.address, SecondProcessMove);
@@ -112,6 +118,12 @@ public class Pr1Connector : MXObject
         MXRequester.Get.AddDeviceAddress(batteryAssemblyAddress.address, BatteryAssemblyCommand);
         MXRequester.Get.AddDeviceAddress(secondInspectionAddress.address, SecondInspectionCommand);
 
+        // AGV 생성 관련 신호 등록
+        // M480은 씬에 배치된 최초 AGV가 사용하므로 생성 신호로 사용하지 않음
+        // M485 : 이전 AGV 공정 완료 확인
+        MXRequester.Get.AddDeviceAddress(processCompletedAddress.address,OnPreviousProcessCompleted);
+        // M551 : 다음 제품 투입 신호
+        MXRequester.Get.AddDeviceAddress(nextProductInputAddress.address,OnNextProductInput);
 
         Debug.Log("[Pr1Connector] PLC 신호 등록 완료");
     }
@@ -546,8 +558,19 @@ public class Pr1Connector : MXObject
         MXRequester.Get.AddSetDeviceRequest(
             autoPermitAddress.address, isPermitted ? 1 : 0);
     }
+    // PLC 연결 성공 시 호출
+    public void OnPLCConnected()
+    {
+        if (filler != null)
+            filler.SetPLCConnection(true);
+    }
 
-
+    // PLC 연결 해제 시 호출
+    public void OnPLCDisconnected()
+    {
+        if (filler != null)
+            filler.SetPLCConnection(false);
+    }
     // ==========================================
     // 종료 처리
     // ==========================================
@@ -560,4 +583,57 @@ public class Pr1Connector : MXObject
             agvController.onCompleteMove.RemoveListener(OnCompletedMove);
         }
     }
+
+    // ==========================================
+    // AGV 반복 생성 처리
+    // ==========================================
+
+    // M485 : 이전 제품 공정 완료 확인
+    private void OnPreviousProcessCompleted(short value)
+    {
+        previousProcessCompleted = value != 0;
+
+        if (previousProcessCompleted)
+        {
+            Debug.Log("[Pr1Connector] M485 이전 제품 공정 완료 확인");
+        }
+    }
+
+
+    // M551 : 다음 제품 투입 신호
+    private void OnNextProductInput(short value)
+    {
+        bool isOn = value != 0;
+
+        // OFF -> ON 순간만 감지
+        if (isOn && !previousNextProductSignal)
+        {
+            Debug.Log("[Pr1Connector] M551 다음 제품 투입 신호 수신");
+
+            if (!previousProcessCompleted)
+            {
+                Debug.LogWarning(
+                    "[Pr1Connector] M485 공정 완료 신호가 없어 AGV 생성을 보류합니다."
+                );
+            }
+            else if (filler == null)
+            {
+                Debug.LogError(
+                    "[Pr1Connector] AGVFiller가 Inspector에 연결되지 않았습니다."
+                );
+            }
+            else
+            {
+                Debug.Log("[Pr1Connector] 다음 AGV 생성 요청");
+
+                filler.RequestSpawn();
+
+                // 다음 제품 생성 요청 처리 후 완료 상태 초기화
+                previousProcessCompleted = false;
+            }
+        }
+
+        previousNextProductSignal = isOn;
+    }
+
 }
