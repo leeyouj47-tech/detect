@@ -21,6 +21,7 @@ public class PackController : MonoBehaviour
 
     [Header("이동 완료 이벤트")]
     public UnityEvent onCompleteMove = new UnityEvent();
+    private int currentRouteIndex;
 
 
     // ==========================================
@@ -47,100 +48,37 @@ public class PackController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!canMove)
-            return;
-
         if (routes == null || routes.Count == 0)
-        {
-            canMove = false;
-            return;
-        }
-
-        if (routeIndex >= routes.Count)
             return;
 
-        if (routes[routeIndex] == null)
-        {
-            Debug.LogError(
-                $"[PackController] Waypoint가 null입니다. Index: {routeIndex}");
+        WayPoint target = routes[currentRouteIndex];
 
-            StopMovement();
-            return;
-        }
+        Vector3 targetPosition = target.transform.position;
 
-        Vector3 targetPosition =
-            routes[routeIndex].transform.position;
+        // Y축 높이는 현재 위치 유지
+        targetPosition.y = transform.position.y;
 
-        Vector3 toward = targetPosition - transform.position;
-        toward.y = 0f;
-
-
-        // 1. 회전 제어
-        if (isRotating)
-        {
-            if (toward.sqrMagnitude > 0.001f)
-            {
-                Quaternion targetRotation =
-                    Quaternion.LookRotation(toward);
-
-                transform.rotation =
-                    Quaternion.RotateTowards(
-                        transform.rotation,
-                        targetRotation,
-                        rotateSpeed * Time.fixedDeltaTime);
-
-                if (Quaternion.Angle(
-                    transform.rotation,
-                    targetRotation) < 0.1f)
-                {
-                    transform.rotation = targetRotation;
-                    isRotating = false;
-                }
-            }
-            else
-            {
-                isRotating = false;
-            }
-
-            return;
-        }
-
-
-        // 2. 이동 제어
+        // 회전 없이 목표 Waypoint 방향으로 직선 이동
         transform.position = Vector3.MoveTowards(
             transform.position,
             targetPosition,
-            speed * Time.fixedDeltaTime);
+            speed * Time.fixedDeltaTime
+        );
 
-
-        // 3. Waypoint 도착 확인
-        if (Vector3.Distance(
-            transform.position,
-            targetPosition) < 0.001f)
+        // 도착 확인
+        if (Vector3.Distance(transform.position, targetPosition) < 0.05f)
         {
-            transform.position = targetPosition;
+            currentRouteIndex++;
 
-            Debug.Log(
-                $"[PackController] Waypoint {routes[routeIndex].id} 도착");
-
-            routeIndex++;
-
-            isRotating = true;
-
-
-            // 4. 최종 목적지 도착
-            if (routeIndex >= routes.Count)
+            if (currentRouteIndex >= routes.Count)
             {
-                StopMovement();
-
-                Debug.Log(
-                    $"[{gameObject.name}] 배터리팩 공정 AGV 최종 목적지 도착");
+                routes.Clear();
+                currentRouteIndex = 0;
 
                 onCompleteMove?.Invoke();
             }
         }
     }
-
 
     // ==========================================
     // 이동 정지
@@ -161,6 +99,7 @@ public class PackController : MonoBehaviour
 
     public void SetRoute(List<WayPoint> newRoutes)
     {
+        Debug.Log("[PackController] 호출됨 경로개수: " + (newRoutes == null ? 0 : newRoutes.Count));
         if (newRoutes == null || newRoutes.Count == 0)
         {
             Debug.LogError(
@@ -194,8 +133,8 @@ public class PackController : MonoBehaviour
 
     public bool Go(int destinationID)
     {
-        Debug.Log(
-            $"[PackController] 이동 명령 / 목적지 ID: {destinationID}");
+        Debug.Log("[PackController] Go 호출 목적지" + destinationID);
+        Debug.Log( $"[PackController] 이동 명령 / 목적지 ID: {destinationID}");
 
         if (manager == null)
         {
