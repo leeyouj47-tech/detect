@@ -7349,6 +7349,8 @@ GameObject:
   - component: {fileID: 543450653057986855}
   - component: {fileID: 3469287837041868418}
   - component: {fileID: 1711813856200116808}
+  - component: {fileID: 3469287837041868420}
+  - component: {fileID: 3469287837041868419}
   m_Layer: 0
   m_Name: AGV
   m_TagString: Untagged
@@ -7365,6 +7367,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 543450653244640760}
+  - component: {fileID: 919132149509625668}
+  - component: {fileID: 919132149509625667}
   m_Layer: 0
   m_Name: Skid
   m_TagString: Untagged
@@ -7372,6 +7376,30 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &919132149509625667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132149509625666}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eae4e9c203568d84a89008941f79dac5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Pr2Connector
+--- !u!114 &919132149509625668
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132149509625666}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c98168a03e15974ea660aa944637534, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Pr2Controller
 --- !u!4 &1068795357077606719
 Transform:
   m_ObjectHideFlags: 0
@@ -7579,6 +7607,30 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 919132148597386141}
   m_Mesh: {fileID: -3028652618374685060, guid: fde62f3731da5564a842e298c3040644, type: 3}
+--- !u!114 &3469287837041868419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132148597386141}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c98168a03e15974ea660aa944637534, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Pr2Controller
+--- !u!114 &3469287837041868420
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132148597386141}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eae4e9c203568d84a89008941f79dac5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Pr2Connector
 --- !u!4 &3534024142928809785
 Transform:
   m_ObjectHideFlags: 0
@@ -8325,6 +8377,8 @@ GameObject:
   - component: {fileID: 8855681593541590327}
   - component: {fileID: 5569379235594629778}
   - component: {fileID: 7687257131147134552}
+  - component: {fileID: 8855681593541590329}
+  - component: {fileID: 8855681593541590328}
   m_Layer: 0
   m_Name: ICCU
   m_TagString: Untagged
@@ -8437,6 +8491,73 @@ Transform:
   m_Children: []
   m_Father: {fileID: 543450652364169903}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 180}
+--- !u!114 &8855681593541590328
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8191594525587842957}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ed4b8d9a51b01f4fa5af6cb859fd4c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PackConnector
+  packController: {fileID: 0}
+  inspectionWaypoint: 2
+  assemblyWaypoint: 3
+  inspectionMoveAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: M510
+    comment: 
+  assemblyMoveAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: M502
+    comment: 
+  inspectionArrivedAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: M540
+    comment: 
+  assemblyArrivedAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: M523
+    comment: 
+  feedbackTime: 0.3
+--- !u!114 &8855681593541590329
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8191594525587842957}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b7edbe74cc36ca4587d4f2afa42c6a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PackController
+  manager: {fileID: 0}
+  routes: []
+  speed: 1
+  rotateSpeed: 90
+  onCompleteMove:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &8896148550993517548
 GameObject:
   m_ObjectHideFlags: 0
