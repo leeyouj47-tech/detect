@@ -44,8 +44,20 @@ public class A1Program : OfflineProgram
         this.MoveJ(waypoints[13]);
         this.MoveJ(waypoints[14]);
         this.MoveJ(waypoints[2]);
-        //this.Action(true);
+        this.Action(true);
         //P3
+        this.Speed(100f,60f,30f);
+        this.MoveJ(waypoints[15]);
+        this.MoveJ(waypoints[16]);
+        this.MoveJ(waypoints[17]);
+        this.MoveJ(waypoints[18]);
+        this.MoveJ(waypoints[19]);
+        //this.MoveJ(waypoints[20]);
+        this.MoveJ(waypoints[21]);
+        this.MoveJ(waypoints[4]);
+        this.MoveJ(waypoints[5]);
+        this.Action(false);
+        this.MoveJ(waypoints[22]);
         Home();
     }
 
