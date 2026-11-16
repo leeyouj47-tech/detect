@@ -1,3 +1,4 @@
+//OfflineProgram.cs 수정
 using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
@@ -29,7 +30,10 @@ public abstract class OfflineProgram : MonoBehaviour
     public TargetScheduler scheduler;
     public TargetWaypoint[] waypoints;
 
-    public TaskState currentState;
+    //public TaskState currentState;
+    //26.11.16 LYJ: 현재값 수정
+    public TaskState currentState = TaskState.Wait;
+
     public float doneDuration = 0.3f;
 
     private Queue<IRobotCommand> taskQueue = new Queue<IRobotCommand>();
@@ -124,7 +128,7 @@ public abstract class OfflineProgram : MonoBehaviour
     }
 
     public abstract void Home();
-    private async void RunProgram()
+    /*private async void RunProgram()
     {
         if (currentState == TaskState.Error || currentState == TaskState.Run)
         {
@@ -147,7 +151,52 @@ public abstract class OfflineProgram : MonoBehaviour
 
         doneOffTime = Time.time + doneDuration;
         Debug.LogWarning($"위치결정 완료");
+    }*/
+
+    //26.11.16 LYJ: 수정
+    public void RunProgram(int programNum)
+    {
+        // Wait 또는 Done 상태에서만 새로운 프로그램 실행 가능
+        if (currentState != TaskState.Wait &&
+            currentState != TaskState.Done)
+        {
+            Debug.LogWarning(
+                "[OfflineProgram] 현재 다른 프로그램이 실행 중입니다. 완료 후 호출해주세요."
+            );
+            return;
+        }
+
+        // 새로운 시퀀스를 담기 위해 큐 초기화
+        taskQueue.Clear();
+
+        string methodName = programNum == 0
+            ? "Home"
+            : $"Program{programNum}";
+
+        MethodInfo targetMethod = this.GetType().GetMethod(
+            methodName,
+            BindingFlags.Instance |
+            BindingFlags.Public |
+            BindingFlags.NonPublic
+        );
+
+        if (targetMethod != null)
+        {
+            Debug.Log($"[OfflineProgram] 프로그램 실행: {methodName}");
+
+            targetMethod.Invoke(this, null);
+
+            // 등록된 명령 순서대로 실행
+            RunProgram();
+        }
+        else
+        {
+            Debug.LogError(
+                $"[OfflineProgram] '{methodName}' 함수를 찾을 수 없습니다."
+            );
+        }
     }
+
 
 
     private void Update()
