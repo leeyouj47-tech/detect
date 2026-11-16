@@ -7388,6 +7388,216 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eae4e9c203568d84a89008941f79dac5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Pr2Connector
+  agvController: {fileID: 0}
+  bodyController: {fileID: 0}
+  iccuController: {fileID: 0}
+  agvWaypoint1: 1
+  bodyWaypoint1: 1
+  bodyWaypoint2: 2
+  bodyWaypoint3: 3
+  bodyWaypoint4: 4
+  iccuWaypoint1: 1
+  iccuWaypoint2: 2
+  agvMoveAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "AGV WP1 \uC774\uB3D9"
+    comment: 
+  bodyWP1MoveAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "\uCC28\uCCB4 WP1 \uC774\uB3D9"
+    comment: 
+  iccuWP1MoveAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "ICCU WP1 \uC774\uB3D9"
+    comment: 
+  iccuWP2MoveAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "ICCU WP2 \uC774\uB3D9"
+    comment: 
+  bodyWP2MoveAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "\uCC28\uCCB4 WP2 \uB864\uB7EC \uC774\uB3D9"
+    comment: 
+  bodyWP3MoveAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "\uCC28\uCCB4 WP3 \uC774\uB3D9"
+    comment: 
+  bodyWP4MoveAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "\uCC28\uCCB4 WP4 \uC774\uB3D9"
+    comment: 
+  liftAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "\uB9AC\uD504\uD2B8 \uBC30\uD130\uB9AC \uACB0\uD569"
+    comment: 
+  robotArmAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "ICCU \uB85C\uBD07\uD314 \uACB0\uD569"
+    comment: 
+  rollerAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "\uB864\uB7EC \uB3D9\uC791"
+    comment: 
+  onLiftOperation:
+    m_PersistentCalls:
+      m_Calls: []
+  onRobotArmOperation:
+    m_PersistentCalls:
+      m_Calls: []
+  onRollerOperation:
+    m_PersistentCalls:
+      m_Calls: []
+  onICCUInspection:
+    m_PersistentCalls:
+      m_Calls: []
+  onBodyInspection:
+    m_PersistentCalls:
+      m_Calls: []
+  agvArrivedAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "AGV WP1 \uB3C4\uCC29"
+    comment: 
+  bodyWP1ArrivedAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "\uCC28\uCCB4 WP1 \uB3C4\uCC29"
+    comment: 
+  liftCompletedAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "\uB9AC\uD504\uD2B8 \uACB0\uD569 \uC644\uB8CC"
+    comment: 
+  iccuWP1ArrivedAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "ICCU WP1 \uB3C4\uCC29"
+    comment: 
+  iccuWP2ArrivedAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "ICCU WP2 \uB3C4\uCC29"
+    comment: 
+  iccuAssemblyCompletedAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "ICCU \uACB0\uD569 \uC644\uB8CC"
+    comment: 
+  bodyWP2ArrivedAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "\uCC28\uCCB4 WP2 \uB3C4\uCC29"
+    comment: 
+  bodyWP3ArrivedAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "\uCC28\uCCB4 WP3 \uB3C4\uCC29"
+    comment: 
+  bodyWP4ArrivedAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "\uCC28\uCCB4 WP4 \uB3C4\uCC29"
+    comment: 
+  iccuGoodAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "ICCU \uAC80\uC0AC \uC815\uC0C1"
+    comment: 
+  iccuBadAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "ICCU \uAC80\uC0AC \uBD88\uB7C9"
+    comment: 
+  bodyGoodAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "\uCC28\uCCB4 \uAC80\uC0AC \uC815\uC0C1"
+    comment: 
+  bodyBadAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "\uCC28\uCCB4 \uAC80\uC0AC \uBD88\uB7C9"
+    comment: 
+  feedbackTime: 0.3
 --- !u!114 &919132149509625668
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7400,6 +7610,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c98168a03e15974ea660aa944637534, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Pr2Controller
+  manager: {fileID: 0}
+  routes: []
+  speed: 1
+  rotateSpeed: 90
+  onCompleteMove:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &1068795357077606719
 Transform:
   m_ObjectHideFlags: 0
@@ -7619,6 +7836,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c98168a03e15974ea660aa944637534, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Pr2Controller
+  manager: {fileID: 0}
+  routes: []
+  speed: 1
+  rotateSpeed: 90
+  onCompleteMove:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &3469287837041868420
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7631,6 +7855,216 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eae4e9c203568d84a89008941f79dac5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Pr2Connector
+  agvController: {fileID: 0}
+  bodyController: {fileID: 0}
+  iccuController: {fileID: 0}
+  agvWaypoint1: 1
+  bodyWaypoint1: 1
+  bodyWaypoint2: 2
+  bodyWaypoint3: 3
+  bodyWaypoint4: 4
+  iccuWaypoint1: 1
+  iccuWaypoint2: 2
+  agvMoveAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "AGV WP1 \uC774\uB3D9"
+    comment: 
+  bodyWP1MoveAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "\uCC28\uCCB4 WP1 \uC774\uB3D9"
+    comment: 
+  iccuWP1MoveAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "ICCU WP1 \uC774\uB3D9"
+    comment: 
+  iccuWP2MoveAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "ICCU WP2 \uC774\uB3D9"
+    comment: 
+  bodyWP2MoveAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "\uCC28\uCCB4 WP2 \uB864\uB7EC \uC774\uB3D9"
+    comment: 
+  bodyWP3MoveAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "\uCC28\uCCB4 WP3 \uC774\uB3D9"
+    comment: 
+  bodyWP4MoveAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "\uCC28\uCCB4 WP4 \uC774\uB3D9"
+    comment: 
+  liftAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "\uB9AC\uD504\uD2B8 \uBC30\uD130\uB9AC \uACB0\uD569"
+    comment: 
+  robotArmAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "ICCU \uB85C\uBD07\uD314 \uACB0\uD569"
+    comment: 
+  rollerAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "\uB864\uB7EC \uB3D9\uC791"
+    comment: 
+  onLiftOperation:
+    m_PersistentCalls:
+      m_Calls: []
+  onRobotArmOperation:
+    m_PersistentCalls:
+      m_Calls: []
+  onRollerOperation:
+    m_PersistentCalls:
+      m_Calls: []
+  onICCUInspection:
+    m_PersistentCalls:
+      m_Calls: []
+  onBodyInspection:
+    m_PersistentCalls:
+      m_Calls: []
+  agvArrivedAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "AGV WP1 \uB3C4\uCC29"
+    comment: 
+  bodyWP1ArrivedAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "\uCC28\uCCB4 WP1 \uB3C4\uCC29"
+    comment: 
+  liftCompletedAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "\uB9AC\uD504\uD2B8 \uACB0\uD569 \uC644\uB8CC"
+    comment: 
+  iccuWP1ArrivedAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "ICCU WP1 \uB3C4\uCC29"
+    comment: 
+  iccuWP2ArrivedAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "ICCU WP2 \uB3C4\uCC29"
+    comment: 
+  iccuAssemblyCompletedAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "ICCU \uACB0\uD569 \uC644\uB8CC"
+    comment: 
+  bodyWP2ArrivedAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "\uCC28\uCCB4 WP2 \uB3C4\uCC29"
+    comment: 
+  bodyWP3ArrivedAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "\uCC28\uCCB4 WP3 \uB3C4\uCC29"
+    comment: 
+  bodyWP4ArrivedAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "\uCC28\uCCB4 WP4 \uB3C4\uCC29"
+    comment: 
+  iccuGoodAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "ICCU \uAC80\uC0AC \uC815\uC0C1"
+    comment: 
+  iccuBadAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "ICCU \uAC80\uC0AC \uBD88\uB7C9"
+    comment: 
+  bodyGoodAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "\uCC28\uCCB4 \uAC80\uC0AC \uC815\uC0C1"
+    comment: 
+  bodyBadAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "\uCC28\uCCB4 \uAC80\uC0AC \uBD88\uB7C9"
+    comment: 
+  feedbackTime: 0.3
 --- !u!4 &3534024142928809785
 Transform:
   m_ObjectHideFlags: 0
