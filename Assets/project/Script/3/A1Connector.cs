@@ -69,7 +69,7 @@ public class A1Connector : MXObject
         Debug.Log("[A1Connector] M23 ON - A1 ∑Œ∫ø∆» Ω√¿€");
 
         // Program1 Ω««‡
-        a1Program.RunProgram(1);
+        a1Program.Program1();
     }
 
     // ==========================================

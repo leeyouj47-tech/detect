@@ -52,9 +52,9 @@ public class A1Program : OfflineProgram
         this.MoveJ(waypoints[13]);
         this.MoveJ(waypoints[14]);
         this.MoveJ(waypoints[2]);
-
+        this.Wait(100);
         // 제품 잡기
-        this.Action(true);
+        this.Action(true, 100);
 
         // =================================
         // P3 작업
@@ -67,7 +67,7 @@ public class A1Program : OfflineProgram
         this.MoveJ(waypoints[17]);
         this.MoveJ(waypoints[18]);
         this.MoveJ(waypoints[19]);
-
+        this.MoveJ(waypoints[23]);
         this.MoveJ(waypoints[21]);
         this.MoveJ(waypoints[4]);
         this.MoveJ(waypoints[5]);

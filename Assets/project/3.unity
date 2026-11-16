@@ -4796,7 +4796,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 150030157}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.075771995, y: -0.07577201, z: 0.7030352, w: 0.7030355}
+  m_LocalRotation: {x: -0, y: -0, z: 0.70710665, w: 0.7071069}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -4818,7 +4818,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Preliy.Flange::Preliy.Flange.TransformJoint
   _position:
-    _value: 12.303
+    _value: 0
   _config:
     _name: 
     _type: 0
@@ -8930,35 +8930,35 @@ MonoBehaviour:
         e33: 1
     _toolCenterPointBase:
       _value:
-        e00: 0.0000054624065
-        e01: -0.0000010350343
-        e02: 1.0000015
-        e03: -0.26699525
-        e10: -0.99999976
-        e11: 0.0000013610526
-        e12: 0.0000050113454
-        e13: 1.0000045
-        e20: -0.0000021417318
-        e21: -0.99999994
-        e22: -0.0000005202572
-        e23: -1.7860088
+        e00: 0.0000050268136
+        e01: -0.00000088483375
+        e02: 1.0000005
+        e03: -0.26699507
+        e10: -1.0000001
+        e11: 0.0000011822387
+        e12: 0.000005077741
+        e13: 1.000004
+        e20: -0.0000013889941
+        e21: -1
+        e22: -0.00000090065413
+        e23: -1.7860093
         e30: 0
         e31: 0
         e32: 0
         e33: 1
     _toolCenterPointWorld:
       _value:
-        e00: 0.000002141732
+        e00: 0.000001388994
         e01: 1.0000004
-        e02: 0.00000040104786
-        e03: 4.5460095
-        e10: -0.99999976
-        e11: 0.0000013610526
-        e12: 0.0000050113454
-        e13: 1.0000045
-        e20: 0.000005462409
-        e21: -0.00000091582535
-        e22: 1.0000019
+        e02: 0.00000078144507
+        e03: 4.54601
+        e10: -1.0000001
+        e11: 0.0000011822387
+        e12: 0.000005077741
+        e13: 1.000004
+        e20: 0.0000050268154
+        e21: -0.00000076562475
+        e22: 1.0000008
         e23: 26.143005
         e30: 0
         e31: 0
@@ -8966,18 +8966,18 @@ MonoBehaviour:
         e33: 1
     _toolCenterPointFrame:
       _value:
-        e00: 0.0000054624065
-        e01: -0.0000010350343
-        e02: 1.0000015
+        e00: 0.0000050268136
+        e01: -0.00000088483375
+        e02: 1.0000005
         e03: -0.26699483
-        e10: -0.99999976
-        e11: 0.0000013610526
-        e12: 0.0000050113454
-        e13: 1.0000045
-        e20: -0.0000021417318
+        e10: -1.0000001
+        e11: 0.0000011822387
+        e12: 0.000005077741
+        e13: 1.000004
+        e20: -0.0000013889941
         e21: -1
-        e22: -0.0000005202572
-        e23: -1.7860087
+        e22: -0.00000090065413
+        e23: -1.7860092
         e30: 0
         e31: 0
         e32: 0
@@ -9951,6 +9951,7 @@ Transform:
   - {fileID: 1625237255}
   - {fileID: 974268806}
   - {fileID: 794341547}
+  - {fileID: 1129040606}
   m_Father: {fileID: 1295369855}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &296433416
@@ -13483,12 +13484,12 @@ Transform:
   m_GameObject: {fileID: 408356722}
   serializedVersion: 2
   m_LocalRotation: {x: 0.5000001, y: 0.50000006, z: 0.50000006, w: -0.4999998}
-  m_LocalPosition: {x: -0.67, y: 2.0524292, z: 21.737}
+  m_LocalPosition: {x: -0.34899792, y: 2.0524292, z: 21.737}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1295369855}
-  m_LocalEulerAnglesHint: {x: 8.777, y: 208.789, z: 91.355}
+  m_LocalEulerAnglesHint: {x: 108.99899, y: 120.545, z: 111.101}
 --- !u!114 &408356724
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13545,12 +13546,13 @@ MonoBehaviour:
   - {fileID: 1625237256}
   - {fileID: 974268807}
   - {fileID: 794341546}
+  - {fileID: 1129040605}
   _target:
     _value:
       e00: -0.00000023841858
       e01: 1
       e02: 0.00000032782555
-      e03: -0.67
+      e03: -0.34899792
       e10: 0.00000032782555
       e11: -0.00000035762787
       e12: 1
@@ -13563,7 +13565,7 @@ MonoBehaviour:
       e31: 0
       e32: 0
       e33: 1
-  targetWaypointIndex: 22
+  targetWaypointIndex: 0
 --- !u!114 &408356725
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13601,6 +13603,7 @@ MonoBehaviour:
   - {fileID: 1625237256}
   - {fileID: 974268807}
   - {fileID: 794341546}
+  - {fileID: 1129040605}
   currentState: 0
   doneDuration: 0.3
 --- !u!1 &413175440
@@ -16428,18 +16431,18 @@ MonoBehaviour:
   _showFrame: 0
   _showName: 0
   _offset:
-    e00: 0.99999994
-    e01: -2.9741827e-14
-    e02: 0.0000000045380575
-    e03: 0.00000069476647
-    e10: 1.8076539e-14
+    e00: 1.0000001
+    e01: 3.5526527e-15
+    e02: 9.769956e-15
+    e03: 0.00000042442974
+    e10: -1.5098942e-14
     e11: 1
-    e12: 2.0349696e-15
-    e13: 0.24000031
-    e20: 0.0000000013484613
-    e21: -8.741155e-15
+    e12: -7.105424e-15
+    e13: 0.24000026
+    e20: 5.328996e-15
+    e21: -7.993583e-15
     e22: 1
-    e23: 0.0000013719537
+    e23: -0.00000007641816
     e30: 0
     e31: 0
     e32: 0
@@ -18024,6 +18027,37 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   m_IsOn: 0
+--- !u!1 &537100188
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 537100189}
+  m_Layer: 0
+  m_Name: A2Connector
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &537100189
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 537100188}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.60321, y: 0, z: 24.58072}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &544360307
 GameObject:
   m_ObjectHideFlags: 0
@@ -21727,6 +21761,68 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 671235369}
   m_CullTransparentMesh: 1
+--- !u!1 &692758362
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 692758364}
+  - component: {fileID: 692758363}
+  m_Layer: 0
+  m_Name: B1Connector
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &692758363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 692758362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0285211f005c6f4e900b3aa8ddedc95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::B1Connector
+  b1Program: {fileID: 0}
+  startAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: M28
+    comment: 
+  completedAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: M68
+    comment: 
+  feedbackTime: 0.3
+--- !u!4 &692758364
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 692758362}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.34551, y: -0, z: 22.29067}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &697948582
 GameObject:
   m_ObjectHideFlags: 0
@@ -28151,17 +28247,17 @@ MonoBehaviour:
   _showName: 0
   _offset:
     e00: 1
-    e01: -1.2723003e-11
-    e02: 0.000000019786821
-    e03: 0.00000045142198
-    e10: 3.0276914e-12
+    e01: -3.552768e-15
+    e02: 9.769952e-15
+    e03: 0.00000031640087
+    e10: 2.3980848e-14
     e11: 1
-    e12: 2.0257575e-11
-    e13: 0.24
-    e20: -0.0000000034486394
-    e21: 1.9167274e-11
+    e12: -1.0658185e-14
+    e13: 0.24000007
+    e20: -1.4210916e-14
+    e21: -7.993595e-15
     e22: 1
-    e23: 0.00000019236649
+    e23: -0.00000008684725
     e30: 0
     e31: 0
     e32: 0
@@ -32699,7 +32795,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1021202959}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.006843166, y: -0.006843168, z: 0.7070735, w: 0.70707387}
+  m_LocalRotation: {x: -0.00029619216, y: -0.00029619227, z: 0.70710665, w: 0.7071069}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -32721,7 +32817,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Preliy.Flange::Preliy.Flange.TransformJoint
   _position:
-    _value: 1.109
+    _value: 0.048
   _config:
     _name: 
     _type: 0
@@ -33147,8 +33243,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1031235618}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.0000061706696, y: -0.0000061706714, z: -0.70710665, w: 0.7071069}
-  m_LocalPosition: {x: -0, y: 1.95, z: 0}
+  m_LocalRotation: {x: -0.69914794, y: 0.6991481, z: 0.105792336, w: -0.105792366}
+  m_LocalPosition: {x: -0, y: 1.95, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -33169,7 +33265,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Preliy.Flange::Preliy.Flange.TransformJoint
   _position:
-    _value: 0.001
+    _value: 162.791
   _config:
     _name: 
     _type: 0
@@ -35308,12 +35404,12 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0.000000059604645, y: -0.0000072914054, z: 1, w: -0.000004594007}
   m_LocalPosition: {x: -1.9439905, y: 0.2926105, z: 20.404991}
-  m_LocalScale: {x: 1, y: 1, z: 0.9999999}
+  m_LocalScale: {x: 1, y: 1.000001, z: 1.0000008}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3061299603402714131}
   - {fileID: 967438981}
-  m_Father: {fileID: 1295369855}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 180}
 --- !u!95 &1094228393
 Animator:
@@ -35356,17 +35452,17 @@ MonoBehaviour:
   _showName: 0
   _offset:
     e00: 1
-    e01: 8.155979e-14
-    e02: 1.8911903e-17
-    e03: 0.00000010123824
-    e10: 8.15599e-14
+    e01: -2.5101522e-13
+    e02: 8.036528e-17
+    e03: 0.00000010124044
+    e10: 4.141349e-13
     e11: 1
-    e12: 1.05834266e-13
+    e12: -4.238279e-13
     e13: 0.2596
-    e20: 4.4720812e-17
-    e21: 2.670002e-13
+    e20: -1.6732554e-17
+    e21: 7.9666433e-13
     e22: 1
-    e23: -0.00000018814197
+    e23: -0.00000057436387
     e30: 0
     e31: 0
     e32: 0
@@ -36582,7 +36678,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0860908ec972e5418f2b043e9a894ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::A1Connector
-  a1Program: {fileID: 0}
+  a1Program: {fileID: 408356725}
   startAddress:
     useDevice: 1
     useDoubleWord: 0
@@ -36950,6 +37046,59 @@ MonoBehaviour:
   - -134.552
   position: {x: 5.766, y: 0.998, z: 25.269}
   rotation: {x: 0.7167993, y: 0.6972368, z: 0.004622061, w: 0.006191026}
+--- !u!1 &1129040604
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1129040606}
+  - component: {fileID: 1129040605}
+  m_Layer: 0
+  m_Name: Target_23
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1129040605
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1129040604}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4cf2b13f4271064ba4927565e23d4e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TargetWaypoint
+  joints:
+  - 85.186
+  - -4.218
+  - 39.722
+  - -171.637
+  - 42.573
+  - -169.04
+  position: {x: -2.504, y: 0.973, z: 23.9}
+  rotation: {x: -0.64421123, y: 0.04763228, z: 0.16245738, w: -0.7458757}
+--- !u!4 &1129040606
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1129040604}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.6442113, y: 0.047632284, z: 0.16245739, w: -0.7458758}
+  m_LocalPosition: {x: -2.504, y: 0.973, z: 23.9}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 294570075}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1129758883
 GameObject:
   m_ObjectHideFlags: 0
@@ -37539,7 +37688,7 @@ MonoBehaviour:
         _r3: 0
         _r4: 0
         _r5: 0
-        _r6: -73.218
+        _r6: -34.529
       _extJoint:
         _e1: 0
         _e2: 0
@@ -37565,17 +37714,17 @@ MonoBehaviour:
   _poseObserver:
     _flange:
       _value:
-        e00: -0.28873128
+        e00: -0.8238396
         e01: -0.00000031391656
-        e02: -0.95741016
+        e02: -0.56682307
         e03: -0.000000248801
-        e10: -0.95741016
+        e10: -0.56682307
         e11: -0.0000003139164
-        e12: 0.28873128
+        e12: 0.8238396
         e13: 2.0524292
-        e20: -0.00000039118427
+        e20: -0.00000043655194
         e21: 1
-        e22: -0.00000020990944
+        e22: 0.000000080681595
         e23: 2.3850005
         e30: 0
         e31: 0
@@ -37583,17 +37732,17 @@ MonoBehaviour:
         e33: 1
     _toolCenterPointBase:
       _value:
-        e00: -0.28873125
-        e01: -0.00000031391653
-        e02: -0.95741016
-        e03: -0.0000018382642
-        e10: -0.9574101
-        e11: -0.00000031391636
-        e12: 0.28873128
-        e13: 2.052429
-        e20: -0.00000039118424
+        e00: -0.8238397
+        e01: -0.00000031391656
+        e02: -0.56682307
+        e03: -0.00000063048753
+        e10: -0.5668231
+        e11: -0.0000003139164
+        e12: 0.8238396
+        e13: 2.0524287
+        e20: -0.000000436552
         e21: 1
-        e22: -0.00000020990944
+        e22: 0.00000008068159
         e23: 2.6250007
         e30: 0
         e31: 0
@@ -37601,35 +37750,35 @@ MonoBehaviour:
         e33: 1
     _toolCenterPointWorld:
       _value:
-        e00: 0.00000042560384
+        e00: 0.0000005347615
         e01: -1.0000004
-        e02: 0.00000032404174
+        e02: -0.000000013111025
         e03: 1.3467276
-        e10: -0.9574101
-        e11: -0.00000031391636
-        e12: 0.28873128
-        e13: 2.052429
-        e20: -0.28873134
-        e21: -0.00000043312596
-        e22: -0.9574105
-        e23: 23.999998
+        e10: -0.5668231
+        e11: -0.0000003139164
+        e12: 0.8238396
+        e13: 2.0524287
+        e20: -0.82384
+        e21: -0.000000433126
+        e22: -0.56682324
+        e23: 24
         e30: 0
         e31: 0
         e32: 0
         e33: 1
     _toolCenterPointFrame:
       _value:
-        e00: -0.28873125
-        e01: -0.00000031391653
-        e02: -0.95741016
-        e03: -0.0000030215647
-        e10: -0.9574101
-        e11: -0.00000031391636
-        e12: 0.28873128
-        e13: 2.052429
-        e20: -0.00000039118424
+        e00: -0.8238397
+        e01: -0.00000031391656
+        e02: -0.56682307
+        e03: -0.0000011142167
+        e10: -0.5668231
+        e11: -0.0000003139164
+        e12: 0.8238396
+        e13: 2.0524287
+        e20: -0.00000043655197
         e21: 1
-        e22: -0.00000020990944
+        e22: 0.00000008068159
         e23: 2.6250007
         e30: 0
         e31: 0
@@ -37916,7 +38065,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1168142379}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.49780664, y: -0.49885315, z: -0.5019882, w: -0.50134015}
+  m_LocalRotation: {x: -0.5432438, y: -0.5441764, z: -0.45247048, w: -0.45169535}
   m_LocalPosition: {x: -0.12684162, y: -0.11849974, z: -1.3539503}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -41479,11 +41628,11 @@ MonoBehaviour:
     _jointState:
       _robJoint:
         _r1: 0
-        _r2: -13.411
-        _r3: 12.303
-        _r4: 0.001
-        _r5: 1.109
-        _r6: 179.999
+        _r2: 0
+        _r3: 0
+        _r4: 162.791
+        _r5: 0.048
+        _r6: 19.503
       _extJoint:
         _e1: 0
         _e2: 0
@@ -41509,72 +41658,72 @@ MonoBehaviour:
   _poseObserver:
     _flange:
       _value:
-        e00: 1
-        e01: -0.0000006517217
-        e02: -0.00000020838706
-        e03: -0.00000032480395
-        e10: -0.00000020839903
-        e11: -0.000017760894
-        e12: -0.99999994
-        e13: 2.0524356
-        e20: 0.0000006517179
-        e21: 0.99999994
-        e22: -0.000017760889
-        e23: 2.0640023
+        e00: 0.99919856
+        e01: -0.0002481711
+        e02: -0.040027637
+        e03: -0.000056016666
+        e10: -0.040027406
+        e11: 0.0007999393
+        e12: -0.99919826
+        e13: 2.0526092
+        e20: 0.0002799918
+        e21: 0.99999964
+        e22: 0.00078936457
+        e23: 2.3850005
         e30: 0
         e31: 0
         e32: 0
         e33: 1
     _toolCenterPointBase:
       _value:
-        e00: 1
-        e01: -0.0000006517217
-        e02: -0.00000020838706
-        e03: -0.00000032480395
-        e10: -0.00000020839903
-        e11: -0.000017760894
-        e12: -0.99999994
-        e13: 2.0524356
-        e20: 0.0000006517179
-        e21: 0.99999994
-        e22: -0.000017760889
-        e23: 2.0640023
+        e00: 0.99919856
+        e01: -0.0002481711
+        e02: -0.040027637
+        e03: -0.000056016666
+        e10: -0.040027406
+        e11: 0.0007999393
+        e12: -0.99919826
+        e13: 2.0526092
+        e20: 0.0002799918
+        e21: 0.99999964
+        e22: 0.00078936457
+        e23: 2.3850005
         e30: 0
         e31: 0
         e32: 0
         e33: 1
     _toolCenterPointWorld:
       _value:
-        e00: 0.00000053250886
-        e01: 1.0000004
-        e02: -0.000017760894
-        e03: -0.66999626
-        e10: -0.00000020839903
-        e11: -0.000017760894
-        e12: -0.99999994
-        e13: 2.0524356
-        e20: -1.0000004
-        e21: 0.0000005325126
-        e22: 0.00000020838925
-        e23: 21.737
+        e00: 0.0002798728
+        e01: 1
+        e02: 0.00078936963
+        e03: -0.34899792
+        e10: -0.040027406
+        e11: 0.0007999393
+        e12: -0.99919826
+        e13: 2.0526092
+        e20: -0.9991989
+        e21: 0.00024805198
+        e22: 0.040027652
+        e23: 21.737055
         e30: 0
         e31: 0
         e32: 0
         e33: 1
     _toolCenterPointFrame:
       _value:
-        e00: 1
-        e01: -0.0000006517217
-        e02: -0.00000020838706
-        e03: 0.00000022423201
-        e10: -0.00000020839903
-        e11: -0.000017760894
-        e12: -0.99999994
-        e13: 2.0524356
-        e20: 0.0000006517179
-        e21: 1
-        e22: -0.000017760889
-        e23: 2.0640023
+        e00: 0.99919856
+        e01: -0.0002481711
+        e02: -0.040027637
+        e03: -0.000055127126
+        e10: -0.040027406
+        e11: 0.0007999393
+        e12: -0.99919826
+        e13: 2.0526092
+        e20: 0.0002799918
+        e21: 0.99999964
+        e22: 0.00078936457
+        e23: 2.3850005
         e30: 0
         e31: 0
         e32: 0
@@ -41694,7 +41843,6 @@ Transform:
   - {fileID: 1387084919}
   - {fileID: 792243505}
   - {fileID: 118058414}
-  - {fileID: 1094228392}
   - {fileID: 1125453267}
   m_Father: {fileID: 996951811}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -42901,18 +43049,18 @@ MonoBehaviour:
   _showFrame: 0
   _showName: 0
   _offset:
-    e00: 0.00000039768457
-    e01: -0.00000015830825
-    e02: 1.0000015
-    e03: 0.0000013758355
-    e10: 0.00000084214474
-    e11: 0.99999994
-    e12: -0.00000034248689
-    e13: 0.2593797
-    e20: -0.99999976
-    e21: 0.00000005960543
-    e22: -0.00000007450895
-    e23: 0.0000002442799
+    e00: -0.000000037910958
+    e01: -0.000000008108526
+    e02: 1.0000005
+    e03: 0.0000015675149
+    e10: 0.00000008940697
+    e11: 1
+    e12: 0.00000003791105
+    e13: 0.25938016
+    e20: -1.0000001
+    e21: -0.00000011920929
+    e22: -0.00000000810854
+    e23: -0.00000027345286
     e30: 0
     e31: 0
     e32: 0
@@ -47952,8 +48100,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1453887229}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.68352735, y: 0.6835275, z: -0.18108073, w: 0.18108079}
-  m_LocalPosition: {x: 0, y: 1.95, z: -0}
+  m_LocalRotation: {x: -0.7037096, y: 0.70370984, z: 0.069228716, w: -0.06922874}
+  m_LocalPosition: {x: -0, y: 1.95, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -47974,7 +48122,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Preliy.Flange::Preliy.Flange.TransformJoint
   _position:
-    _value: -150.324
+    _value: 168.763
   _config:
     _name: 
     _type: 0
@@ -48849,8 +48997,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1490112900}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.27499136, z: -0, w: 0.9614467}
-  m_LocalPosition: {x: 0, y: 0.225, z: 0}
+  m_LocalRotation: {x: 0, y: -0.06922544, z: -0, w: 0.99760103}
+  m_LocalPosition: {x: -0, y: 0.225, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -48871,7 +49019,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Preliy.Flange::Preliy.Flange.TransformJoint
   _position:
-    _value: -31.923
+    _value: 7.939
   _config:
     _name: 
     _type: 0
@@ -52358,8 +52506,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1604912185}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.78483576, z: 0, w: 0.6197039}
-  m_LocalPosition: {x: 1.344733, y: 0, z: -0.32063302}
+  m_LocalRotation: {x: -0, y: 0.70710665, z: -0, w: 0.7071069}
+  m_LocalPosition: {x: 1.38243, y: 0, z: 0.00000043396753}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -52380,7 +52528,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Preliy.Flange::Preliy.Flange.TransformJoint
   _position:
-    _value: -13.411
+    _value: 0
   _config:
     _name: 
     _type: 0
@@ -52494,9 +52642,9 @@ MonoBehaviour:
         _r1: 0
         _r2: 0
         _r3: 0
-        _r4: -150.324
+        _r4: 168.763
         _r5: 0.04
-        _r6: -31.923
+        _r6: 7.939
       _extJoint:
         _e1: 0
         _e2: 0
@@ -52522,17 +52670,17 @@ MonoBehaviour:
   _poseObserver:
     _flange:
       _value:
-        e00: 0.999231
-        e01: 0.0003453275
-        e02: 0.039207406
-        e03: 0.00007752052
-        e10: 0.039207213
-        e11: 0.00060624996
-        e12: -0.9992309
-        e13: 2.0525656
-        e20: -0.00036883142
+        e00: 0.9983439
+        e01: -0.000136357
+        e02: 0.057528723
+        e03: -0.000030858497
+        e10: 0.0575288
+        e11: 0.00068443426
+        e12: -0.99834365
+        e13: 2.0525832
+        e20: 0.000096756514
         e21: 0.99999976
-        e22: 0.00059224444
+        e22: 0.0006911452
         e23: 2.3850005
         e30: 0
         e31: 0
@@ -52540,17 +52688,17 @@ MonoBehaviour:
         e33: 1
     _toolCenterPointBase:
       _value:
-        e00: 0.999231
-        e01: 0.0003453275
-        e02: 0.039207425
-        e03: 0.00016085774
-        e10: 0.039207216
-        e11: 0.00060624996
-        e12: -0.9992309
-        e13: 2.052711
-        e20: -0.00036883142
+        e00: 0.9983439
+        e01: -0.000136357
+        e02: 0.057528723
+        e03: -0.000063273306
+        e10: 0.0575288
+        e11: 0.00068443426
+        e12: -0.99834365
+        e13: 2.0527475
+        e20: 0.000096756514
         e21: 0.99999976
-        e22: 0.00059224444
+        e22: 0.0006911452
         e23: 2.6250005
         e30: 0
         e31: 0
@@ -52558,35 +52706,35 @@ MonoBehaviour:
         e33: 1
     _toolCenterPointWorld:
       _value:
-        e00: -0.00036895066
+        e00: 0.00009663754
         e01: 1.0000001
-        e02: 0.00059223996
+        e02: 0.00069113856
         e03: -1.3467278
-        e10: 0.039207216
-        e11: 0.00060624996
-        e12: -0.9992309
-        e13: 2.062711
-        e20: -0.99923134
-        e21: -0.00034544684
-        e22: -0.03920744
-        e23: 24.02984
+        e10: 0.0575288
+        e11: 0.00068443426
+        e12: -0.99834365
+        e13: 2.0627475
+        e20: -0.99834424
+        e21: 0.00013623784
+        e22: -0.057528745
+        e23: 24.030064
         e30: 0
         e31: 0
         e32: 0
         e33: 1
     _toolCenterPointFrame:
       _value:
-        e00: 0.999231
-        e01: 0.0003453275
-        e02: 0.039207425
-        e03: 0.00015943483
-        e10: 0.039207216
-        e11: 0.00060624996
-        e12: -0.9992309
-        e13: 2.052711
-        e20: -0.00036883142
+        e00: 0.9983439
+        e01: -0.000136357
+        e02: 0.057528723
+        e03: -0.00006372489
+        e10: 0.0575288
+        e11: 0.00068443426
+        e12: -0.99834365
+        e13: 2.0527475
+        e20: 0.000096756514
         e21: 0.99999976
-        e22: 0.00059224444
+        e22: 0.0006911452
         e23: 2.6250005
         e30: 0
         e31: 0
@@ -54839,8 +54987,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1695401305}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 1, z: 0, w: -0.000008777776}
-  m_LocalPosition: {x: -0, y: 0.225, z: -0}
+  m_LocalRotation: {x: 0, y: -0.1693753, z: -0, w: 0.98555166}
+  m_LocalPosition: {x: -0, y: 0.225, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -54861,7 +55009,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Preliy.Flange::Preliy.Flange.TransformJoint
   _position:
-    _value: 179.999
+    _value: 19.503
   _config:
     _name: 
     _type: 0
@@ -61141,7 +61289,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1873660815}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.07961245, y: 0.08083532, z: -0.702471, w: 0.70261085}
+  m_LocalRotation: {x: -0.06418636, y: 0.065393806, z: -0.70407635, w: 0.7041877}
   m_LocalPosition: {x: -0.09702689, y: -0.117340125, z: -0.54938024}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -62865,7 +63013,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1935762357}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.596351, z: -0, w: 0.80272377}
+  m_LocalRotation: {x: -0, y: 0.2967833, z: -0, w: 0.9549449}
   m_LocalPosition: {x: 0, y: 0.225, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -62887,7 +63035,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Preliy.Flange::Preliy.Flange.TransformJoint
   _position:
-    _value: -73.218
+    _value: -34.529
   _config:
     _name: 
     _type: 0
@@ -63884,6 +64032,68 @@ Transform:
   m_Children:
   - {fileID: 638188293}
   m_Father: {fileID: 2125045163}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1974439410
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1974439412}
+  - component: {fileID: 1974439411}
+  m_Layer: 0
+  m_Name: C2Connector
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1974439411
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1974439410}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0860908ec972e5418f2b043e9a894ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::A1Connector
+  a1Program: {fileID: 408356725}
+  startAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 1
+    label: 
+    address: M23
+    description: M23
+    comment: 
+  completedAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 1
+    label: 
+    address: M63
+    description: M63
+    comment: 
+  feedbackTime: 0.3
+--- !u!4 &1974439412
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1974439410}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.34551, y: -0, z: 22.29067}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1976457843
 GameObject:
@@ -65436,6 +65646,68 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2019826641}
   m_CullTransparentMesh: 1
+--- !u!1 &2020952683
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2020952685}
+  - component: {fileID: 2020952684}
+  m_Layer: 0
+  m_Name: GlassConnector
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2020952684
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2020952683}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0860908ec972e5418f2b043e9a894ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::A1Connector
+  a1Program: {fileID: 408356725}
+  startAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 1
+    label: 
+    address: M23
+    description: M23
+    comment: 
+  completedAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 1
+    label: 
+    address: M63
+    description: M63
+    comment: 
+  feedbackTime: 0.3
+--- !u!4 &2020952685
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2020952683}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.34551, y: -0, z: 22.29067}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2021137680
 GameObject:
   m_ObjectHideFlags: 0
@@ -66678,6 +66950,68 @@ MonoBehaviour:
   - 0
   position: {x: -0.3749989, y: 2.0524292, z: 26.41}
   rotation: {x: 0.5000001, y: 0.50000006, z: 0.50000006, w: -0.4999998}
+--- !u!1 &2067700804
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2067700806}
+  - component: {fileID: 2067700805}
+  m_Layer: 0
+  m_Name: B2Connector
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2067700805
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2067700804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0860908ec972e5418f2b043e9a894ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::A1Connector
+  a1Program: {fileID: 408356725}
+  startAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 1
+    label: 
+    address: M23
+    description: M23
+    comment: 
+  completedAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 1
+    label: 
+    address: M63
+    description: M63
+    comment: 
+  feedbackTime: 0.3
+--- !u!4 &2067700806
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2067700804}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.34551, y: -0, z: 22.29067}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2068085467
 GameObject:
   m_ObjectHideFlags: 0
@@ -68449,6 +68783,37 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &2128255816
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2128255817}
+  m_Layer: 0
+  m_Name: C1Connector
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2128255817
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2128255816}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.34551, y: -0, z: 22.29067}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2129254214
 GameObject:
   m_ObjectHideFlags: 0
@@ -75079,7 +75444,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -75493,3 +75858,10 @@ SceneRoots:
   - {fileID: 1762922812}
   - {fileID: 1228528970}
   - {fileID: 1120296285}
+  - {fileID: 537100189}
+  - {fileID: 692758364}
+  - {fileID: 2067700806}
+  - {fileID: 2128255817}
+  - {fileID: 1974439412}
+  - {fileID: 2020952685}
+  - {fileID: 1094228392}

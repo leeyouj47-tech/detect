@@ -21,4 +21,8 @@ public class B1Program : OfflineProgram
         this.Connect(true);
         this.MoveJ(waypoints[6]);
     }
+    public void Program1()
+    {
+        
+    }
 }

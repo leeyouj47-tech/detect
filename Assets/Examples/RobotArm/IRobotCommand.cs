@@ -102,6 +102,7 @@ public class ToolAction : IRobotCommand
     public async Task ExecuteCommand(TargetScheduler scheduler)
     {
         scheduler.ActTool(isOn);
+        Debug.Log("[ToolAction] Tool Action ½ÇÇà: " + (isOn ? "ON" : "OFF"));
 
         await Task.Delay(delay);
     }

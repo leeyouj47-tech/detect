@@ -128,7 +128,7 @@ public abstract class OfflineProgram : MonoBehaviour
     }
 
     public abstract void Home();
-    /*private async void RunProgram()
+    private async void RunProgram()
     {
         if (currentState == TaskState.Error || currentState == TaskState.Run)
         {
@@ -151,7 +151,7 @@ public abstract class OfflineProgram : MonoBehaviour
 
         doneOffTime = Time.time + doneDuration;
         Debug.LogWarning($"위치결정 완료");
-    }*/
+    }
 
     //26.11.16 LYJ: 수정
     public void RunProgram(int programNum)
@@ -207,7 +207,7 @@ public abstract class OfflineProgram : MonoBehaviour
         }
     }
 
-    public void RunProgram(int programNum)
+    /*public void RunProgram(int programNum)
     {
         if (!(currentState != TaskState.Wait || currentState != TaskState.Done))
         {
@@ -232,7 +232,7 @@ public abstract class OfflineProgram : MonoBehaviour
         {
             Debug.LogError($"[호출 실패] 현재 스크립트에 '{methodName}' 함수가 정의되어 있지 않습니다.");
         }
-    }
+    }*/
 
 
     protected void Wait(int millisecond)

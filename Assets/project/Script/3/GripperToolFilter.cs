@@ -15,11 +15,13 @@ public class GripperToolFilter : ToolParent
 
     public void Grab()
     {
+        Debug.Log($"[{Time.frameCount}] 잡기 시도");
         if (grabbed == null && triggerList.Count > 0)
         {
             grabbed = triggerList[0];
             grabbed.isKinematic = true;
             grabbed.transform.SetParent(transform);
+            Debug.Log($"[{Time.frameCount}] 잡음 {grabbed.name}");
         }
     }
 
