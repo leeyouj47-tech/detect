@@ -19,8 +19,7 @@ public class RobotArmprogram : OfflineProgram
         this.MoveJ(waypoints[3]);
         this.MoveJ(waypoints[0]);
         this.Connect(true);
-        this.MoveJ(waypoints[3]);
-        this.MoveC(waypoints[4], waypoints[5],TCPFast,TCPAngleFast);
+        this.MoveJ(waypoints[6]);
     }
         
 

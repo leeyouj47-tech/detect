@@ -3960,6 +3960,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1065580264}
+  - component: {fileID: 1065580265}
   m_Layer: 0
   m_Name: Lift
   m_TagString: Untagged
@@ -3984,6 +3985,42 @@ Transform:
   - {fileID: 8676390145552058382}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1065580265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1065580263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2a23874e0b2459409c0548b141802e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GripperTool
+  _mountType: 0
+  _point: {fileID: 0}
+  _showGizmos: 0
+  _showFrame: 0
+  _showName: 0
+  _offset:
+    e00: 1
+    e01: 0
+    e02: 0
+    e03: 0
+    e10: 0
+    e11: 1
+    e12: 0
+    e13: 0
+    e20: 0
+    e21: 0
+    e22: 1
+    e23: 0
+    e30: 0
+    e31: 0
+    e32: 0
+    e33: 1
+  anim: {fileID: 0}
+  triggerList: []
 --- !u!1 &1160234425
 GameObject:
   m_ObjectHideFlags: 0
@@ -4715,6 +4752,37 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1376528673}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1397439754
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1397439755}
+  m_Layer: 0
+  m_Name: TCP
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1397439755
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1397439754}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: -0.023, z: -0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8676390145552058382}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1402893014
 GameObject:
   m_ObjectHideFlags: 0
@@ -7315,6 +7383,8 @@ GameObject:
   - component: {fileID: 3264551926815315650}
   - component: {fileID: 6776414521079178041}
   - component: {fileID: 7247593353577569965}
+  - component: {fileID: 7247593353577569967}
+  - component: {fileID: 7247593353577569966}
   m_Layer: 0
   m_Name: Trolley
   m_TagString: Untagged
@@ -7349,6 +7419,8 @@ GameObject:
   - component: {fileID: 543450653057986855}
   - component: {fileID: 3469287837041868418}
   - component: {fileID: 1711813856200116808}
+  - component: {fileID: 3469287837041868419}
+  - component: {fileID: 3469287837041868420}
   m_Layer: 0
   m_Name: AGV
   m_TagString: Untagged
@@ -7365,6 +7437,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 543450653244640760}
+  - component: {fileID: 919132149509625668}
+  - component: {fileID: 919132149509625667}
   m_Layer: 0
   m_Name: Skid
   m_TagString: Untagged
@@ -7372,6 +7446,247 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &919132149509625667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132149509625666}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eae4e9c203568d84a89008941f79dac5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Pr2Connector
+  agvController: {fileID: 0}
+  bodyController: {fileID: 0}
+  iccuController: {fileID: 0}
+  agvWaypoint1: 1
+  bodyWaypoint1: 1
+  bodyWaypoint2: 2
+  bodyWaypoint3: 3
+  bodyWaypoint4: 4
+  iccuWaypoint1: 1
+  iccuWaypoint2: 2
+  agvMoveAddress:
+    useDevice: 0
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "AGV WP1 \uC774\uB3D9"
+    comment: 
+  bodyWP1MoveAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "\uCC28\uCCB4 WP1 \uC774\uB3D9"
+    comment: 
+  iccuWP1MoveAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "ICCU WP1 \uC774\uB3D9"
+    comment: 
+  iccuWP2MoveAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "ICCU WP2 \uC774\uB3D9"
+    comment: 
+  bodyWP2MoveAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "\uCC28\uCCB4 WP2 \uB864\uB7EC \uC774\uB3D9"
+    comment: 
+  bodyWP3MoveAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "\uCC28\uCCB4 WP3 \uC774\uB3D9"
+    comment: 
+  bodyWP4MoveAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "\uCC28\uCCB4 WP4 \uC774\uB3D9"
+    comment: 
+  liftAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "\uB9AC\uD504\uD2B8 \uBC30\uD130\uB9AC \uACB0\uD569"
+    comment: 
+  robotArmAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "ICCU \uB85C\uBD07\uD314 \uACB0\uD569"
+    comment: 
+  rollerAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "\uB864\uB7EC \uB3D9\uC791"
+    comment: 
+  onLiftOperation:
+    m_PersistentCalls:
+      m_Calls: []
+  onRobotArmOperation:
+    m_PersistentCalls:
+      m_Calls: []
+  onRollerOperation:
+    m_PersistentCalls:
+      m_Calls: []
+  onICCUInspection:
+    m_PersistentCalls:
+      m_Calls: []
+  onBodyInspection:
+    m_PersistentCalls:
+      m_Calls: []
+  agvArrivedAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "AGV WP1 \uB3C4\uCC29"
+    comment: 
+  bodyWP1ArrivedAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "\uCC28\uCCB4 WP1 \uB3C4\uCC29"
+    comment: 
+  liftCompletedAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "\uB9AC\uD504\uD2B8 \uACB0\uD569 \uC644\uB8CC"
+    comment: 
+  iccuWP1ArrivedAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "ICCU WP1 \uB3C4\uCC29"
+    comment: 
+  iccuWP2ArrivedAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "ICCU WP2 \uB3C4\uCC29"
+    comment: 
+  iccuAssemblyCompletedAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "ICCU \uACB0\uD569 \uC644\uB8CC"
+    comment: 
+  bodyWP2ArrivedAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "\uCC28\uCCB4 WP2 \uB3C4\uCC29"
+    comment: 
+  bodyWP3ArrivedAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "\uCC28\uCCB4 WP3 \uB3C4\uCC29"
+    comment: 
+  bodyWP4ArrivedAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "\uCC28\uCCB4 WP4 \uB3C4\uCC29"
+    comment: 
+  iccuGoodAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "ICCU \uAC80\uC0AC \uC815\uC0C1"
+    comment: 
+  iccuBadAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "ICCU \uAC80\uC0AC \uBD88\uB7C9"
+    comment: 
+  bodyGoodAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "\uCC28\uCCB4 \uAC80\uC0AC \uC815\uC0C1"
+    comment: 
+  bodyBadAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "\uCC28\uCCB4 \uAC80\uC0AC \uBD88\uB7C9"
+    comment: 
+  feedbackTime: 0.3
+--- !u!114 &919132149509625668
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132149509625666}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c98168a03e15974ea660aa944637534, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Pr2Controller
+  manager: {fileID: 0}
+  routes: []
+  speed: 1
+  rotateSpeed: 90
+  onCompleteMove:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &1068795357077606719
 Transform:
   m_ObjectHideFlags: 0
@@ -7564,7 +7879,7 @@ Transform:
   m_GameObject: {fileID: 637941478571917092}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.7071067, z: 0.7071068, w: 0}
-  m_LocalPosition: {x: 0, y: 5.76, z: 37.15}
+  m_LocalPosition: {x: 0, y: 5.86, z: 1.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -7579,6 +7894,247 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 919132148597386141}
   m_Mesh: {fileID: -3028652618374685060, guid: fde62f3731da5564a842e298c3040644, type: 3}
+--- !u!114 &3469287837041868419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132148597386141}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c98168a03e15974ea660aa944637534, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Pr2Controller
+  manager: {fileID: 0}
+  routes: []
+  speed: 1
+  rotateSpeed: 90
+  onCompleteMove:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &3469287837041868420
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132148597386141}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eae4e9c203568d84a89008941f79dac5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Pr2Connector
+  agvController: {fileID: 0}
+  bodyController: {fileID: 0}
+  iccuController: {fileID: 0}
+  agvWaypoint1: 1
+  bodyWaypoint1: 1
+  bodyWaypoint2: 2
+  bodyWaypoint3: 3
+  bodyWaypoint4: 4
+  iccuWaypoint1: 1
+  iccuWaypoint2: 2
+  agvMoveAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 1
+    label: 
+    address: M500
+    description: "AGV WP1 \uC774\uB3D9"
+    comment: 
+  bodyWP1MoveAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 1
+    label: 
+    address: M502
+    description: "\uCC28\uCCB4 WP1 \uC774\uB3D9"
+    comment: 
+  iccuWP1MoveAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 1
+    label: 
+    address: M506
+    description: "ICCU WP1 \uC774\uB3D9"
+    comment: 
+  iccuWP2MoveAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 1
+    label: 
+    address: M508
+    description: "ICCU WP2 \uC774\uB3D9"
+    comment: 
+  bodyWP2MoveAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 1
+    label: 
+    address: M513
+    description: "\uCC28\uCCB4 WP2 \uB864\uB7EC \uC774\uB3D9"
+    comment: 
+  bodyWP3MoveAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 1
+    label: 
+    address: M515
+    description: "\uCC28\uCCB4 WP3 \uC774\uB3D9"
+    comment: 
+  bodyWP4MoveAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 1
+    label: 
+    address: M517
+    description: "\uCC28\uCCB4 WP4 \uC774\uB3D9"
+    comment: 
+  liftAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 1
+    label: 
+    address: M604
+    description: "\uB9AC\uD504\uD2B8 \uBC30\uD130\uB9AC \uACB0\uD569"
+    comment: 
+  robotArmAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 1
+    label: 
+    address: M612
+    description: "ICCU \uB85C\uBD07\uD314 \uACB0\uD569"
+    comment: 
+  rollerAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 1
+    label: 
+    address: M614
+    description: "\uB864\uB7EC \uB3D9\uC791"
+    comment: 
+  onLiftOperation:
+    m_PersistentCalls:
+      m_Calls: []
+  onRobotArmOperation:
+    m_PersistentCalls:
+      m_Calls: []
+  onRollerOperation:
+    m_PersistentCalls:
+      m_Calls: []
+  onICCUInspection:
+    m_PersistentCalls:
+      m_Calls: []
+  onBodyInspection:
+    m_PersistentCalls:
+      m_Calls: []
+  agvArrivedAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 1
+    label: 
+    address: M501
+    description: "AGV WP1 \uB3C4\uCC29"
+    comment: 
+  bodyWP1ArrivedAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 1
+    label: 
+    address: M503
+    description: "\uCC28\uCCB4 WP1 \uB3C4\uCC29"
+    comment: 
+  liftCompletedAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 1
+    label: 
+    address: M505
+    description: "\uB9AC\uD504\uD2B8 \uACB0\uD569 \uC644\uB8CC"
+    comment: 
+  iccuWP1ArrivedAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 1
+    label: 
+    address: M507
+    description: "ICCU WP1 \uB3C4\uCC29"
+    comment: 
+  iccuWP2ArrivedAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 1
+    label: 
+    address: M509
+    description: "ICCU WP2 \uB3C4\uCC29"
+    comment: 
+  iccuAssemblyCompletedAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 1
+    label: 
+    address: M512
+    description: "ICCU \uACB0\uD569 \uC644\uB8CC"
+    comment: 
+  bodyWP2ArrivedAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 1
+    label: 
+    address: M514
+    description: "\uCC28\uCCB4 WP2 \uB3C4\uCC29"
+    comment: 
+  bodyWP3ArrivedAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 1
+    label: 
+    address: M516
+    description: "\uCC28\uCCB4 WP3 \uB3C4\uCC29"
+    comment: 
+  bodyWP4ArrivedAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 1
+    label: 
+    address: M518
+    description: "\uCC28\uCCB4 WP4 \uB3C4\uCC29"
+    comment: 
+  iccuGoodAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 1
+    label: 
+    address: M608
+    description: "ICCU \uAC80\uC0AC \uC815\uC0C1"
+    comment: 
+  iccuBadAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 1
+    label: 
+    address: M609
+    description: "ICCU \uAC80\uC0AC \uBD88\uB7C9"
+    comment: 
+  bodyGoodAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 1
+    label: 
+    address: M618
+    description: "\uCC28\uCCB4 \uAC80\uC0AC \uC815\uC0C1"
+    comment: 
+  bodyBadAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 1
+    label: 
+    address: M619
+    description: "\uCC28\uCCB4 \uAC80\uC0AC \uBD88\uB7C9"
+    comment: 
+  feedbackTime: 0.3
 --- !u!4 &3534024142928809785
 Transform:
   m_ObjectHideFlags: 0
@@ -7720,7 +8276,7 @@ Transform:
   m_GameObject: {fileID: 7043003888851434445}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -2.95}
+  m_LocalPosition: {x: 0, y: 0, z: -2.16}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8040,6 +8596,7 @@ GameObject:
   - component: {fileID: 4186037090312996529}
   - component: {fileID: 4498219048331416844}
   - component: {fileID: 53055722944250921}
+  - component: {fileID: 7043003888851434446}
   m_Layer: 0
   m_Name: CarBody
   m_TagString: Untagged
@@ -8047,6 +8604,28 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!95 &7043003888851434446
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7043003888851434445}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f986d0df00d7f02409a4f1ed7c61fe86, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!4 &7084334766987847232
 Transform:
   m_ObjectHideFlags: 0
@@ -8127,6 +8706,41 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &7247593353577569966
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 637941478571917092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d27f7a0c0116084dbff93e241ec6bc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CarrierMove
+  carrier: {fileID: 8676390145552058384}
+--- !u!95 &7247593353577569967
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 637941478571917092}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4b73a6f5d9f8666429c6e6fc72dd30c5, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!23 &7299025030022856561
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -8187,6 +8801,8 @@ GameObject:
   - component: {fileID: 8676390145552058382}
   - component: {fileID: 3058420530873155390}
   - component: {fileID: 4027977049848239265}
+  - component: {fileID: 8676390145552058384}
+  - component: {fileID: 8676390145552058383}
   m_Layer: 0
   m_Name: Carrier
   m_TagString: Untagged
@@ -8325,6 +8941,8 @@ GameObject:
   - component: {fileID: 8855681593541590327}
   - component: {fileID: 5569379235594629778}
   - component: {fileID: 7687257131147134552}
+  - component: {fileID: 8855681593541590329}
+  - component: {fileID: 8855681593541590328}
   m_Layer: 0
   m_Name: ICCU
   m_TagString: Untagged
@@ -8406,7 +9024,7 @@ Transform:
   m_GameObject: {fileID: 7348906372047782239}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.7071068, z: 0.7071068, w: 0}
-  m_LocalPosition: {x: 0, y: 3.05, z: 0}
+  m_LocalPosition: {x: 0, y: 0.54, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -8420,8 +9038,48 @@ Transform:
   - {fileID: 2003638654}
   - {fileID: 1944482473}
   - {fileID: 306341450}
+  - {fileID: 1397439755}
   m_Father: {fileID: 1065580264}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 180}
+--- !u!114 &8676390145552058383
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7348906372047782239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f71cc9c28d10fbc4092350403c084abc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CarbodyanimEvent
+  Carbody: {fileID: 4186037090312996529}
+  Carrier: {fileID: 8676390145552058382}
+  Skid: {fileID: 543450653244640760}
+  animatorCarrier: {fileID: 0}
+  Battery: {fileID: 7111119077649012813}
+--- !u!95 &8676390145552058384
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7348906372047782239}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 7f670018959686e49a06c71d583eb4ed, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!4 &8855681593541590327
 Transform:
   m_ObjectHideFlags: 0
@@ -8437,6 +9095,73 @@ Transform:
   m_Children: []
   m_Father: {fileID: 543450652364169903}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 180}
+--- !u!114 &8855681593541590328
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8191594525587842957}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ed4b8d9a51b01f4fa5af6cb859fd4c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PackConnector
+  packController: {fileID: 0}
+  inspectionWaypoint: 2
+  assemblyWaypoint: 3
+  inspectionMoveAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: M510
+    comment: 
+  assemblyMoveAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: M502
+    comment: 
+  inspectionArrivedAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: M540
+    comment: 
+  assemblyArrivedAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: M523
+    comment: 
+  feedbackTime: 0.3
+--- !u!114 &8855681593541590329
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8191594525587842957}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b7edbe74cc36ca4587d4f2afa42c6a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PackController
+  manager: {fileID: 0}
+  routes: []
+  speed: 1
+  rotateSpeed: 90
+  onCompleteMove:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &8896148550993517548
 GameObject:
   m_ObjectHideFlags: 0
