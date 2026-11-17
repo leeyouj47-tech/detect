@@ -3684,31 +3684,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eae4e9c203568d84a89008941f79dac5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Pr2Connector
-  agvController: {fileID: 0}
-  bodyController: {fileID: 0}
-  iccuController: {fileID: 0}
+  pr2Controller: {fileID: 0}
   agvWaypoint1: 1
-  bodyWaypoint1: 1
-  bodyWaypoint2: 2
-  bodyWaypoint3: 3
-  bodyWaypoint4: 4
+  trolleyWaypoint1: 1
   iccuWaypoint1: 1
   iccuWaypoint2: 2
-  agvMoveAddress:
+  carBodyWaypoint1: 1
+  carBodyWaypoint2: 2
+  carBodyWaypoint3: 3
+  carBodyWaypoint4: 4
+  agvWP1MoveAddress:
     useDevice: 1
     useDoubleWord: 0
     isLocked: 0
     label: 
-    address: M620
-    description: "AGV WP1 \uC774\uB3D9"
+    address: 
+    description: "M620 AGV WP1 \uCD9C\uBC1C"
     comment: 
-  bodyWP1MoveAddress:
+  trolleyWP1MoveAddress:
     useDevice: 1
     useDoubleWord: 0
-    isLocked: 1
+    isLocked: 0
     label: 
-    address: M621
-    description: "\uCC28\uCCB4 WP1 \uC774\uB3D9(\uD2B8\uB864\uB9AC)"
+    address: 
+    description: "M621 Trolley WP1 \uCD9C\uBC1C"
     comment: 
   iccuWP1MoveAddress:
     useDevice: 1
@@ -3726,92 +3725,64 @@ MonoBehaviour:
     address: M623
     description: "ICCU WP2 \uC774\uB3D9"
     comment: 
-  bodyWP2MoveAddress:
-    useDevice: 1
-    useDoubleWord: 0
-    isLocked: 1
-    label: 
-    address: M626
-    description: "\uCC28\uCCB4 WP2 \uB864\uB7EC \uC774\uB3D9"
-    comment: 
-  bodyWP3MoveAddress:
-    useDevice: 1
-    useDoubleWord: 0
-    isLocked: 1
-    label: 
-    address: M627
-    description: "\uCC28\uCCB4 WP3 \uC774\uB3D9"
-    comment: 
-  bodyWP4MoveAddress:
-    useDevice: 1
-    useDoubleWord: 0
-    isLocked: 1
-    label: 
-    address: M628
-    description: "\uCC28\uCCB4 WP4 \uC774\uB3D9"
-    comment: 
-  liftAddress:
-    useDevice: 1
-    useDoubleWord: 0
-    isLocked: 1
-    label: 
-    address: M624
-    description: "\uB9AC\uD504\uD2B8 \uBC30\uD130\uB9AC \uACB0\uD569"
-    comment: 
-  robotArmAddress:
-    useDevice: 1
-    useDoubleWord: 0
-    isLocked: 1
-    label: 
-    address: M625
-    description: "ICCU \uB85C\uBD07\uD314 \uACB0\uD569"
-    comment: 
-  rollerAddress:
+  carBodyWP1MoveAddress:
     useDevice: 1
     useDoubleWord: 0
     isLocked: 0
     label: 
     address: 
-    description: "\uB864\uB7EC \uB3D9\uC791"
+    description: "M624 CarBody WP1 \uCD9C\uBC1C"
     comment: 
-  onLiftOperation:
-    m_PersistentCalls:
-      m_Calls: []
-  onRobotArmOperation:
-    m_PersistentCalls:
-      m_Calls: []
-  onRollerOperation:
-    m_PersistentCalls:
-      m_Calls: []
-  onICCUInspection:
-    m_PersistentCalls:
-      m_Calls: []
-  onBodyInspection:
-    m_PersistentCalls:
-      m_Calls: []
-  agvArrivedAddress:
+  carBodyWP2MoveAddress:
     useDevice: 1
     useDoubleWord: 0
-    isLocked: 1
+    isLocked: 0
     label: 
-    address: M640
-    description: "AGV WP1 \uB3C4\uCC29"
+    address: 
+    description: "M626 CarBody WP2 \uCD9C\uBC1C"
     comment: 
-  bodyWP1ArrivedAddress:
+  carBodyWP3MoveAddress:
     useDevice: 1
     useDoubleWord: 0
-    isLocked: 1
+    isLocked: 0
     label: 
-    address: M641
-    description: "\uCC28\uCCB4 WP1 \uB3C4\uCC29"
+    address: 
+    description: "M627 CarBody WP3 \uCD9C\uBC1C"
     comment: 
-  liftCompletedAddress:
+  carBodyWP4MoveAddress:
     useDevice: 1
     useDoubleWord: 0
-    isLocked: 1
+    isLocked: 0
     label: 
-    address: M642
-    description: "\uB9AC\uD504\uD2B8 \uACB0\uD569 \uC644\uB8CC"
+    address: 
+    description: "M628 CarBody WP4 \uCD9C\uBC1C"
+    comment: 
+  iccuAssemblyCommandAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "M625 ICCU \uACB0\uD569 \uBA85\uB839"
+    comment: 
+  onICCUAssembly:
+    m_PersistentCalls:
+      m_Calls: []
+  agvWP1ArrivedAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "M640 AGV WP1 \uB3C4\uCC29"
+    comment: 
+  trolleyWP1ArrivedAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "M641 Trolley WP1 \uB3C4\uCC29"
     comment: 
   iccuWP1ArrivedAddress:
     useDevice: 1
@@ -3829,6 +3800,38 @@ MonoBehaviour:
     address: M644
     description: "ICCU WP2 \uB3C4\uCC29"
     comment: 
+  carBodyWP1ArrivedAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "M644 CarBody WP1 \uB3C4\uCC29"
+    comment: 
+  carBodyWP2ArrivedAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "M646 CarBody WP2 \uB3C4\uCC29"
+    comment: 
+  carBodyWP3ArrivedAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "M647 CarBody WP3 \uB3C4\uCC29"
+    comment: 
+  carBodyWP4ArrivedAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: "M648 CarBody WP4 \uB3C4\uCC29"
+    comment: 
   iccuAssemblyCompletedAddress:
     useDevice: 1
     useDoubleWord: 0
@@ -3836,62 +3839,6 @@ MonoBehaviour:
     label: 
     address: M645
     description: "ICCU \uACB0\uD569 \uC644\uB8CC"
-    comment: 
-  bodyWP2ArrivedAddress:
-    useDevice: 1
-    useDoubleWord: 0
-    isLocked: 1
-    label: 
-    address: M646
-    description: "\uCC28\uCCB4 WP2 \uB3C4\uCC29"
-    comment: 
-  bodyWP3ArrivedAddress:
-    useDevice: 1
-    useDoubleWord: 0
-    isLocked: 1
-    label: 
-    address: M647
-    description: "\uCC28\uCCB4 WP3 \uB3C4\uCC29"
-    comment: 
-  bodyWP4ArrivedAddress:
-    useDevice: 1
-    useDoubleWord: 0
-    isLocked: 1
-    label: 
-    address: M648
-    description: "\uCC28\uCCB4 WP4 \uB3C4\uCC29"
-    comment: 
-  iccuGoodAddress:
-    useDevice: 1
-    useDoubleWord: 0
-    isLocked: 1
-    label: 
-    address: M650
-    description: "ICCU \uAC80\uC0AC \uC815\uC0C1"
-    comment: 
-  iccuBadAddress:
-    useDevice: 1
-    useDoubleWord: 0
-    isLocked: 1
-    label: 
-    address: M651
-    description: "ICCU \uAC80\uC0AC \uBD88\uB7C9"
-    comment: 
-  bodyGoodAddress:
-    useDevice: 1
-    useDoubleWord: 0
-    isLocked: 1
-    label: 
-    address: M652
-    description: "\uCC28\uCCB4 \uAC80\uC0AC \uC815\uC0C1"
-    comment: 
-  bodyBadAddress:
-    useDevice: 1
-    useDoubleWord: 0
-    isLocked: 1
-    label: 
-    address: M653
-    description: "\uCC28\uCCB4 \uAC80\uC0AC \uBD88\uB7C9"
     comment: 
   feedbackTime: 0.3
 --- !u!114 &931791588
@@ -3906,11 +3853,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c98168a03e15974ea660aa944637534, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Pr2Controller
-  manager: {fileID: 0}
-  routes: []
-  speed: 1
-  rotateSpeed: 90
-  onCompleteMove:
+  agv: {fileID: 0}
+  trolley: {fileID: 0}
+  iccu: {fileID: 0}
+  carBody: {fileID: 0}
+  agvSpeed: 1
+  trolleySpeed: 1
+  iccuSpeed: 1
+  carBodySpeed: 1
+  agvRotateSpeed: 90
+  trolleyRotateSpeed: 90
+  iccuRotateSpeed: 90
+  carBodyRotateSpeed: 90
+  agvRailRoute: {fileID: 0}
+  trolleyRailRoute: {fileID: 0}
+  iccuRoute: {fileID: 0}
+  carRoute: {fileID: 0}
+  onAGVCompleteMove:
+    m_PersistentCalls:
+      m_Calls: []
+  onTrolleyCompleteMove:
+    m_PersistentCalls:
+      m_Calls: []
+  onICCUCompleteMove:
+    m_PersistentCalls:
+      m_Calls: []
+  onCarBodyCompleteMove:
     m_PersistentCalls:
       m_Calls: []
 --- !u!4 &931791589
