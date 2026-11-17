@@ -17,13 +17,47 @@ public class C2Program : OfflineProgram
         this.AccTime(0.2f, 0.2f);
         this.Speed(300f, 30f, 90f);
         this.MoveJ(waypoints[3]);
-        this.MoveJ(waypoints[0]);
-        this.Connect(true);
-        this.MoveJ(waypoints[6]);
+        if (scheduler.currentAttachedTool != null)
+        {
+            this.MoveJ(waypoints[7]);
+            this.MoveJ(waypoints[8]);
+            this.MoveJ(waypoints[9]);
+        }
+        else
+        {
+            this.MoveJ(waypoints[0]);
+            this.Connect(true);
+            this.MoveJ(waypoints[6]);
+            this.MoveJ(waypoints[8]);
+            this.MoveJ(waypoints[9]);
+        }
     }
 
     public void Program1()
     {
-
+        //P2
+        this.MoveL(waypoints[10]);
+        this.MoveL(waypoints[11]);
+        this.MoveL(waypoints[12]);
+        this.MoveL(waypoints[13]);
+        this.MoveL(waypoints[14]);
+        this.MoveL(waypoints[2]);
+        this.Wait(100);
+        this.Action(true, 500);
+        //P3
+        this.MoveL(waypoints[14]);
+        this.MoveL(waypoints[15]);
+        this.MoveL(waypoints[16]);
+        this.MoveL(waypoints[17]);
+        this.MoveC(waypoints[18], waypoints[19]);
+        this.MoveL(waypoints[20]);
+        this.MoveL(waypoints[21]);
+        this.MoveL(waypoints[4]);
+        this.Wait(5000);
+        this.Action(false);
+        this.Wait(100);
+        this.MoveL(waypoints[5]);
+        this.MoveL(waypoints[22]);
+        Home();
     }
 }

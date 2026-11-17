@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class C1Connector : MonoBehaviour
+public class C1Connector : MXObject
 {
     [Header("Robot Arm Program")]
     public C1Program C1Program;

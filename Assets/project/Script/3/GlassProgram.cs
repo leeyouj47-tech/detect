@@ -16,13 +16,39 @@ public class GlassProgram : OfflineProgram
     {
         this.AccTime(0.2f, 0.2f);
         this.Speed(300f, 30f, 90f);
-        this.MoveJ(waypoints[3]);
-        this.MoveJ(waypoints[0]);
-        this.Connect(true);
-        this.MoveJ(waypoints[6]);
+        this.MoveJ(waypoints[19]);
     }
 
     public void Program1()
     {
+        if(scheduler.currentAttachedTool == null)
+        {
+            this.MoveJ(waypoints[0]);
+            this.Connect(true);
+            this.MoveJ(waypoints[4]);            
+        }
+       
+        this.MoveL(waypoints[5]);
+        this.MoveL(waypoints[6]);
+        this.MoveL(waypoints[21]);
+        this.MoveL(waypoints[22]);
+        this.Action(true, 100);
+        this.Wait(500);
+        this.MoveL(waypoints[6]);
+        this.MoveL(waypoints[8]);
+        this.MoveL(waypoints[9]);
+        this.MoveL(waypoints[10]);
+        this.MoveL(waypoints[11]);
+        this.MoveL(waypoints[12]);
+        this.MoveL(waypoints[13]);        
+        this.MoveL(waypoints[14]);
+        this.MoveL(waypoints[15]);
+        this.MoveL(waypoints[3]);
+        this.Action(false, 100);
+        this.Wait(500);
+        this.MoveL(waypoints[16]);
+        this.MoveL(waypoints[17]);
+        this.MoveL(waypoints[18]);
+        this.MoveL(waypoints[20]);
     }
 }

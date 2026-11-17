@@ -39,27 +39,29 @@ public class C1Program : OfflineProgram
     public void Program1()
     {
         //P2
-        this.MoveJ(waypoints[10]);
-        this.MoveJ(waypoints[11]);
-        this.MoveJ(waypoints[12]);
-        this.MoveJ(waypoints[13]);
-        this.MoveJ(waypoints[14]);
-        this.MoveJ(waypoints[2]);
+        this.MoveL(waypoints[10]);
+        this.MoveL(waypoints[11]);
+        this.MoveL(waypoints[12]);
+        this.MoveL(waypoints[13]);
+        this.MoveL(waypoints[14]);
+        this.MoveL(waypoints[2]);
         this.Action(true, 500);
-        this.MoveJ(waypoints[14]);
+        this.MoveL(waypoints[14]);
         //P3
         this.Speed(100f, 60f, 30f);
-        this.MoveJ(waypoints[15]);
-        this.MoveJ(waypoints[16]);
-        this.MoveJ(waypoints[17]);
+        this.MoveL(waypoints[15]);
+        this.MoveL(waypoints[16]);
+        this.MoveL(waypoints[17]);
         this.MoveJ(waypoints[18]);
         this.MoveJ(waypoints[19]);        
-        this.MoveJ(waypoints[4]);
-        //this.Wait(5000);
-        this.MoveJ(waypoints[22]);
-        this.MoveJ(waypoints[23]);
+        this.MoveL(waypoints[4]);
+        this.Wait(5000);
+        this.MoveL(waypoints[21]);
+        this.MoveL(waypoints[5]);
+        //this.MoveL(waypoints[22]);
+        //this.MoveL(waypoints[23]);
         this.Action(false, 500);
-        this.MoveJ(waypoints[20]);
+        this.MoveL(waypoints[20]);
         Home();
     }
 }

@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class GlassConnector : MonoBehaviour
+public class GlassConnector : MXObject
 {
     [Header("Robot Arm Program")]
     public GlassProgram glassProgram;
