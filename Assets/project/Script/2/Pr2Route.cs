@@ -175,7 +175,9 @@ public class Pr2Route : MonoBehaviour
         if (path == null || path.Count == 0)
             return false;
 
-        controller.SetRoute(path);
+        //controller.SetRoute(path);
+        //26.11.17 LYJ: 수정
+        controller.SetRoute(Pr2Vehicle.CarBody, path);
 
         Debug.Log($"[{name}] 경로 전달 완료");
 

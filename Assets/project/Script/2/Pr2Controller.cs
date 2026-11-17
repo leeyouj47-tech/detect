@@ -1,168 +1,297 @@
-
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+public enum Pr2Vehicle
+{
+    AGV,
+    Trolley,
+    ICCU,
+    CarBody
+}
+
 public class Pr2Controller : MonoBehaviour
 {
-    [Header("Route º≥¡§")]
-    public ICCURoute manager;
-    public List<WayPoint> routes;
-
-    private int routeIndex;
-    private bool canMove = false;
-    private bool isRotating = false;
-
-    [Header("¿Ãµø º≥¡§")]
-    public float speed = 1f;
-    public float rotateSpeed = 90f;
-
-    [Header("¿Ãµø øœ∑· ¿Ã∫•∆Æ")]
-    public UnityEvent onCompleteMove = new UnityEvent();
-
-    private void Start()
+    [System.Serializable]
+    private class VehicleMotion
     {
-        canMove = false;
-        isRotating = false;
-        routeIndex = 0;
+        public Transform target;
+        public float speed = 1f;
+        public float rotateSpeed = 90f;
+        public UnityEvent onCompleteMove = new UnityEvent();
 
-        if (manager == null)
-            Debug.LogError($"[{name}] Process2Route∞° ø¨∞·µ«¡ˆ æ æ“Ω¿¥œ¥Ÿ.");
+        [HideInInspector] public List<WayPoint> routes;
+        [HideInInspector] public int routeIndex;
+        [HideInInspector] public bool canMove;
+        [HideInInspector] public bool isRotating;
+        [HideInInspector] public bool isBusy;
+    }
+
+    [Header("Ïù¥Îèô Ïò§Î∏åÏ†ùÌä∏")]
+    public Transform agv;
+    public Transform trolley;
+    public Transform iccu;
+    public Transform carBody;
+
+    [Header("Í∞úÎ≥Ñ Ïù¥Îèô ÏÜçÎèÑ")]
+    public float agvSpeed = 1f;
+    public float trolleySpeed = 1f;
+    public float iccuSpeed = 1f;
+    public float carBodySpeed = 1f;
+
+    [Header("Í∞úÎ≥Ñ ÌöåÏ†Ñ ÏÜçÎèÑ")]
+    public float agvRotateSpeed = 90f;
+    public float trolleyRotateSpeed = 90f;
+    public float iccuRotateSpeed = 90f;
+    public float carBodyRotateSpeed = 90f;
+
+    [Header("Í≤ΩÎ°ú Í¥ÄÎ¶¨Ïûê")]
+    public RailRoute agvRailRoute;
+    public RailRoute trolleyRailRoute;
+    public ICCURoute iccuRoute;
+    public CarRoute carRoute;
+
+    [Header("Ïù¥Îèô ÏôÑÎ£å Ïù¥Î≤§Ìä∏")]
+    public UnityEvent onAGVCompleteMove = new UnityEvent();
+    public UnityEvent onTrolleyCompleteMove = new UnityEvent();
+    public UnityEvent onICCUCompleteMove = new UnityEvent();
+    public UnityEvent onCarBodyCompleteMove = new UnityEvent();
+
+    private VehicleMotion agvMotion;
+    private VehicleMotion trolleyMotion;
+    private VehicleMotion iccuMotion;
+    private VehicleMotion carBodyMotion;
+
+    private void Awake()
+    {
+        agvMotion = CreateMotion(agv, agvSpeed, agvRotateSpeed, onAGVCompleteMove);
+        trolleyMotion = CreateMotion(trolley, trolleySpeed, trolleyRotateSpeed, onTrolleyCompleteMove);
+        iccuMotion = CreateMotion(iccu, iccuSpeed, iccuRotateSpeed, onICCUCompleteMove);
+        carBodyMotion = CreateMotion(carBody, carBodySpeed, carBodyRotateSpeed, onCarBodyCompleteMove);
+    }
+
+    private VehicleMotion CreateMotion(
+        Transform target,
+        float moveSpeed,
+        float turnSpeed,
+        UnityEvent completeEvent)
+    {
+        VehicleMotion motion = new VehicleMotion();
+        motion.target = target;
+        motion.speed = moveSpeed;
+        motion.rotateSpeed = turnSpeed;
+        motion.onCompleteMove = completeEvent;
+        motion.canMove = false;
+        motion.isRotating = false;
+        motion.isBusy = false;
+        motion.routeIndex = 0;
+        return motion;
     }
 
     private void FixedUpdate()
     {
-        if (!canMove)
+        UpdateMotion(agvMotion, "AGV");
+        UpdateMotion(trolleyMotion, "Trolley");
+        UpdateMotion(iccuMotion, "ICCU");
+        UpdateMotion(carBodyMotion, "CarBody");
+    }
+
+    private void UpdateMotion(VehicleMotion motion, string objectName)
+    {
+        if (motion == null || !motion.canMove)
             return;
 
-        if (routes == null || routes.Count == 0)
+        if (motion.target == null)
         {
-            StopMovement();
+            Debug.LogError("[Pr2Controller] " + objectName + " TransformÏù¥ Ïó∞Í≤∞ÎêòÏßÄ ÏïäÏïòÏäµÎãàÎã§.");
+            StopMotion(motion);
             return;
         }
 
-        if (routeIndex >= routes.Count)
-            return;
-
-        if (routes[routeIndex] == null)
+        if (motion.routes == null || motion.routes.Count == 0)
         {
-            Debug.LogError($"[{name}] Waypoint∞° null¿‘¥œ¥Ÿ.");
-            StopMovement();
+            StopMotion(motion);
             return;
         }
 
-        Vector3 targetPosition =
-            routes[routeIndex].transform.position;
+        if (motion.routeIndex >= motion.routes.Count)
+            return;
 
-        Vector3 toward = targetPosition - transform.position;
+        WayPoint waypoint = motion.routes[motion.routeIndex];
+
+        if (waypoint == null)
+        {
+            Debug.LogError("[Pr2Controller] " + objectName + " Í≤ΩÎ°úÏóê null WaypointÍ∞Ä ÏûàÏäµÎãàÎã§.");
+            StopMotion(motion);
+            return;
+        }
+
+        Vector3 targetPosition = waypoint.transform.position;
+        Vector3 toward = targetPosition - motion.target.position;
         toward.y = 0f;
 
-        // »∏¿¸
-        if (isRotating)
+        // 1. Î™©Ìëú Î∞©Ìñ•ÏúºÎ°ú ÌöåÏ†Ñ
+        if (motion.isRotating)
         {
             if (toward.sqrMagnitude > 0.001f)
             {
-                Quaternion targetRotation =
-                    Quaternion.LookRotation(toward);
+                Quaternion targetRotation = Quaternion.LookRotation(toward);
 
-                transform.rotation =
-                    Quaternion.RotateTowards(
-                        transform.rotation,
-                        targetRotation,
-                        rotateSpeed * Time.fixedDeltaTime
-                    );
+                motion.target.rotation = Quaternion.RotateTowards(
+                    motion.target.rotation,
+                    targetRotation,
+                    motion.rotateSpeed * Time.fixedDeltaTime);
 
-                if (Quaternion.Angle(
-                    transform.rotation, targetRotation) < 0.1f)
+                if (Quaternion.Angle(motion.target.rotation, targetRotation) < 0.1f)
                 {
-                    transform.rotation = targetRotation;
-                    isRotating = false;
+                    motion.target.rotation = targetRotation;
+                    motion.isRotating = false;
                 }
             }
             else
             {
-                isRotating = false;
+                motion.isRotating = false;
             }
 
             return;
         }
 
-        // ¿Ãµø
-        transform.position = Vector3.MoveTowards(
-            transform.position,
+        // 2. Î™©Ìëú ÏúÑÏπòÎ°ú Ïù¥Îèô (ÌòÑÏû¨ Y ÎÜíÏù¥ Ïú†ÏßÄ)
+        targetPosition.y = motion.target.position.y;
+
+        motion.target.position = Vector3.MoveTowards(
+            motion.target.position,
             targetPosition,
-            speed * Time.fixedDeltaTime
-        );
+            motion.speed * Time.fixedDeltaTime);
 
-        // µµ¬¯ »Æ¿Œ
-        if (Vector3.Distance(
-            transform.position, targetPosition) < 0.001f)
+        // 3. Waypoint ÎèÑÏ∞© ÌôïÏù∏
+        if (Vector3.Distance(motion.target.position, targetPosition) < 0.001f)
         {
-            transform.position = targetPosition;
+            motion.target.position = targetPosition;
 
-            Debug.Log(
-                $"[{name}] Waypoint {routes[routeIndex].id} µµ¬¯");
+            Debug.Log("[Pr2Controller] " + objectName + " Waypoint " + waypoint.id + " ÎèÑÏ∞©");
 
-            routeIndex++;
+            motion.routeIndex++;
+            motion.isRotating = true;
 
-            isRotating = true;
-
-            if (routeIndex >= routes.Count)
+            // 4. ÏµúÏ¢Ö Î™©Ï†ÅÏßÄ ÎèÑÏ∞©
+            if (motion.routeIndex >= motion.routes.Count)
             {
-                StopMovement();
+                UnityEvent completed = motion.onCompleteMove;
+                StopMotion(motion);
 
-                Debug.Log($"[{name}] √÷¡æ ∏Ò¿˚¡ˆ µµ¬¯");
-
-                onCompleteMove?.Invoke();
+                Debug.Log("[Pr2Controller] " + objectName + " ÏµúÏ¢Ö Î™©Ï†ÅÏßÄ ÎèÑÏ∞©");
+                if (completed != null)
+                    completed.Invoke();
             }
         }
     }
 
-    private void StopMovement()
+    private void StopMotion(VehicleMotion motion)
     {
-        canMove = false;
-        routes = null;
-        routeIndex = 0;
-        isRotating = false;
+        if (motion == null)
+            return;
+
+        motion.canMove = false;
+        motion.isBusy = false;
+        motion.routes = null;
+        motion.routeIndex = 0;
+        motion.isRotating = false;
     }
 
-    public void SetRoute(List<WayPoint> newRoutes)
+    public bool IsBusy(Pr2Vehicle vehicle)
     {
-        if (newRoutes == null || newRoutes.Count == 0)
+        VehicleMotion motion = GetMotion(vehicle);
+        return motion != null && motion.isBusy;
+    }
+
+    public bool Go(Pr2Vehicle vehicle, int destinationID)
+    {
+        VehicleMotion motion = GetMotion(vehicle);
+
+        if (motion == null || motion.target == null)
         {
-            Debug.LogError($"[{name}] ¿¸¥ﬁπﬁ¿∫ ∞Ê∑Œ∞° æ¯Ω¿¥œ¥Ÿ.");
-            StopMovement();
+            Debug.LogError("[Pr2Controller] " + vehicle + " Ïò§Î∏åÏ†ùÌä∏Í∞Ä Ïó∞Í≤∞ÎêòÏßÄ ÏïäÏïòÏäµÎãàÎã§.");
+            return false;
+        }
+
+        if (motion.isBusy)
+        {
+            Debug.LogWarning("[Pr2Controller] " + vehicle + " Ïù¥ÎØ∏ Ïù¥Îèô Ï§ëÏûÖÎãàÎã§.");
+            return false;
+        }
+
+        int startID = GetNearestWaypointID(vehicle, motion.target.position);
+        if (startID < 0)
+        {
+            Debug.LogError("[Pr2Controller] " + vehicle + " Ï∂úÎ∞ú WaypointÎ•º Ï∞æÏßÄ Î™ªÌñàÏäµÎãàÎã§.");
+            return false;
+        }
+
+        bool result = false;
+
+        if (vehicle == Pr2Vehicle.AGV && agvRailRoute != null)
+            result = agvRailRoute.GetRoutes(this, vehicle, startID, destinationID);
+        else if (vehicle == Pr2Vehicle.Trolley && trolleyRailRoute != null)
+            result = trolleyRailRoute.GetRoutes(this, vehicle, startID, destinationID);
+        else if (vehicle == Pr2Vehicle.ICCU && iccuRoute != null)
+            result = iccuRoute.GetRoutes(this, startID, destinationID);
+        else if (vehicle == Pr2Vehicle.CarBody && carRoute != null)
+            result = carRoute.GetRoutes(this, startID, destinationID);
+
+        if (!result)
+            Debug.LogError("[Pr2Controller] " + vehicle + " Í≤ΩÎ°ú ÏÉùÏÑ± Ïã§Ìå®: " + startID + " -> " + destinationID);
+
+        return result;
+    }
+
+    public int GetNearestWaypointID(Pr2Vehicle vehicle, Vector3 position)
+    {
+        if (vehicle == Pr2Vehicle.AGV && agvRailRoute != null)
+            return agvRailRoute.GetNearestWaypointID(position);
+        if (vehicle == Pr2Vehicle.Trolley && trolleyRailRoute != null)
+            return trolleyRailRoute.GetNearestWaypointID(position);
+        if (vehicle == Pr2Vehicle.ICCU && iccuRoute != null)
+            return iccuRoute.GetNearestWaypointID(position);
+        if (vehicle == Pr2Vehicle.CarBody && carRoute != null)
+            return carRoute.GetNearestWaypointID(position);
+
+        return -1;
+    }
+
+    public void SetRoute(Pr2Vehicle vehicle, List<WayPoint> newRoutes)
+    {
+        VehicleMotion motion = GetMotion(vehicle);
+
+        if (motion == null || newRoutes == null || newRoutes.Count == 0)
+        {
+            Debug.LogError("[Pr2Controller] " + vehicle + " Ï†ÑÎã¨Î∞õÏùÄ Í≤ΩÎ°úÍ∞Ä ÎπÑÏñ¥ ÏûàÏäµÎãàÎã§.");
             return;
         }
 
-        routes = new List<WayPoint>(newRoutes);
-        routeIndex = 0;
-        isRotating = true;
-        canMove = true;
-
-        Debug.Log(
-            $"[{name}] ∞Ê∑Œ º≥¡§ øœ∑· / " +
-            $"Ω√¿€ WP: {routes[0].id} / " +
-            $"∏Ò¿˚¡ˆ WP: {routes[routes.Count - 1].id}");
-    }
-
-    public bool Go(int destinationID)
-    {
-        if (manager == null)
+        if (motion.isBusy)
         {
-            Debug.LogError($"[{name}] Route∞° ø¨∞·µ«¡ˆ æ æ“Ω¿¥œ¥Ÿ.");
-            return false;
+            Debug.LogWarning("[Pr2Controller] " + vehicle + " Ïù¥Îèô Ï§ë Í≤ΩÎ°ú Î≥ÄÍ≤ΩÏùÑ Í±∞Î∂ÄÌñàÏäµÎãàÎã§.");
+            return;
         }
 
-        int startID =
-            manager.GetNearestWaypointID(transform.position);
+        motion.routes = new List<WayPoint>(newRoutes);
+        motion.routeIndex = 0;
+        motion.isRotating = true;
+        motion.canMove = true;
+        motion.isBusy = true;
 
-        if (startID < 0)
-            return false;
+        Debug.Log("[Pr2Controller] " + vehicle + " Í≤ΩÎ°ú ÏÑ§Ï†ï ÏôÑÎ£å / Waypoint Ïàò: " + newRoutes.Count);
+        Debug.Log("[Pr2Controller] " + vehicle + " Ï∂úÎ∞ú: " + newRoutes[0].id +
+                  " / Î™©Ï†ÅÏßÄ: " + newRoutes[newRoutes.Count - 1].id);
+    }
 
-        Debug.Log(
-            $"[{name}] ¿Ãµø ø‰√ª: {startID} -> {destinationID}");
-
-        return manager.GetRoutes(this, startID, destinationID);
+    private VehicleMotion GetMotion(Pr2Vehicle vehicle)
+    {
+        if (vehicle == Pr2Vehicle.AGV) return agvMotion;
+        if (vehicle == Pr2Vehicle.Trolley) return trolleyMotion;
+        if (vehicle == Pr2Vehicle.ICCU) return iccuMotion;
+        if (vehicle == Pr2Vehicle.CarBody) return carBodyMotion;
+        return null;
     }
 }

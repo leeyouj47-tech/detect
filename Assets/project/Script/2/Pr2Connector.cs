@@ -1,643 +1,331 @@
-
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class Pr2Connector : MXObject
 {
-    [Header("AGV")]
-    public Pr1Controller agvController;
+    [Header("ë©”ì¸ ì»¨íŠ¸ë¡¤ëŸ¬")]
+    public Pr2Controller pr2Controller;
 
-    [Header("Â÷Ã¼")]
-    public BodyController bodyController;
-
-    [Header("ICCU")]
-    public ICCUController iccuController;
-
-    [Header("Waypoint ID")]
+    [Header("Waypoint ID - Inspectorì—ì„œ ì‹¤ì œ ID í™•ì¸")]
     public int agvWaypoint1 = 1;
-    public int bodyWaypoint1 = 1;
-    public int bodyWaypoint2 = 2;
-    public int bodyWaypoint3 = 3;
-    public int bodyWaypoint4 = 4;
+    public int trolleyWaypoint1 = 1;
     public int iccuWaypoint1 = 1;
     public int iccuWaypoint2 = 2;
+    public int carBodyWaypoint1 = 1;
+    public int carBodyWaypoint2 = 2;
+    public int carBodyWaypoint3 = 3;
+    public int carBodyWaypoint4 = 4;
 
-    [Header("PLC -> Unity : ÀÌµ¿ ¸í·É")]
-    public DeviceAddress agvMoveAddress =
-        new DeviceAddress("AGV WP1 ÀÌµ¿");
+    [Header("PLC -> Unity : ì´ë™ ëª…ë ¹")]
+    public DeviceAddress agvWP1MoveAddress = new DeviceAddress("M620 AGV WP1 ì¶œë°œ");
+    public DeviceAddress trolleyWP1MoveAddress = new DeviceAddress("M621 Trolley WP1 ì¶œë°œ");
+    public DeviceAddress iccuWP1MoveAddress = new DeviceAddress("M622 ICCU WP1 ì¶œë°œ");
+    public DeviceAddress iccuWP2MoveAddress = new DeviceAddress("M623 ICCU WP2 ì¶œë°œ");
+    public DeviceAddress carBodyWP1MoveAddress = new DeviceAddress("M624 CarBody WP1 ì¶œë°œ");
+    public DeviceAddress carBodyWP2MoveAddress = new DeviceAddress("M626 CarBody WP2 ì¶œë°œ");
+    public DeviceAddress carBodyWP3MoveAddress = new DeviceAddress("M627 CarBody WP3 ì¶œë°œ");
+    public DeviceAddress carBodyWP4MoveAddress = new DeviceAddress("M628 CarBody WP4 ì¶œë°œ");
 
-    public DeviceAddress bodyWP1MoveAddress =
-        new DeviceAddress("Â÷Ã¼ WP1 ÀÌµ¿");
+    [Header("PLC -> Unity : ë¡œë´‡íŒ” ì‘ì—… ëª…ë ¹")]
+    public DeviceAddress iccuAssemblyCommandAddress = new DeviceAddress("M625 ICCU ê²°í•© ëª…ë ¹");
 
-    public DeviceAddress iccuWP1MoveAddress =
-        new DeviceAddress("ICCU WP1 ÀÌµ¿");
+    [Header("ì‘ì—… ì‹¤í–‰ ì´ë²¤íŠ¸")]
+    public UnityEvent onICCUAssembly = new UnityEvent();
 
-    public DeviceAddress iccuWP2MoveAddress =
-        new DeviceAddress("ICCU WP2 ÀÌµ¿");
+    [Header("Unity -> PLC : ì´ë™ ë„ì°© í”¼ë“œë°±")]
+    public DeviceAddress agvWP1ArrivedAddress = new DeviceAddress("M640 AGV WP1 ë„ì°©");
+    public DeviceAddress trolleyWP1ArrivedAddress = new DeviceAddress("M641 Trolley WP1 ë„ì°©");
+    public DeviceAddress iccuWP1ArrivedAddress = new DeviceAddress("M642 ICCU WP1 ë„ì°©");
+    public DeviceAddress iccuWP2ArrivedAddress = new DeviceAddress("M643 ICCU WP2 ë„ì°©");
+    public DeviceAddress carBodyWP1ArrivedAddress = new DeviceAddress("M644 CarBody WP1 ë„ì°©");
+    public DeviceAddress carBodyWP2ArrivedAddress = new DeviceAddress("M646 CarBody WP2 ë„ì°©");
+    public DeviceAddress carBodyWP3ArrivedAddress = new DeviceAddress("M647 CarBody WP3 ë„ì°©");
+    public DeviceAddress carBodyWP4ArrivedAddress = new DeviceAddress("M648 CarBody WP4 ë„ì°©");
 
-    public DeviceAddress bodyWP2MoveAddress =
-        new DeviceAddress("Â÷Ã¼ WP2 ·Ñ·¯ ÀÌµ¿");
+    [Header("Unity -> PLC : ë¡œë´‡íŒ” ì™„ë£Œ í”¼ë“œë°±")]
+    public DeviceAddress iccuAssemblyCompletedAddress = new DeviceAddress("M645 ICCU ê²°í•© ì™„ë£Œ");
 
-    public DeviceAddress bodyWP3MoveAddress =
-        new DeviceAddress("Â÷Ã¼ WP3 ÀÌµ¿");
-
-    public DeviceAddress bodyWP4MoveAddress =
-        new DeviceAddress("Â÷Ã¼ WP4 ÀÌµ¿");
-
-
-    [Header("PLC -> Unity : Àåºñ µ¿ÀÛ ¸í·É")]
-    public DeviceAddress liftAddress =
-        new DeviceAddress("¸®ÇÁÆ® ¹èÅÍ¸® °áÇÕ");
-
-    public DeviceAddress robotArmAddress =
-        new DeviceAddress("ICCU ·Îº¿ÆÈ °áÇÕ");
-
-    public DeviceAddress rollerAddress =
-        new DeviceAddress("·Ñ·¯ µ¿ÀÛ");
-
-
-    [Header("Unity µ¿ÀÛ ÀÌº¥Æ®")]
-    public UnityEvent onLiftOperation;
-    public UnityEvent onRobotArmOperation;
-    public UnityEvent onRollerOperation;
-
-    [Header("ºÒ·®°Ë»ç ÀÌº¥Æ®")]
-    public UnityEvent onICCUInspection;
-    public UnityEvent onBodyInspection;
-
-    [Header("Unity -> PLC : µµÂø ¹× ¿Ï·á ½ÅÈ£")]
-    public DeviceAddress agvArrivedAddress =
-        new DeviceAddress("AGV WP1 µµÂø");
-
-    public DeviceAddress bodyWP1ArrivedAddress =
-        new DeviceAddress("Â÷Ã¼ WP1 µµÂø");
-
-    public DeviceAddress liftCompletedAddress =
-        new DeviceAddress("¸®ÇÁÆ® °áÇÕ ¿Ï·á");
-
-    public DeviceAddress iccuWP1ArrivedAddress =
-        new DeviceAddress("ICCU WP1 µµÂø");
-
-    public DeviceAddress iccuWP2ArrivedAddress =
-        new DeviceAddress("ICCU WP2 µµÂø");
-
-    public DeviceAddress iccuAssemblyCompletedAddress =
-        new DeviceAddress("ICCU °áÇÕ ¿Ï·á");
-
-    public DeviceAddress bodyWP2ArrivedAddress =
-        new DeviceAddress("Â÷Ã¼ WP2 µµÂø");
-
-    public DeviceAddress bodyWP3ArrivedAddress =
-        new DeviceAddress("Â÷Ã¼ WP3 µµÂø");
-
-    public DeviceAddress bodyWP4ArrivedAddress =
-        new DeviceAddress("Â÷Ã¼ WP4 µµÂø");
-
-
-    [Header("°Ë»ç °á°ú ½ÅÈ£")]
-    public DeviceAddress iccuGoodAddress =
-        new DeviceAddress("ICCU °Ë»ç Á¤»ó");
-
-    public DeviceAddress iccuBadAddress =
-        new DeviceAddress("ICCU °Ë»ç ºÒ·®");
-
-    public DeviceAddress bodyGoodAddress =
-        new DeviceAddress("Â÷Ã¼ °Ë»ç Á¤»ó");
-
-    public DeviceAddress bodyBadAddress =
-        new DeviceAddress("Â÷Ã¼ °Ë»ç ºÒ·®");
-
-
-    [Header("°øÅë ¼³Á¤")]
+    [Header("ê³µí†µ ì„¤ì •")]
     public float feedbackTime = 0.3f;
 
+    private bool[] moveCommandReceived = new bool[8];
+    private bool iccuAssemblyCommandReceived;
 
-    // ==========================================
-    // ÀÌµ¿ »óÅÂ
-    // ==========================================
-
-    private bool agvBusy = false;
-    private bool bodyBusy = false;
-    private bool iccuBusy = false;
-
-    private bool agvCommandReceived = false;
-    private bool bodyWP1CommandReceived = false;
-    private bool bodyWP2CommandReceived = false;
-    private bool bodyWP3CommandReceived = false;
-    private bool bodyWP4CommandReceived = false;
-
-    private bool iccuWP1CommandReceived = false;
-    private bool iccuWP2CommandReceived = false;
-
-    private bool liftCommandReceived = false;
-    private bool robotCommandReceived = false;
-    private bool rollerCommandReceived = false;
-
-
-    private DeviceAddress agvCurrentAddress;
-    private DeviceAddress bodyCurrentAddress;
-    private DeviceAddress iccuCurrentAddress;
-
-
-    // ==========================================
-    // ÃÊ±â ¼³Á¤
-    // ==========================================
+    private DeviceAddress currentAGVArrivedAddress;
+    private DeviceAddress currentTrolleyArrivedAddress;
+    private DeviceAddress currentICCUArrivedAddress;
+    private DeviceAddress currentCarBodyArrivedAddress;
 
     private void Start()
     {
-        if (agvController == null ||
-            bodyController == null ||
-            iccuController == null)
+        if (pr2Controller == null)
         {
-            Debug.LogError(
-                "[Process2Connector] Controller ¿¬°áÀ» È®ÀÎÇÏ¼¼¿ä.");
+            Debug.LogError("[Pr2Connector] Pr2Controllerê°€ ì—°ê²°ë˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤.");
             return;
         }
 
-        agvController.onCompleteMove.AddListener(OnAGVCompleted);
-        bodyController.onCompleteMove.AddListener(OnBodyCompleted);
-        iccuController.onCompleteMove.AddListener(OnICCUCompleted);
+        // ì´ë™ ì™„ë£Œ ì´ë²¤íŠ¸ ì—°ê²°
+        pr2Controller.onAGVCompleteMove.AddListener(OnAGVCompletedMove);
+        pr2Controller.onTrolleyCompleteMove.AddListener(OnTrolleyCompletedMove);
+        pr2Controller.onICCUCompleteMove.AddListener(OnICCUCompletedMove);
+        pr2Controller.onCarBodyCompleteMove.AddListener(OnCarBodyCompletedMove);
 
+        // AGV / Trolley / ICCU / CarBody ì´ë™ ëª…ë ¹ ë“±ë¡
+        MXRequester.Get.AddDeviceAddress(agvWP1MoveAddress.address, AGVWP1Move);
+        MXRequester.Get.AddDeviceAddress(trolleyWP1MoveAddress.address, TrolleyWP1Move);
+        MXRequester.Get.AddDeviceAddress(iccuWP1MoveAddress.address, ICCUWP1Move);
+        MXRequester.Get.AddDeviceAddress(iccuWP2MoveAddress.address, ICCUWP2Move);
+        MXRequester.Get.AddDeviceAddress(carBodyWP1MoveAddress.address, CarBodyWP1Move);
+        MXRequester.Get.AddDeviceAddress(carBodyWP2MoveAddress.address, CarBodyWP2Move);
+        MXRequester.Get.AddDeviceAddress(carBodyWP3MoveAddress.address, CarBodyWP3Move);
+        MXRequester.Get.AddDeviceAddress(carBodyWP4MoveAddress.address, CarBodyWP4Move);
 
-        // AGV ÀÌµ¿
+        // ë¡œë´‡íŒ” ICCU ê²°í•© ëª…ë ¹ ë“±ë¡
         MXRequester.Get.AddDeviceAddress(
-            agvMoveAddress.address, AGVMove);
+            iccuAssemblyCommandAddress.address, ICCUAssemblyCommand);
 
-
-        // Â÷Ã¼ ÀÌµ¿
-        MXRequester.Get.AddDeviceAddress(
-            bodyWP1MoveAddress.address, BodyWP1Move);
-
-        MXRequester.Get.AddDeviceAddress(
-            bodyWP2MoveAddress.address, BodyWP2Move);
-
-        MXRequester.Get.AddDeviceAddress(
-            bodyWP3MoveAddress.address, BodyWP3Move);
-
-        MXRequester.Get.AddDeviceAddress(
-            bodyWP4MoveAddress.address, BodyWP4Move);
-
-
-        // ICCU ÀÌµ¿
-        MXRequester.Get.AddDeviceAddress(
-            iccuWP1MoveAddress.address, ICCUWP1Move);
-
-        MXRequester.Get.AddDeviceAddress(
-            iccuWP2MoveAddress.address, ICCUWP2Move);
-
-
-        // Àåºñ µ¿ÀÛ
-        MXRequester.Get.AddDeviceAddress(
-            liftAddress.address, LiftCommand);
-
-        MXRequester.Get.AddDeviceAddress(
-            robotArmAddress.address, RobotArmCommand);
-
-        MXRequester.Get.AddDeviceAddress(
-            rollerAddress.address, RollerCommand);
-
-
-        Debug.Log("[Process2Connector] PLC ½ÅÈ£ µî·Ï ¿Ï·á");
+        Debug.Log("[Pr2Connector] 2ì°¨ê³µì • PLC ì‹ í˜¸ ë“±ë¡ ì™„ë£Œ");
     }
 
-
     // ==========================================
-    // ÀÌµ¿ °øÅë Ã³¸®
+    // ê³µí†µ ì´ë™ ëª…ë ¹ ì²˜ë¦¬
     // ==========================================
 
     private void MoveCommand(
         short value,
-        ref bool commandReceived,
-        ref bool busy,
-        Pr2Controller controller,
+        int commandIndex,
+        Pr2Vehicle vehicle,
         int waypointID,
-        DeviceAddress arrivedAddress,
-        string deviceName)
+        DeviceAddress arrivedAddress)
     {
+        // PLC ëª…ë ¹ OFF ì‹œ ë‹¤ìŒ ëª…ë ¹ì„ ë°›ì„ ìˆ˜ ìˆë„ë¡ ì´ˆê¸°í™”
         if (value == 0)
         {
-            commandReceived = false;
+            moveCommandReceived[commandIndex] = false;
             return;
         }
 
-        if (commandReceived || busy)
+        // ê°™ì€ ëª…ë ¹ì´ ê³„ì† ONì¸ ë™ì•ˆ ì¤‘ë³µ ì‹¤í–‰ ë°©ì§€
+        if (moveCommandReceived[commandIndex])
             return;
 
-        if (controller == null)
+        if (waypointID < 0)
         {
-            Debug.LogError(
-                $"[{deviceName}] Controller°¡ ¿¬°áµÇÁö ¾Ê¾Ò½À´Ï´Ù.");
+            Debug.LogWarning("[Pr2Connector] " + vehicle + " ëª©ì ì§€ Waypoint IDê°€ ì˜ëª»ë˜ì—ˆìŠµë‹ˆë‹¤.");
             return;
         }
 
-        bool success = controller.Go(waypointID);
+        if (pr2Controller == null)
+        {
+            Debug.LogError("[Pr2Connector] Pr2Controllerê°€ ì—°ê²°ë˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤.");
+            return;
+        }
+
+        // ê°™ì€ ì˜¤ë¸Œì íŠ¸ê°€ ì´ë¯¸ ì´ë™ ì¤‘ì´ë©´ ëª…ë ¹ ë³´ë¥˜
+        if (pr2Controller.IsBusy(vehicle))
+        {
+            Debug.LogWarning("[Pr2Connector] " + vehicle + " ì´ë™ ì¤‘ì…ë‹ˆë‹¤. ì´ë²ˆ ëª…ë ¹ì€ ì‹¤í–‰í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.");
+            return;
+        }
+
+        bool success = pr2Controller.Go(vehicle, waypointID);
 
         if (!success)
         {
-            Debug.LogError(
-                $"[{deviceName}] °æ·Î ÀÌµ¿ ½ÇÆĞ: WP{waypointID}");
+            Debug.LogError("[Pr2Connector] " + vehicle + " ì´ë™ ì‹¤íŒ¨ / ëª©ì ì§€: " + waypointID);
             return;
         }
 
-        commandReceived = true;
-        busy = true;
+        moveCommandReceived[commandIndex] = true;
+        SetPendingArrivedAddress(vehicle, arrivedAddress);
 
-        if (controller == bodyController)
-            bodyCurrentAddress = arrivedAddress;
-
-        else if (controller == iccuController)
-            iccuCurrentAddress = arrivedAddress;
-
-        Debug.Log(
-            $"[{deviceName}] ÀÌµ¿ ½ÃÀÛ / WP{waypointID}");
+        Debug.Log("[Pr2Connector] " + vehicle + " ì´ë™ ì‹œì‘ / Waypoint: " + waypointID);
     }
 
-
-    // ==========================================
-    // AGV ÀÌµ¿
-    // ==========================================
-
-    private void AGVMove(short value)
+    private void SetPendingArrivedAddress(Pr2Vehicle vehicle, DeviceAddress address)
     {
-        if (value == 0)
-        {
-            agvCommandReceived = false;
-            return;
-        }
-
-        if (agvCommandReceived || agvBusy)
-            return;
-
-        if (agvController == null)
-            return;
-
-        bool success = agvController.Go(agvWaypoint1);
-
-        if (!success)
-            return;
-
-        agvCommandReceived = true;
-        agvBusy = true;
-
-        agvCurrentAddress = agvArrivedAddress;
-
-        Debug.Log("[Process2] AGV WP1 ÀÌµ¿ ½ÃÀÛ");
+        if (vehicle == Pr2Vehicle.AGV)
+            currentAGVArrivedAddress = address;
+        else if (vehicle == Pr2Vehicle.Trolley)
+            currentTrolleyArrivedAddress = address;
+        else if (vehicle == Pr2Vehicle.ICCU)
+            currentICCUArrivedAddress = address;
+        else if (vehicle == Pr2Vehicle.CarBody)
+            currentCarBodyArrivedAddress = address;
     }
 
+    private DeviceAddress GetPendingArrivedAddress(Pr2Vehicle vehicle)
+    {
+        if (vehicle == Pr2Vehicle.AGV) return currentAGVArrivedAddress;
+        if (vehicle == Pr2Vehicle.Trolley) return currentTrolleyArrivedAddress;
+        if (vehicle == Pr2Vehicle.ICCU) return currentICCUArrivedAddress;
+        if (vehicle == Pr2Vehicle.CarBody) return currentCarBodyArrivedAddress;
+        return null;
+    }
+
+    private void ClearPendingArrivedAddress(Pr2Vehicle vehicle)
+    {
+        if (vehicle == Pr2Vehicle.AGV)
+            currentAGVArrivedAddress = null;
+        else if (vehicle == Pr2Vehicle.Trolley)
+            currentTrolleyArrivedAddress = null;
+        else if (vehicle == Pr2Vehicle.ICCU)
+            currentICCUArrivedAddress = null;
+        else if (vehicle == Pr2Vehicle.CarBody)
+            currentCarBodyArrivedAddress = null;
+    }
 
     // ==========================================
-    // Â÷Ã¼ ÀÌµ¿
+    // PLC ì´ë™ ëª…ë ¹ë³„ ì½œë°±
     // ==========================================
 
-    private void BodyWP1Move(short value)
+    private void AGVWP1Move(short value)
     {
-        MoveCommand(
-            value,
-            ref bodyWP1CommandReceived,
-            ref bodyBusy,
-            bodyController,
-            bodyWaypoint1,
-            bodyWP1ArrivedAddress,
-            "Â÷Ã¼ WP1");
+        MoveCommand(value, 0, Pr2Vehicle.AGV, agvWaypoint1, agvWP1ArrivedAddress);
     }
 
-    private void BodyWP2Move(short value)
+    private void TrolleyWP1Move(short value)
     {
-        if (value == 0)
-        {
-            bodyWP2CommandReceived = false;
-            return;
-        }
-
-        if (bodyWP2CommandReceived || bodyBusy)
-            return;
-
-        bool success = bodyController.Go(bodyWaypoint2);
-
-        if (!success)
-            return;
-
-        bodyWP2CommandReceived = true;
-        bodyBusy = true;
-
-        bodyCurrentAddress = bodyWP2ArrivedAddress;
-
-        // Â÷Ã¼ ÀÌµ¿°ú µ¿½Ã¿¡ ·Ñ·¯ µ¿ÀÛ
-        onRollerOperation?.Invoke();
-
-        Debug.Log("[Process2] Â÷Ã¼ WP2 ÀÌµ¿ ¹× ·Ñ·¯ µ¿ÀÛ ½ÃÀÛ");
+        MoveCommand(value, 1, Pr2Vehicle.Trolley, trolleyWaypoint1, trolleyWP1ArrivedAddress);
     }
-    private void BodyWP3Move(short value)
-    {
-        MoveCommand(
-            value,
-            ref bodyWP3CommandReceived,
-            ref bodyBusy,
-            bodyController,
-            bodyWaypoint3,
-            bodyWP3ArrivedAddress,
-            "Â÷Ã¼ WP3");
-    }
-
-    private void BodyWP4Move(short value)
-    {
-        MoveCommand(
-            value,
-            ref bodyWP4CommandReceived,
-            ref bodyBusy,
-            bodyController,
-            bodyWaypoint4,
-            bodyWP4ArrivedAddress,
-            "Â÷Ã¼ WP4");
-    }
-
-
-    // ==========================================
-    // ICCU ÀÌµ¿
-    // ==========================================
 
     private void ICCUWP1Move(short value)
     {
-        MoveCommand(
-            value,
-            ref iccuWP1CommandReceived,
-            ref iccuBusy,
-            iccuController,
-            iccuWaypoint1,
-            iccuWP1ArrivedAddress,
-            "ICCU WP1");
+        MoveCommand(value, 2, Pr2Vehicle.ICCU, iccuWaypoint1, iccuWP1ArrivedAddress);
     }
 
     private void ICCUWP2Move(short value)
     {
-        MoveCommand(
-            value,
-            ref iccuWP2CommandReceived,
-            ref iccuBusy,
-            iccuController,
-            iccuWaypoint2,
-            iccuWP2ArrivedAddress,
-            "ICCU WP2");
+        MoveCommand(value, 3, Pr2Vehicle.ICCU, iccuWaypoint2, iccuWP2ArrivedAddress);
     }
 
+    private void CarBodyWP1Move(short value)
+    {
+        MoveCommand(value, 4, Pr2Vehicle.CarBody, carBodyWaypoint1, carBodyWP1ArrivedAddress);
+    }
+
+    private void CarBodyWP2Move(short value)
+    {
+        MoveCommand(value, 5, Pr2Vehicle.CarBody, carBodyWaypoint2, carBodyWP2ArrivedAddress);
+    }
+
+    private void CarBodyWP3Move(short value)
+    {
+        MoveCommand(value, 6, Pr2Vehicle.CarBody, carBodyWaypoint3, carBodyWP3ArrivedAddress);
+    }
+
+    private void CarBodyWP4Move(short value)
+    {
+        MoveCommand(value, 7, Pr2Vehicle.CarBody, carBodyWaypoint4, carBodyWP4ArrivedAddress);
+    }
 
     // ==========================================
-    // Àåºñ µ¿ÀÛ ¸í·É
+    // ì´ë™ ì™„ë£Œ ì´ë²¤íŠ¸
     // ==========================================
 
-    private void ExecuteWork(
-        short value,
-        ref bool received,
-        UnityEvent action,
-        string workName)
+    private void OnAGVCompletedMove()
+    {
+        StartCoroutine(CompleteMoveFeedback(Pr2Vehicle.AGV));
+    }
+
+    private void OnTrolleyCompletedMove()
+    {
+        StartCoroutine(CompleteMoveFeedback(Pr2Vehicle.Trolley));
+    }
+
+    private void OnICCUCompletedMove()
+    {
+        StartCoroutine(CompleteMoveFeedback(Pr2Vehicle.ICCU));
+    }
+
+    private void OnCarBodyCompletedMove()
+    {
+        StartCoroutine(CompleteMoveFeedback(Pr2Vehicle.CarBody));
+    }
+
+    private IEnumerator CompleteMoveFeedback(Pr2Vehicle vehicle)
+    {
+        DeviceAddress arrivedAddress = GetPendingArrivedAddress(vehicle);
+
+        if (arrivedAddress == null)
+        {
+            Debug.LogWarning("[Pr2Connector] " + vehicle + " ë„ì°© ì£¼ì†Œê°€ ì§€ì •ë˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤.");
+            yield break;
+        }
+
+        // ë„ì°© ì‹ í˜¸ ON
+        MXRequester.Get.AddSetDeviceRequest(arrivedAddress.address, (short)1);
+
+        yield return new WaitForSeconds(feedbackTime);
+
+        // ë„ì°© ì‹ í˜¸ OFF
+        MXRequester.Get.AddSetDeviceRequest(arrivedAddress.address, (short)0);
+
+        ClearPendingArrivedAddress(vehicle);
+
+        Debug.Log("[Pr2Connector] " + vehicle + " ë„ì°© í”¼ë“œë°± ì „ì†¡ ì™„ë£Œ");
+    }
+
+    // ==========================================
+    // ë¡œë´‡íŒ” ICCU ê²°í•© ëª…ë ¹
+    // ==========================================
+
+    private void ICCUAssemblyCommand(short value)
     {
         if (value == 0)
         {
-            received = false;
+            iccuAssemblyCommandReceived = false;
             return;
         }
 
-        if (received)
+        if (iccuAssemblyCommandReceived)
             return;
 
-        received = true;
+        iccuAssemblyCommandReceived = true;
 
-        Debug.Log($"[Process2] {workName} ½ÇÇà");
+        Debug.Log("[Pr2Connector] ë¡œë´‡íŒ” ICCU ê²°í•© ëª…ë ¹ ìˆ˜ì‹ ");
 
-        if (action != null)
-            action.Invoke();
+        if (onICCUAssembly != null)
+            onICCUAssembly.Invoke();
         else
-            Debug.LogWarning(
-                $"{workName} ÀÌº¥Æ®°¡ ¿¬°áµÇÁö ¾Ê¾Ò½À´Ï´Ù.");
+            Debug.LogWarning("[Pr2Connector] onICCUAssembly ì´ë²¤íŠ¸ê°€ ì—°ê²°ë˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤.");
     }
 
-    private void LiftCommand(short value)
-    {
-        ExecuteWork(
-            value, ref liftCommandReceived,
-            onLiftOperation, "¸®ÇÁÆ® ¹èÅÍ¸® °áÇÕ");
-    }
-
-    private void RobotArmCommand(short value)
-    {
-        ExecuteWork(
-            value, ref robotCommandReceived,
-            onRobotArmOperation, "ICCU ·Îº¿ÆÈ °áÇÕ");
-    }
-
-    private void RollerCommand(short value)
-    {
-        ExecuteWork(
-            value, ref rollerCommandReceived,
-            onRollerOperation, "·Ñ·¯ µ¿ÀÛ");
-    }
-
-
-    // ==========================================
-    // AGV ÀÌµ¿ ¿Ï·á
-    // ==========================================
-
-    private void OnAGVCompleted()
-    {
-        if (agvCurrentAddress == null)
-            return;
-
-        StartCoroutine(
-            CompleteMoveFeedback(agvCurrentAddress, 0));
-    }
-
-
-    // ==========================================
-    // Â÷Ã¼ ÀÌµ¿ ¿Ï·á
-    // ==========================================
-
-    private void OnBodyCompleted()
-    {
-        if (bodyCurrentAddress == null)
-            return;
-
-        bool isInspectionPosition =
-            bodyCurrentAddress == bodyWP3ArrivedAddress;
-
-        if (isInspectionPosition)
-            onBodyInspection?.Invoke();
-
-        StartCoroutine(
-            CompleteMoveFeedback(bodyCurrentAddress, 1));
-    }
-
-    // ==========================================
-    // ICCU ÀÌµ¿ ¿Ï·á
-    // ==========================================
-
-    private void OnICCUCompleted()
-    {
-        if (iccuCurrentAddress == null)
-            return;
-
-        bool isInspectionPosition =
-            iccuCurrentAddress == iccuWP1ArrivedAddress;
-
-        if (isInspectionPosition)
-            onICCUInspection?.Invoke();
-
-        StartCoroutine(
-            CompleteMoveFeedback(iccuCurrentAddress, 2));
-    }
-
-
-    // ==========================================
-    // ÀÌµ¿ ¿Ï·á ÇÇµå¹é
-    // ==========================================
-
-    private IEnumerator CompleteMoveFeedback(
-        DeviceAddress address, int deviceIndex)
-    {
-        MXRequester.Get.AddSetDeviceRequest(
-            address.address, 1);
-
-        Debug.Log(
-            $"[Process2] µµÂø ½ÅÈ£ ON: {address.address}");
-
-        yield return new WaitForSeconds(feedbackTime);
-
-        MXRequester.Get.AddSetDeviceRequest(
-            address.address, 0);
-
-        if (deviceIndex == 0)
-        {
-            agvBusy = false;
-            agvCurrentAddress = null;
-        }
-        else if (deviceIndex == 1)
-        {
-            bodyBusy = false;
-            bodyCurrentAddress = null;
-        }
-        else
-        {
-            iccuBusy = false;
-            iccuCurrentAddress = null;
-        }
-
-        Debug.Log(
-            $"[Process2] µµÂø ÇÇµå¹é ¿Ï·á: {address.address}");
-    }
-
-
-    // ==========================================
-    // Àåºñ µ¿ÀÛ ¿Ï·á ÇÇµå¹é
-    // ==========================================
-
-    public void OnLiftCompleted()
-    {
-        SendFeedback(liftCompletedAddress);
-    }
-
+    // ë¡œë´‡íŒ” ì• ë‹ˆë©”ì´ì…˜ ë˜ëŠ” ì‘ì—… ìŠ¤í¬ë¦½íŠ¸ ì™„ë£Œ ì‹œ í˜¸ì¶œ
     public void OnICCUAssemblyCompleted()
     {
-        SendFeedback(iccuAssemblyCompletedAddress);
-    }
-
-    public void OnRollerCompleted()
-    {
-        SendFeedback(bodyWP2ArrivedAddress);
-    }
-
-
-    // ==========================================
-    // °Ë»ç °á°ú Àü´Ş
-    // ==========================================
-
-    public void ICCUGood()
-    {
-        SetResult(iccuGoodAddress, iccuBadAddress, true);
-    }
-
-    public void ICCUBad()
-    {
-        SetResult(iccuGoodAddress, iccuBadAddress, false);
-    }
-
-    public void BodyGood()
-    {
-        SetResult(bodyGoodAddress, bodyBadAddress, true);
-    }
-
-    public void BodyBad()
-    {
-        SetResult(bodyGoodAddress, bodyBadAddress, false);
-    }
-
-    public void ClearICCUResult()
-    {
-        ClearResult(iccuGoodAddress, iccuBadAddress);
-    }
-
-    public void ClearBodyResult()
-    {
-        ClearResult(bodyGoodAddress, bodyBadAddress);
-    }
-
-    private void SetResult(
-        DeviceAddress good,
-        DeviceAddress bad,
-        bool isGood)
-    {
         MXRequester.Get.AddSetDeviceRequest(
-            good.address, isGood ? 1 : 0);
+            iccuAssemblyCompletedAddress.address, (short)1);
 
-        MXRequester.Get.AddSetDeviceRequest(
-            bad.address, isGood ? 0 : 1);
+        StartCoroutine(ResetAssemblyFeedback());
     }
 
-    private void ClearResult(
-        DeviceAddress good,
-        DeviceAddress bad)
+    private IEnumerator ResetAssemblyFeedback()
     {
-        MXRequester.Get.AddSetDeviceRequest(
-            good.address, 0);
-
-        MXRequester.Get.AddSetDeviceRequest(
-            bad.address, 0);
-    }
-
-
-    // ==========================================
-    // °øÅë ÇÇµå¹é
-    // ==========================================
-
-    private void SendFeedback(DeviceAddress address)
-    {
-        StartCoroutine(FeedbackCoroutine(address));
-    }
-
-    private IEnumerator FeedbackCoroutine(DeviceAddress address)
-    {
-        MXRequester.Get.AddSetDeviceRequest(
-            address.address, 1);
-
         yield return new WaitForSeconds(feedbackTime);
 
         MXRequester.Get.AddSetDeviceRequest(
-            address.address, 0);
+            iccuAssemblyCompletedAddress.address, (short)0);
+
+        Debug.Log("[Pr2Connector] ICCU ê²°í•© ì™„ë£Œ í”¼ë“œë°± ì „ì†¡");
     }
-
-
-    // ==========================================
-    // Á¾·á Ã³¸®
-    // ==========================================
 
     private void OnDestroy()
     {
-        if (agvController != null)
-            agvController.onCompleteMove.RemoveListener(OnAGVCompleted);
+        if (pr2Controller == null)
+            return;
 
-        if (bodyController != null)
-            bodyController.onCompleteMove.RemoveListener(OnBodyCompleted);
+        if (pr2Controller.onAGVCompleteMove != null)
+            pr2Controller.onAGVCompleteMove.RemoveListener(OnAGVCompletedMove);
 
-        if (iccuController != null)
-            iccuController.onCompleteMove.RemoveListener(OnICCUCompleted);
+        if (pr2Controller.onTrolleyCompleteMove != null)
+            pr2Controller.onTrolleyCompleteMove.RemoveListener(OnTrolleyCompletedMove);
+
+        if (pr2Controller.onICCUCompleteMove != null)
+            pr2Controller.onICCUCompleteMove.RemoveListener(OnICCUCompletedMove);
+
+        if (pr2Controller.onCarBodyCompleteMove != null)
+            pr2Controller.onCarBodyCompleteMove.RemoveListener(OnCarBodyCompletedMove);
     }
 }
