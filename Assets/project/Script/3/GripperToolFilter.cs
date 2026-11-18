@@ -19,7 +19,7 @@ public class GripperToolFilter : ToolParent
         if (grabbed == null && triggerList.Count > 0)
         {
             grabbed = triggerList[0];
-            grabbed.isKinematic = true;
+            //grabbed.isKinematic = true;
             grabbed.transform.SetParent(transform);
             Debug.Log($"[{Time.frameCount}] 잡음 {grabbed.name}");
         }
@@ -30,7 +30,7 @@ public class GripperToolFilter : ToolParent
         if (grabbed != null)
         {
             grabbed.transform.SetParent(null);
-            grabbed.isKinematic = false;
+            //grabbed.isKinematic = false;
             grabbed = null;
         }
     }
