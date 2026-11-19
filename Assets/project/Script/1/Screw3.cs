@@ -10,7 +10,7 @@ public class Screw3 : OfflineProgram
         this.MoveJ(waypoints[0]);
     }
 
-    public void Program3()
+    public void Program1()
     {
         this.MoveJ(waypoints[1]);
 

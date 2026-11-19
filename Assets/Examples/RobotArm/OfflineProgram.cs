@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 using Preliy.Flange;
+//26.11.19 LYJ
+using UnityEngine.Events;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -35,6 +37,9 @@ public abstract class OfflineProgram : MonoBehaviour
     public TaskState currentState = TaskState.Wait;
 
     public float doneDuration = 0.3f;
+
+    //26.11.19 LYJ
+    public UnityEvent onProgramCompleted = new UnityEvent();
 
     private Queue<IRobotCommand> taskQueue = new Queue<IRobotCommand>();
 
@@ -146,11 +151,21 @@ public abstract class OfflineProgram : MonoBehaviour
             await taskQueue.Dequeue().ExecuteCommand(scheduler);
         }
 
-        if (currentState == TaskState.Run)
+        /*if (currentState == TaskState.Run)
             currentState = TaskState.Done;
 
         doneOffTime = Time.time + doneDuration;
-        Debug.LogWarning($"위치결정 완료");
+        Debug.LogWarning($"위치결정 완료");*/
+        //26.11.19 LYJ
+        if (currentState == TaskState.Run)
+        {
+            currentState = TaskState.Done;
+
+            Debug.LogWarning("[OfflineProgram] 위치결정 완료");
+
+            onProgramCompleted?.Invoke();
+        }
+        doneOffTime = Time.time + doneDuration;
     }
 
     //26.11.16 LYJ: 수정
