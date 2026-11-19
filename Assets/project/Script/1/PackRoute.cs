@@ -54,12 +54,12 @@ public class PackRoute : MonoBehaviour
     // 가장 가까운 Waypoint 검색
     // ==========================================
 
+
     public int GetNearestWaypointID(Vector3 position)
     {
         if (waypointDic.Count == 0)
         {
-            Debug.LogError(
-                "[PackRoute] 등록된 Waypoint가 없습니다.");
+            Debug.LogError("[PackRoute] 등록된 Waypoint가 없습니다.");
             return -1;
         }
 
@@ -71,19 +71,31 @@ public class PackRoute : MonoBehaviour
             if (pair.Value == null)
                 continue;
 
-            float distanceSqr =
-                (pair.Value.transform.position - position).sqrMagnitude;
+            float distance = Vector3.Distance(
+                pair.Value.transform.position,
+                position);
 
-            if (distanceSqr < minDistance)
+            Debug.Log(
+                $"[PackRoute] Waypoint {pair.Key} 거리: {distance:F4}");
+
+            if (distance < minDistance)
             {
-                minDistance = distanceSqr;
+                minDistance = distance;
                 foundID = pair.Key;
             }
         }
 
+        Debug.Log(
+            $"[PackRoute] 최종 출발지: Waypoint {foundID}, 거리: {minDistance:F4}");
+
+        if (foundID < 0)
+        {
+            Debug.LogError("[PackRoute] 출발 Waypoint를 찾지 못했습니다.");
+            return -1;
+        }
+
         return foundID;
     }
-
 
     // ==========================================
     // 최단 경로 탐색 - 다익스트라 알고리즘

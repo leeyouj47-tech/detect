@@ -16,7 +16,7 @@ public class Pr2Route : MonoBehaviour
 
         if (allWaypoints == null || allWaypoints.Length == 0)
         {
-            Debug.LogError($"[{name}] Waypoint가 없습니다.");
+            Debug.LogError($"[{name}] Waypntrloint가 없습니다.");
             return;
         }
 

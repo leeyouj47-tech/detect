@@ -296,4 +296,9 @@ public class MXRequester : MonoBehaviour
     {
         AddSetDeviceRequest(address, (short)v);
     }
+
+    internal void AddDeviceAddress(object address, Action<short> assemblyMove)
+    {
+        throw new NotImplementedException();
+    }
 }

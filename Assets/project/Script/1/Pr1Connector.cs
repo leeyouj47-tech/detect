@@ -6,6 +6,7 @@ using UnityEngine.Events;
 public class Pr1Connector : MXObject
 {
     public AGVFiller filler;
+    public int coverLineWaypoint = 3;
     [Header("AGV 관련")]
     public Pr1Controller agvController;
 
@@ -110,6 +111,7 @@ public class Pr1Connector : MXObject
         MXRequester.Get.AddDeviceAddress(assemblyMoveAddress.address, AssemblyMove);
         MXRequester.Get.AddDeviceAddress(secondDefectMoveAddress.address, SecondDefectMove);
         MXRequester.Get.AddDeviceAddress(secondProcessMoveAddress.address, SecondProcessMove);
+        /*MXRequester.Get.AddDeviceAddress(coverLineMoveAddress.address, CoverLineMove);*/
 
 
         // 작업 명령 등록
@@ -132,6 +134,7 @@ public class Pr1Connector : MXObject
     // ==========================================
     // AGV 이동 공통 처리
     // ==========================================
+
     private void MoveCommand(
         short value,
         int commandIndex,
@@ -176,7 +179,11 @@ public class Pr1Connector : MXObject
 
         Debug.Log($"[AGV] 이동 명령 시작 / 목적지: Waypoint {waypointID}");
 
-        // 경로 탐색 및 이동 명령
+        // 도착 주소를 먼저 설정
+        currentArrivedAddress = arrivedAddress;
+        agvBusy = true;
+
+        // 이동 명령
         bool success = agvController.Go(waypointID);
 
         Debug.Log($"[AGV] Go 실행 결과: {success}");
@@ -185,17 +192,19 @@ public class Pr1Connector : MXObject
         {
             Debug.LogError(
                 $"[AGV] 경로 탐색 실패 / 목적지: Waypoint {waypointID}");
+
+            currentArrivedAddress = null;
+            agvBusy = false;
             return;
         }
 
-        // 이동 명령 성공 후 상태 변경
+        // 이동 명령 성공
         moveCommandReceived[commandIndex] = true;
-        agvBusy = true;
-        currentArrivedAddress = arrivedAddress;
 
         Debug.Log(
             $"[AGV] 이동 시작 완료 / 목적지: Waypoint {waypointID}");
     }
+
     // ==========================================
     // AGV 이동 명령별 처리
     // ==========================================
@@ -244,22 +253,18 @@ public class Pr1Connector : MXObject
     }
     //배터리팩 커버 이동위치 정하지 않아 수정한 소스
     // M503 : 커버 조립라인 이동 (Waypoint 미정)
-    private void CoverLineMove(short value)
+    // M503 : 커버 조립라인 이동
+    /*private void CoverLineMove(short value)
     {
-        if (value == 0)
-        {
-            moveCommandReceived[2] = false;
-            return;
-        }
+        Debug.Log($"[PLC 수신] M503 = {value}");
 
-        if (moveCommandReceived[2])
-            return;
-
-        moveCommandReceived[2] = true;
-
-        Debug.Log(
-            "[Pr1Connector] M503 수신 - Waypoint 미정으로 이동 보류");
-    }
+        MoveCommand(
+            value,
+            2,
+            coverLineWaypoint,
+            coverLineArrivedAddress
+        );
+    }*/
 
     // M505 : 조립공정 이동
     private void AssemblyMove(short value)
@@ -304,20 +309,25 @@ public class Pr1Connector : MXObject
     {
         DeviceAddress arrivedAddress = currentArrivedAddress;
 
-        // 도착 신호 ON
+        Debug.Log(
+            $"[AGV] 도착 신호 전송 시작: {arrivedAddress.address}");
+
         MXRequester.Get.AddSetDeviceRequest(
             arrivedAddress.address, 1);
 
+        Debug.Log(
+            $"[AGV] 도착 신호 ON 요청: {arrivedAddress.address}");
+
         yield return new WaitForSeconds(feedbackTime);
 
-        // 도착 신호 OFF
         MXRequester.Get.AddSetDeviceRequest(
             arrivedAddress.address, 0);
 
+        Debug.Log(
+            $"[AGV] 도착 신호 OFF 요청: {arrivedAddress.address}");
+
         currentArrivedAddress = null;
         agvBusy = false;
-
-        Debug.Log("[Pr1Connector] AGV 도착 피드백 전송 완료");
     }
 
 

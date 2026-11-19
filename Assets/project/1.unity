@@ -567,8 +567,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 42592630}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -0.612, y: 0, z: 0.00000002675137}
+  m_LocalRotation: {x: -0, y: 0.7071809, z: 0, w: 0.7070327}
+  m_LocalPosition: {x: -0.612, y: 0, z: 0.0001282106}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -607,7 +607,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _position:
-    _value: -90
+    _value: -90.012
   _config:
     _name: 
     _type: 0
@@ -1509,8 +1509,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 129722221}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.5723}
+  m_LocalRotation: {x: 0, y: -0.00038397245, z: -0, w: 0.99999994}
+  m_LocalPosition: {x: 0.00043949482, y: 0, z: -0.57229984}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1549,7 +1549,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _position:
-    _value: 0
+    _value: 0.044
   _config:
     _name: 
     _type: 0
@@ -2425,19 +2425,19 @@ MonoBehaviour:
     _controller: {fileID: 186973345}
     _jointState:
       _robJoint:
-        _r1: 90
-        _r2: -90
-        _r3: 0
-        _r4: -90
-        _r5: 0
-        _r6: 0
+        _r1: 90.049
+        _r2: -90.012
+        _r3: 0.044
+        _r4: 269.941
+        _r5: -0.088
+        _r6: 0.027
       _extJoint:
-        _e1: 9e+9
-        _e2: 9e+9
-        _e3: 9e+9
-        _e4: 9e+9
-        _e5: 9e+9
-        _e6: 9e+9
+        _e1: 0
+        _e2: 0
+        _e3: 0
+        _e4: 0
+        _e5: 0
+        _e6: 0
     _initJointState:
       _robJoint:
         _r1: 90
@@ -2456,72 +2456,72 @@ MonoBehaviour:
   _poseObserver:
     _flange:
       _value:
-        e00: -0.00000008742276
-        e01: -0.00000004371142
-        e02: 1
-        e03: -0.000000073078496
+        e00: 0.00000020969613
+        e01: 0.0006806383
+        e02: 0.9999998
+        e03: 0.00005943659
         e10: 1
-        e11: 0.00000031391647
-        e12: 0.00000008742278
-        e13: 1.4273
-        e20: -0.00000031391647
-        e21: 1
-        e22: 0.000000043711395
-        e23: 0.25614104
+        e11: 0.0000010373649
+        e12: -0.00000021039055
+        e13: 1.4273001
+        e20: -0.0000010375078
+        e21: 0.99999976
+        e22: -0.00068063824
+        e23: 0.2561411
         e30: 0
         e31: 0
         e32: 0
         e33: 1
     _toolCenterPointBase:
       _value:
-        e00: 1.0000005
-        e01: -0.000000039017827
-        e02: -0.00000007549793
-        e03: -0.000000061896635
-        e10: -0.000000039017703
+        e00: 1.0000002
+        e01: -0.00000033637514
+        e02: -0.0006807577
+        e03: 0.000114729424
+        e10: -0.00000033683125
         e11: -0.99999976
-        e12: 0.00000003648009
-        e13: 1.25875
-        e20: -0.00000007549787
-        e21: -0.000000036480085
-        e22: -1.0000002
-        e23: 0.33742976
+        e12: -0.00000068696846
+        e13: 1.2587502
+        e20: -0.0006807578
+        e21: 0.0000006871972
+        e22: -1
+        e23: 0.3374299
         e30: 0
         e31: 0
         e32: 0
         e33: 1
     _toolCenterPointWorld:
       _value:
-        e00: 1.0000005
-        e01: -0.000000039017827
-        e02: -0.00000007549793
-        e03: 22.5
-        e10: -0.000000039017703
+        e00: 1.0000002
+        e01: -0.00000033637514
+        e02: -0.0006807577
+        e03: 22.500114
+        e10: -0.00000033683125
         e11: -0.99999976
-        e12: 0.00000003648009
-        e13: 1.25875
-        e20: -0.00000007549787
-        e21: -0.000000036480085
-        e22: -1.0000002
-        e23: 4.6074295
+        e12: -0.00000068696846
+        e13: 1.2587502
+        e20: -0.0006807578
+        e21: 0.0000006871972
+        e22: -1
+        e23: 4.60743
         e30: 0
         e31: 0
         e32: 0
         e33: 1
     _toolCenterPointFrame:
       _value:
-        e00: 1.0000005
-        e01: -0.000000039017827
-        e02: -0.00000007549793
-        e03: 0
-        e10: -0.000000039017703
+        e00: 1.0000002
+        e01: -0.00000033637514
+        e02: -0.0006807577
+        e03: 0.00011444092
+        e10: -0.00000033683125
         e11: -0.99999976
-        e12: 0.00000003648009
-        e13: 1.25875
-        e20: -0.00000007549787
-        e21: -0.000000036480085
-        e22: -1.0000002
-        e23: 0.33742952
+        e12: -0.00000068696846
+        e13: 1.2587502
+        e20: -0.0006807578
+        e21: 0.0000006871972
+        e22: -1
+        e23: 0.33743
         e30: 0
         e31: 0
         e32: 0
@@ -4824,7 +4824,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 320988138}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.5, y: -0.5, z: -0.5, w: 0.5}
+  m_LocalRotation: {x: 0.50021386, y: -0.50021374, z: -0.49978617, w: 0.49978614}
   m_LocalPosition: {x: -0, y: 0.1273, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -4864,7 +4864,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _position:
-    _value: 90
+    _value: 90.049
   _config:
     _name: 
     _type: 0
@@ -6980,8 +6980,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 463846099}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: 0.70710665, w: 0.7071069}
-  m_LocalPosition: {x: -0, y: 0.1157, z: 0}
+  m_LocalRotation: {x: 0.00054301886, y: 0.00054301904, z: 0.7071064, w: 0.70710677}
+  m_LocalPosition: {x: 0, y: 0.1157, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -7020,7 +7020,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _position:
-    _value: 0
+    _value: -0.088
   _config:
     _name: 
     _type: 0
@@ -9215,7 +9215,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 680954889}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.5, y: -0.5, z: 0.5, w: -0.5}
+  m_LocalRotation: {x: 0.5002312, y: -0.5002312, z: 0.49976873, w: -0.4997687}
   m_LocalPosition: {x: 0, y: 0.163941, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -9255,7 +9255,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _position:
-    _value: -90
+    _value: 269.947
   _config:
     _name: 
     _type: 0
@@ -9290,8 +9290,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 690401378}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.5723}
+  m_LocalRotation: {x: 0, y: -0.00038397245, z: -0, w: 0.99999994}
+  m_LocalPosition: {x: 0.00043949482, y: 0, z: -0.57229984}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -9330,7 +9330,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _position:
-    _value: 0
+    _value: 0.044
   _config:
     _name: 
     _type: 0
@@ -12437,8 +12437,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 961739749}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.32443556, y: -0.33947372, z: 0.12604064, w: -0.8738495}
-  m_LocalPosition: {x: 18.963116, y: 2.8495119, z: 2.8145685}
+  m_LocalRotation: {x: 0.31273475, y: -0.4345346, z: 0.1639708, w: 0.828547}
+  m_LocalPosition: {x: 48.03785, y: 29.250706, z: -32.190147}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -12470,8 +12470,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 974493268}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: 0.70710665, w: 0.7071069}
-  m_LocalPosition: {x: -0, y: 0.1157, z: 0}
+  m_LocalRotation: {x: 0.00062323763, y: 0.0006232378, z: 0.7071065, w: 0.7071066}
+  m_LocalPosition: {x: 0, y: 0.1157, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -12510,7 +12510,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _position:
-    _value: 0
+    _value: -0.101
   _config:
     _name: 
     _type: 0
@@ -13253,7 +13253,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1032666550}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.5, y: -0.5, z: -0.5, w: 0.5}
+  m_LocalRotation: {x: 0.500301, y: -0.50030094, z: -0.49969885, w: 0.49969882}
   m_LocalPosition: {x: -0, y: 0.1273, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -13293,7 +13293,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _position:
-    _value: 90
+    _value: 90.069
   _config:
     _name: 
     _type: 0
@@ -13717,7 +13717,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1096064046}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.5, y: -0.5, z: 0.5, w: -0.5}
+  m_LocalRotation: {x: 0.5002573, y: -0.5002573, z: 0.49974257, w: -0.49974254}
   m_LocalPosition: {x: 0, y: 0.163941, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -13757,7 +13757,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _position:
-    _value: -90
+    _value: 269.941
   _config:
     _name: 
     _type: 0
@@ -18714,8 +18714,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1468056027}
-  - component: {fileID: 1468056031}
-  - component: {fileID: 1468056030}
   - component: {fileID: 1468056029}
   - component: {fileID: 1468056028}
   m_Layer: 0
@@ -18789,77 +18787,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.8, y: 0.05, z: 1.7}
   m_Center: {x: 0, y: 0.025, z: 0}
---- !u!114 &1468056030
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1468056026}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ed4b8d9a51b01f4fa5af6cb859fd4c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PackConnector
-  packController: {fileID: 1468056031}
-  inspectionWaypoint: 2
-  assemblyWaypoint: 3
-  inspectionMoveAddress:
-    useDevice: 1
-    useDoubleWord: 0
-    isLocked: 1
-    label: 
-    address: M510
-    description: "\uBC30\uD130\uB9AC\uD329 \uCEE4\uBC84 \uBD88\uB7C9\uAC80\uC0AC\uB77C\uC778
-      \uCD9C\uBC1C"
-    comment: 
-  assemblyMoveAddress:
-    useDevice: 1
-    useDoubleWord: 0
-    isLocked: 1
-    label: 
-    address: M502
-    description: "\uBC30\uD130\uB9AC\uD329 \uCEE4\uBC84 \uC870\uB9BD\uB77C\uC778
-      \uC774\uB3D9"
-    comment: 
-  inspectionArrivedAddress:
-    useDevice: 1
-    useDoubleWord: 0
-    isLocked: 1
-    label: 
-    address: M540
-    description: "\uBC30\uD130\uB9AC\uD329 \uCEE4\uBC84 \uBD88\uB7C9\uAC80\uC0AC\uB77C\uC778
-      \uB3C4\uCC29"
-    comment: 
-  assemblyArrivedAddress:
-    useDevice: 1
-    useDoubleWord: 0
-    isLocked: 1
-    label: 
-    address: M523
-    description: "\uBC30\uD130\uB9AC\uD329 \uCEE4\uBC84 \uC870\uB9BD\uB77C\uC778
-      \uB3C4\uCC29"
-    comment: 
-  feedbackTime: 0.3
---- !u!114 &1468056031
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1468056026}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b7edbe74cc36ca4587d4f2afa42c6a7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PackController
-  manager: {fileID: 336879265}
-  routes: []
-  speed: 1
-  rotateSpeed: 90
-  onCompleteMove:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &1473613929
 GameObject:
   m_ObjectHideFlags: 0
@@ -20877,7 +20804,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _position:
-    _value: 0
+    _value: 0.027
   _config:
     _name: 
     _type: 0
@@ -20912,7 +20839,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1647934071}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: -0.00023561949, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0.0922, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -21917,19 +21844,19 @@ MonoBehaviour:
     _controller: {fileID: 1749722055}
     _jointState:
       _robJoint:
-        _r1: 90
-        _r2: -90
-        _r3: 0
-        _r4: -90
-        _r5: 0
-        _r6: 0
+        _r1: 90.069
+        _r2: -90.01
+        _r3: 0.044
+        _r4: 269.947
+        _r5: -0.101
+        _r6: 0.019
       _extJoint:
-        _e1: 9e+9
-        _e2: 9e+9
-        _e3: 9e+9
-        _e4: 9e+9
-        _e5: 9e+9
-        _e6: 9e+9
+        _e1: 0
+        _e2: 0
+        _e3: 0
+        _e4: 0
+        _e5: 0
+        _e6: 0
     _initJointState:
       _robJoint:
         _r1: 90
@@ -21948,53 +21875,53 @@ MonoBehaviour:
   _poseObserver:
     _flange:
       _value:
-        e00: -0.00000008742276
-        e01: -0.00000004371142
-        e02: 1
-        e03: -0.000000073078496
+        e00: -0.000000060808325
+        e01: 0.0005584864
+        e02: 0.9999999
+        e03: 0.00004844041
         e10: 1
-        e11: 0.00000031391647
-        e12: 0.00000008742278
-        e13: 1.4273
-        e20: -0.00000031391647
-        e21: 1
-        e22: 0.000000043711395
-        e23: 0.25614104
+        e11: 0.00000089858423
+        e12: 0.00000006033223
+        e13: 1.4273001
+        e20: -0.0000008985504
+        e21: 0.9999999
+        e22: -0.00055848627
+        e23: 0.25614116
         e30: 0
         e31: 0
         e32: 0
         e33: 1
     _toolCenterPointBase:
       _value:
-        e00: 1.0000002
-        e01: -0.00000008116468
-        e02: 0.000000103316054
-        e03: -0.00000006189664
-        e10: -0.00000008116456
+        e00: 1.0000001
+        e01: -0.00000010795126
+        e02: -0.0005584268
+        e03: 0.000093849274
+        e10: -0.00000010825507
         e11: -0.99999976
-        e12: -0.000000005666772
-        e13: 1.2587501
-        e20: 0.000000103316005
-        e21: 0.000000005666752
-        e22: -1
-        e23: 0.33742976
+        e12: -0.00000059033454
+        e13: 1.2587502
+        e20: -0.0005584268
+        e21: 0.00000059039473
+        e22: -0.9999999
+        e23: 0.33742997
         e30: 0
         e31: 0
         e32: 0
         e33: 1
     _toolCenterPointWorld:
       _value:
-        e00: 1.0000002
-        e01: -0.00000008116468
-        e02: 0.000000103316054
-        e03: 22.5
-        e10: -0.00000008116456
+        e00: 1.0000001
+        e01: -0.00000010795126
+        e02: -0.0005584268
+        e03: 22.500093
+        e10: -0.00000010825507
         e11: -0.99999976
-        e12: -0.000000005666772
-        e13: 1.2587501
-        e20: 0.000000103316005
-        e21: 0.000000005666752
-        e22: -1
+        e12: -0.00000059033454
+        e13: 1.2587502
+        e20: -0.0005584268
+        e21: 0.00000059039473
+        e22: -0.9999999
         e23: 6.33743
         e30: 0
         e31: 0
@@ -22002,17 +21929,17 @@ MonoBehaviour:
         e33: 1
     _toolCenterPointFrame:
       _value:
-        e00: 1.0000002
-        e01: -0.00000008116468
-        e02: 0.000000103316054
-        e03: 0
-        e10: -0.00000008116456
+        e00: 1.0000001
+        e01: -0.00000010795126
+        e02: -0.0005584268
+        e03: 0.00009346008
+        e10: -0.00000010825507
         e11: -0.99999976
-        e12: -0.000000005666772
-        e13: 1.2587501
-        e20: 0.000000103316005
-        e21: 0.000000005666752
-        e22: -1
+        e12: -0.00000059033454
+        e13: 1.2587502
+        e20: -0.0005584268
+        e21: 0.00000059039473
+        e22: -0.9999999
         e23: 0.33743
         e30: 0
         e31: 0
@@ -23115,7 +23042,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _position:
-    _value: 0
+    _value: 0.019
   _config:
     _name: 
     _type: 0
@@ -23150,7 +23077,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1842770472}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: -0.00016580627, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0.0922, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -24219,8 +24146,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1926668499}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -0.612, y: 0, z: 0.00000002675137}
+  m_LocalRotation: {x: -0, y: 0.7071685, z: 0, w: 0.70704514}
+  m_LocalPosition: {x: -0.612, y: 0, z: 0.00010683446}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -24259,7 +24186,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _position:
-    _value: -90
+    _value: -90.01
   _config:
     _name: 
     _type: 0
@@ -27953,7 +27880,7 @@ Transform:
   m_GameObject: {fileID: 2213922009092184207}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 21, y: -0, z: 4.82}
+  m_LocalPosition: {x: 21, y: -0, z: -38}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -29820,6 +29747,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Pr1Connector
   filler: {fileID: 1272608871}
+  coverLineWaypoint: 3
   agvController: {fileID: 7715020782877625542}
   nextProductInputAddress:
     useDevice: 1
@@ -33215,7 +33143,7 @@ Transform:
   m_GameObject: {fileID: 6815866555479284028}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0.7071068, w: 0}
-  m_LocalPosition: {x: 0, y: 0.054000035, z: 0}
+  m_LocalPosition: {x: 7.91, y: 0.054000035, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -33709,6 +33637,8 @@ GameObject:
   - component: {fileID: 6187103841171702662}
   - component: {fileID: 7093971768690445347}
   - component: {fileID: 5014246865418418409}
+  - component: {fileID: 7093971768690445349}
+  - component: {fileID: 7093971768690445348}
   m_Layer: 0
   m_Name: Battery pack cover
   m_TagString: Untagged
@@ -33986,6 +33916,72 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6815866555479284028}
   m_Mesh: {fileID: 4249043406941840833, guid: f73ddc2107db81d4c9ea83b3cd2226a9, type: 3}
+--- !u!114 &7093971768690445348
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6815866555479284028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ed4b8d9a51b01f4fa5af6cb859fd4c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PackConnector
+  packController: {fileID: 7093971768690445349}
+  inspectionWaypoint: 2
+  inspectionMoveAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 1
+    label: 
+    address: M510
+    description: M510
+    comment: 
+  nextAssemblyMoveAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 1
+    label: 
+    address: M503
+    description: M503
+    comment: 
+  inspectionArrivedAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 1
+    label: 
+    address: M540
+    description: M540
+    comment: 
+  nextAssemblyArrivedAddress:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 1
+    label: 
+    address: M523
+    description: M523
+    comment: 
+  feedbackTime: 0.3
+--- !u!114 &7093971768690445349
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6815866555479284028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b7edbe74cc36ca4587d4f2afa42c6a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PackController
+  manager: {fileID: 336879265}
+  routes: []
+  speed: 1
+  rotateSpeed: 90
+  onCompleteMove:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &7126486973447445158
 Transform:
   m_ObjectHideFlags: 0
