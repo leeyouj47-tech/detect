@@ -2444,7 +2444,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WayPoint
   id: 4
-  neighbors: []
+  neighbors:
+  - {fileID: 1242395956}
 --- !u!1 &624677514
 GameObject:
   m_ObjectHideFlags: 0

@@ -176,6 +176,13 @@ public class ServoAmp : MonoBehaviour
         get => cmd_JogForward | cmd_JogReverse;
     }
 
+    public bool IsHoming
+    {
+        get => currentState == AmpState.Homing_Search ||
+               currentState == AmpState.Homing_Retry ||
+               currentState == AmpState.Homing_Creep;
+    }
+
     public bool IsStopped
     {
         get => isStopped;
