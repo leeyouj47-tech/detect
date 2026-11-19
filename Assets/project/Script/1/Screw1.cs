@@ -1,0 +1,23 @@
+using UnityEngine;
+
+public class Screw1 : OfflineProgram
+{
+    public override void Home()
+    {
+        this.AccTime(0.2f, 0.2f);
+        this.Speed(1000f, 60f, 90f);
+
+        this.MoveJ(waypoints[0]);
+    }
+
+    public void Program1()
+    {
+        this.MoveJ(waypoints[1]);
+
+        this.Action(true, 400);
+
+        this.Action(false);
+
+        this.MoveJ(waypoints[0]);
+    }
+}
