@@ -5,6 +5,7 @@ public class GantryConnector : MXObject
 {
     public ServoAmp axis1, axis2, axis3, axis4;
     public ServoPositioningData data;
+    public GantryController axis1Controller, axis2Controller, axis3Controller, axis4Controller;
     public float feedbackTime;
 
     //각 1,2 / 3,4 동일한 내역
@@ -12,7 +13,7 @@ public class GantryConnector : MXObject
     public DeviceAddress moduleReady = new DeviceAddress("Module Ready");   //M226
     public DeviceAddress servoAllOnAddress = new DeviceAddress("Servo All On 신호");
     public DeviceAddress servoAllReadyAddress = new DeviceAddress("Servo All Ready");
-    
+
     //IOCHECK 한번 테스트 진행하고, 공정에서는 진행하지 X
     public DeviceAddress axis1JogFWDAddress = new DeviceAddress("1축 JOG 전진 신호");
     public DeviceAddress axis1JogRVSAddress = new DeviceAddress("1축 JOG 후진 신호");
@@ -22,7 +23,7 @@ public class GantryConnector : MXObject
     public DeviceAddress axis3JogRVSAddress = new DeviceAddress("3축 JOG 후진 신호");
     public DeviceAddress axis4JogFWDAddress = new DeviceAddress("4축 JOG 전진 신호");
     public DeviceAddress axis4JogRVSAddress = new DeviceAddress("4축 JOG 후진 신호");
-    
+
     public DeviceAddress axis1PosAddress = new DeviceAddress("1축 위치 결정 기동 신호");
     public DeviceAddress axis2PosAddress = new DeviceAddress("2축 위치 결정 기동 신호");
     public DeviceAddress axis3PosAddress = new DeviceAddress("3축 위치 결정 기동 신호");
@@ -38,7 +39,7 @@ public class GantryConnector : MXObject
     public DeviceAddress axis2StopAddress = new DeviceAddress("2축 정지 신호");
     public DeviceAddress axis3StopAddress = new DeviceAddress("3축 정지 신호");
     public DeviceAddress axis4StopAddress = new DeviceAddress("4축 정지 신호");
-    
+
     //IOCHECK 한번 테스트 진행하고, 공정에서는 진행하지 X
     public DeviceAddress axis1RstAddress = new DeviceAddress("1축 리셋 신호");
     public DeviceAddress axis2RstAddress = new DeviceAddress("2축 리셋 신호");
@@ -238,6 +239,11 @@ public class GantryConnector : MXObject
 
     void Start()
     {
+        axis1Controller.Initialize(axis1, data.axes[0], OnCompletedAxis1Positioning);
+        axis2Controller.Initialize(axis2, data.axes[1], OnCompletedAxis2Positioning);
+        axis3Controller.Initialize(axis3, data.axes[2], OnCompletedAxis3Positioning);
+        axis4Controller.Initialize(axis4, data.axes[3], OnCompletedAxis4Positioning);
+
         if (plcReadyAddress.useDevice)
             MXRequester.Get.AddDeviceAddress(plcReadyAddress.address, PLCReady);
         if (servoAllOnAddress.useDevice)
@@ -316,6 +322,7 @@ public class GantryConnector : MXObject
         axis1.ServoOn(obj != 0);
         axis2.ServoOn(obj != 0);
         axis3.ServoOn(obj != 0);
+        axis4.ServoOn(obj != 0);
     }
 
     private void Axis1JogFWD(short obj)
@@ -490,7 +497,7 @@ public class GantryConnector : MXObject
             }
             else
             {
-                axis1.Positioning((int)data.axes[0].stepDataList[axis1Positioning - 1].positioningAddress);
+                axis1Controller.StartPositioning(axis1Positioning);
             }
 
             haveToExcuteAxis1 = false;
@@ -511,7 +518,7 @@ public class GantryConnector : MXObject
             }
             else
             {
-                axis2.Positioning((int)data.axes[1].stepDataList[axis2Positioning - 1].positioningAddress);
+                axis2Controller.StartPositioning(axis2Positioning);
             }
 
             haveToExcuteAxis2 = false;
@@ -532,7 +539,7 @@ public class GantryConnector : MXObject
             }
             else
             {
-                axis3.Positioning((int)data.axes[2].stepDataList[axis3Positioning - 1].positioningAddress);
+                axis3Controller.StartPositioning(axis3Positioning);
             }
 
             haveToExcuteAxis3 = false;
@@ -553,7 +560,7 @@ public class GantryConnector : MXObject
             }
             else
             {
-                axis4.Positioning((int)data.axes[3].stepDataList[axis4Positioning - 1].positioningAddress);
+                axis4Controller.StartPositioning(axis4Positioning);
             }
 
             haveToExcuteAxis4 = false;
