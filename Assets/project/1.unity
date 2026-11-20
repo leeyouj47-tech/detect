@@ -567,8 +567,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 42592630}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.7071809, z: 0, w: 0.7070327}
-  m_LocalPosition: {x: -0.612, y: 0, z: 0.0001282106}
+  m_LocalRotation: {x: -0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -0.612, y: 0, z: 0.00000002675137}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -607,7 +607,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _position:
-    _value: -90.012
+    _value: -90
   _config:
     _name: 
     _type: 0
@@ -1509,8 +1509,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 129722221}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0.00038397245, z: -0, w: 0.99999994}
-  m_LocalPosition: {x: 0.00043949482, y: 0, z: -0.57229984}
+  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -0.5723}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1549,7 +1549,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _position:
-    _value: 0.044
+    _value: 0
   _config:
     _name: 
     _type: 0
@@ -2425,19 +2425,19 @@ MonoBehaviour:
     _controller: {fileID: 186973345}
     _jointState:
       _robJoint:
-        _r1: 90.049
-        _r2: -90.012
-        _r3: 0.044
-        _r4: 269.941
-        _r5: -0.088
-        _r6: 0.027
+        _r1: 90
+        _r2: -90
+        _r3: 0
+        _r4: -90
+        _r5: 0
+        _r6: 0
       _extJoint:
-        _e1: 0
-        _e2: 0
-        _e3: 0
-        _e4: 0
-        _e5: 0
-        _e6: 0
+        _e1: 9e+9
+        _e2: 9e+9
+        _e3: 9e+9
+        _e4: 9e+9
+        _e5: 9e+9
+        _e6: 9e+9
     _initJointState:
       _robJoint:
         _r1: 90
@@ -2456,72 +2456,72 @@ MonoBehaviour:
   _poseObserver:
     _flange:
       _value:
-        e00: 0.00000020969613
-        e01: 0.0006806383
-        e02: 0.9999998
-        e03: 0.00005943659
+        e00: -0.00000008742276
+        e01: -0.00000004371142
+        e02: 1
+        e03: -0.000000073078496
         e10: 1
-        e11: 0.0000010373649
-        e12: -0.00000021039055
-        e13: 1.4273001
-        e20: -0.0000010375078
-        e21: 0.99999976
-        e22: -0.00068063824
-        e23: 0.2561411
+        e11: 0.00000031391647
+        e12: 0.00000008742278
+        e13: 1.4273
+        e20: -0.00000031391647
+        e21: 1
+        e22: 0.000000043711395
+        e23: 0.25614104
         e30: 0
         e31: 0
         e32: 0
         e33: 1
     _toolCenterPointBase:
       _value:
-        e00: 1.0000002
-        e01: -0.00000033637514
-        e02: -0.0006807577
-        e03: 0.000114729424
-        e10: -0.00000033683125
+        e00: 1.0000005
+        e01: -0.000000039017827
+        e02: -0.00000007549793
+        e03: -0.000000061896635
+        e10: -0.000000039017703
         e11: -0.99999976
-        e12: -0.00000068696846
-        e13: 1.2587502
-        e20: -0.0006807578
-        e21: 0.0000006871972
-        e22: -1
-        e23: 0.3374299
+        e12: 0.00000003648009
+        e13: 1.25875
+        e20: -0.00000007549787
+        e21: -0.000000036480085
+        e22: -1.0000002
+        e23: 0.33742976
         e30: 0
         e31: 0
         e32: 0
         e33: 1
     _toolCenterPointWorld:
       _value:
-        e00: 1.0000002
-        e01: -0.00000033637514
-        e02: -0.0006807577
-        e03: 22.500114
-        e10: -0.00000033683125
+        e00: 1.0000005
+        e01: -0.000000039017827
+        e02: -0.00000007549793
+        e03: 22.5
+        e10: -0.000000039017703
         e11: -0.99999976
-        e12: -0.00000068696846
-        e13: 1.2587502
-        e20: -0.0006807578
-        e21: 0.0000006871972
-        e22: -1
-        e23: 4.60743
+        e12: 0.00000003648009
+        e13: 1.25875
+        e20: -0.00000007549787
+        e21: -0.000000036480085
+        e22: -1.0000002
+        e23: 4.6074295
         e30: 0
         e31: 0
         e32: 0
         e33: 1
     _toolCenterPointFrame:
       _value:
-        e00: 1.0000002
-        e01: -0.00000033637514
-        e02: -0.0006807577
-        e03: 0.00011444092
-        e10: -0.00000033683125
+        e00: 1.0000005
+        e01: -0.000000039017827
+        e02: -0.00000007549793
+        e03: 0
+        e10: -0.000000039017703
         e11: -0.99999976
-        e12: -0.00000068696846
-        e13: 1.2587502
-        e20: -0.0006807578
-        e21: 0.0000006871972
-        e22: -1
-        e23: 0.33743
+        e12: 0.00000003648009
+        e13: 1.25875
+        e20: -0.00000007549787
+        e21: -0.000000036480085
+        e22: -1.0000002
+        e23: 0.33742952
         e30: 0
         e31: 0
         e32: 0
@@ -4901,7 +4901,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 320988138}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.50021386, y: -0.50021374, z: -0.49978617, w: 0.49978614}
+  m_LocalRotation: {x: 0.5, y: -0.5, z: -0.5, w: 0.5}
   m_LocalPosition: {x: -0, y: 0.1273, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -4941,7 +4941,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _position:
-    _value: 90.049
+    _value: 90
   _config:
     _name: 
     _type: 0
@@ -7060,8 +7060,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 463846099}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.00054301886, y: 0.00054301904, z: 0.7071064, w: 0.70710677}
-  m_LocalPosition: {x: 0, y: 0.1157, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: 0.70710665, w: 0.7071069}
+  m_LocalPosition: {x: -0, y: 0.1157, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -7100,7 +7100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _position:
-    _value: -0.088
+    _value: 0
   _config:
     _name: 
     _type: 0
@@ -9295,7 +9295,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 680954889}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.5002312, y: -0.5002312, z: 0.49976873, w: -0.4997687}
+  m_LocalRotation: {x: 0.5, y: -0.5, z: 0.5, w: -0.5}
   m_LocalPosition: {x: 0, y: 0.163941, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -9335,7 +9335,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _position:
-    _value: 269.947
+    _value: -90
   _config:
     _name: 
     _type: 0
@@ -9370,8 +9370,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 690401378}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0.00038397245, z: -0, w: 0.99999994}
-  m_LocalPosition: {x: 0.00043949482, y: 0, z: -0.57229984}
+  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -0.5723}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -9410,7 +9410,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _position:
-    _value: 0.044
+    _value: 0
   _config:
     _name: 
     _type: 0
@@ -12553,8 +12553,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 974493268}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.00062323763, y: 0.0006232378, z: 0.7071065, w: 0.7071066}
-  m_LocalPosition: {x: 0, y: 0.1157, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: 0.70710665, w: 0.7071069}
+  m_LocalPosition: {x: -0, y: 0.1157, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -12593,7 +12593,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _position:
-    _value: -0.101
+    _value: 0
   _config:
     _name: 
     _type: 0
@@ -13336,7 +13336,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1032666550}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.500301, y: -0.50030094, z: -0.49969885, w: 0.49969882}
+  m_LocalRotation: {x: 0.5, y: -0.5, z: -0.5, w: 0.5}
   m_LocalPosition: {x: -0, y: 0.1273, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -13376,7 +13376,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _position:
-    _value: 90.069
+    _value: 90
   _config:
     _name: 
     _type: 0
@@ -13800,7 +13800,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1096064046}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.5002573, y: -0.5002573, z: 0.49974257, w: -0.49974254}
+  m_LocalRotation: {x: 0.5, y: -0.5, z: 0.5, w: -0.5}
   m_LocalPosition: {x: 0, y: 0.163941, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -13840,7 +13840,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _position:
-    _value: 269.941
+    _value: -90
   _config:
     _name: 
     _type: 0
@@ -15281,7 +15281,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 2
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -15293,7 +15293,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 3
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -15305,7 +15305,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 4
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -20890,7 +20890,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _position:
-    _value: 0.027
+    _value: 0
   _config:
     _name: 
     _type: 0
@@ -20925,7 +20925,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1647934071}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0.00023561949, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0.0922, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -21930,19 +21930,19 @@ MonoBehaviour:
     _controller: {fileID: 1749722055}
     _jointState:
       _robJoint:
-        _r1: 90.069
-        _r2: -90.01
-        _r3: 0.044
-        _r4: 269.947
-        _r5: -0.101
-        _r6: 0.019
+        _r1: 90
+        _r2: -90
+        _r3: 0
+        _r4: -90
+        _r5: 0
+        _r6: 0
       _extJoint:
-        _e1: 0
-        _e2: 0
-        _e3: 0
-        _e4: 0
-        _e5: 0
-        _e6: 0
+        _e1: 9e+9
+        _e2: 9e+9
+        _e3: 9e+9
+        _e4: 9e+9
+        _e5: 9e+9
+        _e6: 9e+9
     _initJointState:
       _robJoint:
         _r1: 90
@@ -21961,53 +21961,53 @@ MonoBehaviour:
   _poseObserver:
     _flange:
       _value:
-        e00: -0.000000060808325
-        e01: 0.0005584864
-        e02: 0.9999999
-        e03: 0.00004844041
+        e00: -0.00000008742276
+        e01: -0.00000004371142
+        e02: 1
+        e03: -0.000000073078496
         e10: 1
-        e11: 0.00000089858423
-        e12: 0.00000006033223
-        e13: 1.4273001
-        e20: -0.0000008985504
-        e21: 0.9999999
-        e22: -0.00055848627
-        e23: 0.25614116
+        e11: 0.00000031391647
+        e12: 0.00000008742278
+        e13: 1.4273
+        e20: -0.00000031391647
+        e21: 1
+        e22: 0.000000043711395
+        e23: 0.25614104
         e30: 0
         e31: 0
         e32: 0
         e33: 1
     _toolCenterPointBase:
       _value:
-        e00: 1.0000001
-        e01: -0.00000010795126
-        e02: -0.0005584268
-        e03: 0.000093849274
-        e10: -0.00000010825507
+        e00: 1.0000002
+        e01: -0.00000008116468
+        e02: 0.000000103316054
+        e03: -0.00000006189664
+        e10: -0.00000008116456
         e11: -0.99999976
-        e12: -0.00000059033454
-        e13: 1.2587502
-        e20: -0.0005584268
-        e21: 0.00000059039473
-        e22: -0.9999999
-        e23: 0.33742997
+        e12: -0.000000005666772
+        e13: 1.2587501
+        e20: 0.000000103316005
+        e21: 0.000000005666752
+        e22: -1
+        e23: 0.33742976
         e30: 0
         e31: 0
         e32: 0
         e33: 1
     _toolCenterPointWorld:
       _value:
-        e00: 1.0000001
-        e01: -0.00000010795126
-        e02: -0.0005584268
-        e03: 22.500093
-        e10: -0.00000010825507
+        e00: 1.0000002
+        e01: -0.00000008116468
+        e02: 0.000000103316054
+        e03: 22.5
+        e10: -0.00000008116456
         e11: -0.99999976
-        e12: -0.00000059033454
-        e13: 1.2587502
-        e20: -0.0005584268
-        e21: 0.00000059039473
-        e22: -0.9999999
+        e12: -0.000000005666772
+        e13: 1.2587501
+        e20: 0.000000103316005
+        e21: 0.000000005666752
+        e22: -1
         e23: 6.33743
         e30: 0
         e31: 0
@@ -22015,17 +22015,17 @@ MonoBehaviour:
         e33: 1
     _toolCenterPointFrame:
       _value:
-        e00: 1.0000001
-        e01: -0.00000010795126
-        e02: -0.0005584268
-        e03: 0.00009346008
-        e10: -0.00000010825507
+        e00: 1.0000002
+        e01: -0.00000008116468
+        e02: 0.000000103316054
+        e03: 0
+        e10: -0.00000008116456
         e11: -0.99999976
-        e12: -0.00000059033454
-        e13: 1.2587502
-        e20: -0.0005584268
-        e21: 0.00000059039473
-        e22: -0.9999999
+        e12: -0.000000005666772
+        e13: 1.2587501
+        e20: 0.000000103316005
+        e21: 0.000000005666752
+        e22: -1
         e23: 0.33743
         e30: 0
         e31: 0
@@ -23128,7 +23128,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _position:
-    _value: 0.019
+    _value: 0
   _config:
     _name: 
     _type: 0
@@ -23163,7 +23163,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1842770472}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0.00016580627, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0.0922, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -24232,8 +24232,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1926668499}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.7071685, z: 0, w: 0.70704514}
-  m_LocalPosition: {x: -0.612, y: 0, z: 0.00010683446}
+  m_LocalRotation: {x: -0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -0.612, y: 0, z: 0.00000002675137}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -24272,7 +24272,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _position:
-    _value: -90.01
+    _value: -90
   _config:
     _name: 
     _type: 0
