@@ -3,16 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GantryController : MonoBehaviour
-{    
+{
     // 축 1개 전용. GantryConnector의 포지셔닝 데이터와 ServoAmp를 사용해 스텝을 실행한다.
     // 지원: ABS_Linear / INC_Linear, End / Location (Continue는 End로 처리)
     // 무시: Forward_Speed / Reverse_Speed
 
 
-    public GantryConnector connector;
-    public int axisIndex = 1;   // 1~4 (1축~4축)
-
     private ServoAmp amp;
+    private AxisData axisData;
+    private Action onFinished;          // 시퀀스 종료 시 호출 (위치결정완료 피드백)
     private float originalMaxSpeed;     // ServoAmp 원래 maxSpeed (속도 상한)
 
     private List<PositioningData> steps;
@@ -21,15 +20,12 @@ public class GantryController : MonoBehaviour
     private bool dwelling;
     private float dwellEndTime;
 
-    private void Start()
+    // GantryConnector가 호출. 사용할 ServoAmp, 해당 축의 스텝 데이터, 종료 콜백을 전달받는다.
+    public void Initialize(ServoAmp amp, AxisData axisData, Action onFinished)
     {
-        amp = axisIndex switch
-        {
-            1 => connector.axis1,
-            2 => connector.axis2,
-            3 => connector.axis3,
-            _ => connector.axis4
-        };
+        this.amp = amp;
+        this.axisData = axisData;
+        this.onFinished = onFinished;
         originalMaxSpeed = amp.maxSpeed;
 
         amp.onCompletedPositioning.AddListener(OnArrived);
@@ -55,13 +51,13 @@ public class GantryController : MonoBehaviour
     // stepNumber: 위치결정번호(1부터)
     public void StartPositioning(int stepNumber)
     {
-        if (connector.data == null || axisIndex - 1 >= connector.data.axes.Count)
+        if (amp == null || axisData == null)
         {
-            Debug.LogError($"{name} 포지셔닝 데이터가 없습니다.");
+            Debug.LogError($"{name} 초기화되지 않았거나 포지셔닝 데이터가 없습니다.");
             return;
         }
 
-        var list = connector.data.axes[axisIndex - 1].stepDataList;
+        var list = axisData.stepDataList;
         if (stepNumber < 1 || stepNumber > list.Count)
         {
             //Debug.LogError($"{name} 잘못된 위치결정번호: {stepNumber}");
@@ -130,14 +126,7 @@ public class GantryController : MonoBehaviour
     private void Finish()
     {
         Halt();
-
-        switch (axisIndex)
-        {
-            case 1: connector.OnCompletedAxis1Positioning(); break;
-            case 2: connector.OnCompletedAxis2Positioning(); break;
-            case 3: connector.OnCompletedAxis3Positioning(); break;
-            default: connector.OnCompletedAxis4Positioning(); break;
-        }
+        onFinished?.Invoke();
     }
 
     // mm/degree -> pulse (ServoAmp에 공개 변환 함수가 없어서 같은 공식으로 직접 계산)

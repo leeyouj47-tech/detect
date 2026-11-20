@@ -6469,8 +6469,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e96344bce86ab1429fa4dbb789346e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GantryController
-  connector: {fileID: 930643662}
-  axisIndex: 4
 --- !u!1 &196133286
 GameObject:
   m_ObjectHideFlags: 0
@@ -12834,7 +12832,7 @@ Transform:
   m_GameObject: {fileID: 352795862}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 2.783998, y: 1.271, z: -18.325}
+  m_LocalPosition: {x: 2.783998, y: 0.13499999, z: -22.208}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -13329,6 +13327,9 @@ MonoBehaviour:
   - {fileID: 1011230816}
   currentState: 1
   doneDuration: 0.3
+  onProgramCompleted:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &367999716
 GameObject:
   m_ObjectHideFlags: 0
@@ -14888,6 +14889,9 @@ MonoBehaviour:
   - {fileID: 1129040605}
   currentState: 0
   doneDuration: 0.3
+  onProgramCompleted:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &413175440
 GameObject:
   m_ObjectHideFlags: 0
@@ -14987,8 +14991,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 416418933}
-  - component: {fileID: 416418935}
   - component: {fileID: 416418934}
+  - component: {fileID: 416418935}
   m_Layer: 0
   m_Name: Holder
   m_TagString: Untagged
@@ -15032,8 +15036,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.024, y: 0.006, z: 0.006}
-  m_Center: {x: 0.0083, y: -0.0001, z: 0.0076}
+  m_Size: {x: 0.024, y: 0.006, z: 0.0005}
+  m_Center: {x: 0.0083, y: -0.0001, z: 0.00485}
 --- !u!114 &416418935
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15043,17 +15047,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 416418932}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9fb814162cd3a248a398428581c2d2a, type: 3}
+  m_Script: {fileID: 11500000, guid: 2f56dd9c5cc6e744880c8f23f5e49e73, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::HolderGripper
+  m_EditorClassIdentifier: Assembly-CSharp::HolderTrigger
   grabbableMask:
     serializedVersion: 2
     m_Bits: 128
-  grabPoint: {fileID: 1541795878}
-  triggerList: []
-  autoGrab: 0
-  grabDelay: 1
-  bodyRoot: {fileID: 1541795878}
+  grabPoint: {fileID: 0}
+  releaseZones:
+  - {fileID: 1597921884}
+  - {fileID: 1308867285}
+  servos:
+  - {fileID: 776850088}
+  - {fileID: 1847410789}
+  - {fileID: 1333657857}
+  - {fileID: 195613883}
 --- !u!1 &417222515
 GameObject:
   m_ObjectHideFlags: 0
@@ -16877,6 +16885,9 @@ MonoBehaviour:
   - {fileID: 2012912750}
   currentState: 1
   doneDuration: 0.3
+  onProgramCompleted:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &466210617
 GameObject:
   m_ObjectHideFlags: 0
@@ -18040,18 +18051,18 @@ MonoBehaviour:
   _showFrame: 0
   _showName: 0
   _offset:
-    e00: 1.0000001
-    e01: 3.5526527e-15
-    e02: 9.769956e-15
-    e03: 0.00000042442974
-    e10: -1.5098942e-14
+    e00: 1
+    e01: 1.671425e-14
+    e02: 0.000000018465833
+    e03: 0.0000006632158
+    e10: 1.40326085e-14
     e11: 1
-    e12: -7.105424e-15
-    e13: 0.24000026
-    e20: 5.328996e-15
-    e21: -7.993583e-15
-    e22: 1
-    e23: -0.00000007641816
+    e12: 1.8285442e-15
+    e13: 0.24000016
+    e20: 0.000000015319282
+    e21: 6.1558187e-15
+    e22: 0.99999994
+    e23: -0.0000004745409
     e30: 0
     e31: 0
     e32: 0
@@ -21666,6 +21677,9 @@ MonoBehaviour:
   - {fileID: 1700379499}
   currentState: 1
   doneDuration: 0.3
+  onProgramCompleted:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &616036183
 GameObject:
   m_ObjectHideFlags: 0
@@ -24658,8 +24672,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e96344bce86ab1429fa4dbb789346e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GantryController
-  connector: {fileID: 1118505433}
-  axisIndex: 3
 --- !u!1 &723058039
 GameObject:
   m_ObjectHideFlags: 0
@@ -26435,8 +26447,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e96344bce86ab1429fa4dbb789346e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GantryController
-  connector: {fileID: 930643662}
-  axisIndex: 1
 --- !u!1 &777754107
 GameObject:
   m_ObjectHideFlags: 0
@@ -27037,6 +27047,9 @@ MonoBehaviour:
   - {fileID: 1086613178}
   currentState: 0
   doneDuration: 0.3
+  onProgramCompleted:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &792243508
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27076,6 +27089,9 @@ MonoBehaviour:
   - {fileID: 586862431}
   currentState: 0
   doneDuration: 0.3
+  onProgramCompleted:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &793613077
 GameObject:
   m_ObjectHideFlags: 0
@@ -30314,7 +30330,7 @@ Transform:
   m_GameObject: {fileID: 860572144}
   serializedVersion: 2
   m_LocalRotation: {x: 0.50000006, y: 0.49999994, z: 0.50000006, w: -0.49999994}
-  m_LocalPosition: {x: 0.659, y: 0.309, z: -0.006}
+  m_LocalPosition: {x: 0.718, y: 0.318, z: -0.006}
   m_LocalScale: {x: 0.6754351, y: 0.052258473, z: 0.38192686}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -31253,17 +31269,17 @@ MonoBehaviour:
   _showName: 0
   _offset:
     e00: 1
-    e01: -1.0658175e-14
-    e02: 9.769971e-15
-    e03: 0.00000030924787
-    e10: -4.440843e-15
+    e01: -1.0658141e-14
+    e02: 0.000000017261867
+    e03: -0.00000030426267
+    e10: -1.8859968e-14
     e11: 1
-    e12: -1.0658165e-14
-    e13: 0.24000007
-    e20: -2.131634e-14
-    e21: -7.993595e-15
+    e12: 7.771036e-16
+    e13: 0.23999998
+    e20: -0.000000002625466
+    e21: 0
     e22: 1
-    e23: -0.00000008684725
+    e23: -0.00000012674063
     e30: 0
     e31: 0
     e32: 0
@@ -32369,8 +32385,12 @@ MonoBehaviour:
   axis2: {fileID: 1847410789}
   axis3: {fileID: 1333657857}
   axis4: {fileID: 195613883}
-  data: {fileID: 0}
-  feedbackTime: 0
+  data: {fileID: 11400000, guid: 9b0bc3e97be7b4348858ac804f68a10b, type: 2}
+  axis1Controller: {fileID: 776850090}
+  axis2Controller: {fileID: 1847410791}
+  axis3Controller: {fileID: 1333657859}
+  axis4Controller: {fileID: 195613884}
+  feedbackTime: 0.3
   plcReadyAddress:
     useDevice: 1
     useDoubleWord: 0
@@ -32394,7 +32414,11 @@ MonoBehaviour:
     label: 
     address: 
     description: "Servo All On \uC2E0\uD638"
-    comment: 
+    comment: 'X
+
+
+
+'
   servoAllReadyAddress:
     useDevice: 1
     useDoubleWord: 0
@@ -32402,9 +32426,13 @@ MonoBehaviour:
     label: 
     address: 
     description: Servo All Ready
-    comment: 
+    comment: 'Y
+
+
+
+'
   axis1JogFWDAddress:
-    useDevice: 1
+    useDevice: 0
     useDoubleWord: 0
     isLocked: 0
     label: 
@@ -32412,7 +32440,7 @@ MonoBehaviour:
     description: "1\uCD95 JOG \uC804\uC9C4 \uC2E0\uD638"
     comment: 
   axis1JogRVSAddress:
-    useDevice: 1
+    useDevice: 0
     useDoubleWord: 0
     isLocked: 0
     label: 
@@ -32420,7 +32448,7 @@ MonoBehaviour:
     description: "1\uCD95 JOG \uD6C4\uC9C4 \uC2E0\uD638"
     comment: 
   axis2JogFWDAddress:
-    useDevice: 1
+    useDevice: 0
     useDoubleWord: 0
     isLocked: 0
     label: 
@@ -32428,7 +32456,7 @@ MonoBehaviour:
     description: "2\uCD95 JOG \uC804\uC9C4 \uC2E0\uD638"
     comment: 
   axis2JogRVSAddress:
-    useDevice: 1
+    useDevice: 0
     useDoubleWord: 0
     isLocked: 0
     label: 
@@ -32436,7 +32464,7 @@ MonoBehaviour:
     description: "2\uCD95 JOG \uD6C4\uC9C4 \uC2E0\uD638"
     comment: 
   axis3JogFWDAddress:
-    useDevice: 1
+    useDevice: 0
     useDoubleWord: 0
     isLocked: 0
     label: 
@@ -32444,7 +32472,7 @@ MonoBehaviour:
     description: "3\uCD95 JOG \uC804\uC9C4 \uC2E0\uD638"
     comment: 
   axis3JogRVSAddress:
-    useDevice: 1
+    useDevice: 0
     useDoubleWord: 0
     isLocked: 0
     label: 
@@ -32452,7 +32480,7 @@ MonoBehaviour:
     description: "3\uCD95 JOG \uD6C4\uC9C4 \uC2E0\uD638"
     comment: 
   axis4JogFWDAddress:
-    useDevice: 1
+    useDevice: 0
     useDoubleWord: 0
     isLocked: 0
     label: 
@@ -32460,7 +32488,7 @@ MonoBehaviour:
     description: "4\uCD95 JOG \uC804\uC9C4 \uC2E0\uD638"
     comment: 
   axis4JogRVSAddress:
-    useDevice: 1
+    useDevice: 0
     useDoubleWord: 0
     isLocked: 0
     label: 
@@ -32532,7 +32560,7 @@ MonoBehaviour:
     description: "4\uCD95 \uC704\uCE58 \uACB0\uC815 \uBC88\uD638"
     comment: 
   axis1StopAddress:
-    useDevice: 1
+    useDevice: 0
     useDoubleWord: 0
     isLocked: 0
     label: 
@@ -32540,7 +32568,7 @@ MonoBehaviour:
     description: "1\uCD95 \uC815\uC9C0 \uC2E0\uD638"
     comment: 
   axis2StopAddress:
-    useDevice: 1
+    useDevice: 0
     useDoubleWord: 0
     isLocked: 0
     label: 
@@ -32548,7 +32576,7 @@ MonoBehaviour:
     description: "2\uCD95 \uC815\uC9C0 \uC2E0\uD638"
     comment: 
   axis3StopAddress:
-    useDevice: 1
+    useDevice: 0
     useDoubleWord: 0
     isLocked: 0
     label: 
@@ -32556,7 +32584,7 @@ MonoBehaviour:
     description: "3\uCD95 \uC815\uC9C0 \uC2E0\uD638"
     comment: 
   axis4StopAddress:
-    useDevice: 1
+    useDevice: 0
     useDoubleWord: 0
     isLocked: 0
     label: 
@@ -40023,7 +40051,7 @@ Transform:
   m_GameObject: {fileID: 1118505430}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.549999, y: 4.11, z: -15.29}
+  m_LocalPosition: {x: 5.549999, y: 3.97, z: -15.29}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -40046,8 +40074,12 @@ MonoBehaviour:
   axis2: {fileID: 1702582953}
   axis3: {fileID: 717612255}
   axis4: {fileID: 1397657703}
-  data: {fileID: 0}
-  feedbackTime: 0
+  data: {fileID: 11400000, guid: c543b3fc187d61a4d8e4c61202438df5, type: 2}
+  axis1Controller: {fileID: 1829936733}
+  axis2Controller: {fileID: 1702582955}
+  axis3Controller: {fileID: 717612257}
+  axis4Controller: {fileID: 1397657706}
+  feedbackTime: 0.3
   plcReadyAddress:
     useDevice: 1
     useDoubleWord: 0
@@ -40097,7 +40129,7 @@ MonoBehaviour:
 
 '
   axis1JogFWDAddress:
-    useDevice: 1
+    useDevice: 0
     useDoubleWord: 0
     isLocked: 0
     label: 
@@ -40105,7 +40137,7 @@ MonoBehaviour:
     description: "1\uCD95 JOG \uC804\uC9C4 \uC2E0\uD638"
     comment: 
   axis1JogRVSAddress:
-    useDevice: 1
+    useDevice: 0
     useDoubleWord: 0
     isLocked: 0
     label: 
@@ -40113,7 +40145,7 @@ MonoBehaviour:
     description: "1\uCD95 JOG \uD6C4\uC9C4 \uC2E0\uD638"
     comment: 
   axis2JogFWDAddress:
-    useDevice: 1
+    useDevice: 0
     useDoubleWord: 0
     isLocked: 0
     label: 
@@ -40121,7 +40153,7 @@ MonoBehaviour:
     description: "2\uCD95 JOG \uC804\uC9C4 \uC2E0\uD638"
     comment: 
   axis2JogRVSAddress:
-    useDevice: 1
+    useDevice: 0
     useDoubleWord: 0
     isLocked: 0
     label: 
@@ -40129,7 +40161,7 @@ MonoBehaviour:
     description: "2\uCD95 JOG \uD6C4\uC9C4 \uC2E0\uD638"
     comment: 
   axis3JogFWDAddress:
-    useDevice: 1
+    useDevice: 0
     useDoubleWord: 0
     isLocked: 0
     label: 
@@ -40137,7 +40169,7 @@ MonoBehaviour:
     description: "3\uCD95 JOG \uC804\uC9C4 \uC2E0\uD638"
     comment: 
   axis3JogRVSAddress:
-    useDevice: 1
+    useDevice: 0
     useDoubleWord: 0
     isLocked: 0
     label: 
@@ -40145,7 +40177,7 @@ MonoBehaviour:
     description: "3\uCD95 JOG \uD6C4\uC9C4 \uC2E0\uD638"
     comment: 
   axis4JogFWDAddress:
-    useDevice: 1
+    useDevice: 0
     useDoubleWord: 0
     isLocked: 0
     label: 
@@ -40153,7 +40185,7 @@ MonoBehaviour:
     description: "4\uCD95 JOG \uC804\uC9C4 \uC2E0\uD638"
     comment: 
   axis4JogRVSAddress:
-    useDevice: 1
+    useDevice: 0
     useDoubleWord: 0
     isLocked: 0
     label: 
@@ -40225,7 +40257,7 @@ MonoBehaviour:
     description: "4\uCD95 \uC704\uCE58 \uACB0\uC815 \uBC88\uD638"
     comment: 
   axis1StopAddress:
-    useDevice: 1
+    useDevice: 0
     useDoubleWord: 0
     isLocked: 0
     label: 
@@ -40233,7 +40265,7 @@ MonoBehaviour:
     description: "1\uCD95 \uC815\uC9C0 \uC2E0\uD638"
     comment: 
   axis2StopAddress:
-    useDevice: 1
+    useDevice: 0
     useDoubleWord: 0
     isLocked: 0
     label: 
@@ -40241,7 +40273,7 @@ MonoBehaviour:
     description: "2\uCD95 \uC815\uC9C0 \uC2E0\uD638"
     comment: 
   axis3StopAddress:
-    useDevice: 1
+    useDevice: 0
     useDoubleWord: 0
     isLocked: 0
     label: 
@@ -40249,7 +40281,7 @@ MonoBehaviour:
     description: "3\uCD95 \uC815\uC9C0 \uC2E0\uD638"
     comment: 
   axis4StopAddress:
-    useDevice: 1
+    useDevice: 0
     useDoubleWord: 0
     isLocked: 0
     label: 
@@ -40257,7 +40289,7 @@ MonoBehaviour:
     description: "4\uCD95 \uC815\uC9C0 \uC2E0\uD638"
     comment: 
   axis1RstAddress:
-    useDevice: 1
+    useDevice: 0
     useDoubleWord: 0
     isLocked: 0
     label: 
@@ -40265,7 +40297,7 @@ MonoBehaviour:
     description: "1\uCD95 \uB9AC\uC14B \uC2E0\uD638"
     comment: 
   axis2RstAddress:
-    useDevice: 1
+    useDevice: 0
     useDoubleWord: 0
     isLocked: 0
     label: 
@@ -40273,7 +40305,7 @@ MonoBehaviour:
     description: "2\uCD95 \uB9AC\uC14B \uC2E0\uD638"
     comment: 
   axis3RstAddress:
-    useDevice: 1
+    useDevice: 0
     useDoubleWord: 0
     isLocked: 0
     label: 
@@ -40281,7 +40313,7 @@ MonoBehaviour:
     description: "3\uCD95 \uB9AC\uC14B \uC2E0\uD638"
     comment: 
   axis4RstAddress:
-    useDevice: 1
+    useDevice: 0
     useDoubleWord: 0
     isLocked: 0
     label: 
@@ -40353,7 +40385,7 @@ MonoBehaviour:
     description: "4\uCD95 BUSY \uD53C\uB4DC\uBC31"
     comment: 
   axis1ErrorAddress:
-    useDevice: 1
+    useDevice: 0
     useDoubleWord: 0
     isLocked: 0
     label: 
@@ -40361,7 +40393,7 @@ MonoBehaviour:
     description: "1\uCD95 ERROR \uD53C\uB4DC\uBC31"
     comment: 
   axis2ErrorAddress:
-    useDevice: 1
+    useDevice: 0
     useDoubleWord: 0
     isLocked: 0
     label: 
@@ -40369,7 +40401,7 @@ MonoBehaviour:
     description: "2\uCD95 ERROR \uD53C\uB4DC\uBC31"
     comment: 
   axis3ErrorAddress:
-    useDevice: 1
+    useDevice: 0
     useDoubleWord: 0
     isLocked: 0
     label: 
@@ -40377,7 +40409,7 @@ MonoBehaviour:
     description: "3\uCD95 ERROR \uD53C\uB4DC\uBC31"
     comment: 
   axis4ErrorAddress:
-    useDevice: 1
+    useDevice: 0
     useDoubleWord: 0
     isLocked: 0
     label: 
@@ -44320,8 +44352,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.024, y: 0.006, z: 0.0015}
-  m_Center: {x: 0.0083, y: -0.0001, z: 0.0059}
+  m_Size: {x: 0.024, y: 0.006, z: 0.002}
+  m_Center: {x: 0.0083, y: -0.0001, z: 0.0062}
 --- !u!114 &1249016063
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -48057,8 +48089,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e96344bce86ab1429fa4dbb789346e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GantryController
-  connector: {fileID: 930643662}
-  axisIndex: 3
 --- !u!1 &1335455878
 GameObject:
   m_ObjectHideFlags: 0
@@ -51632,8 +51662,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e96344bce86ab1429fa4dbb789346e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GantryController
-  connector: {fileID: 1118505433}
-  axisIndex: 4
 --- !u!1 &1401867203
 GameObject:
   m_ObjectHideFlags: 0
@@ -57219,7 +57247,7 @@ Transform:
   m_GameObject: {fileID: 1597921879}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.0000019073486, z: -20.045002}
+  m_LocalPosition: {x: 0, y: 0.0000038146973, z: -26.426004}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -57682,8 +57710,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.2, y: 1.5, z: 4.8}
-  m_Center: {x: 0, y: 1, z: 0}
+  m_Size: {x: 2.2, y: 1.5, z: 3.5}
+  m_Center: {x: 0, y: 1, z: 0.48}
 --- !u!1 &1600123441
 GameObject:
   m_ObjectHideFlags: 0
@@ -58007,9 +58035,9 @@ MonoBehaviour:
       _value:
         e00: 0.9983034
         e01: -0.00013131004
-        e02: 0.058225747
-        e03: -0.00006093368
-        e10: 0.058225825
+        e02: 0.058225766
+        e03: -0.00006154846
+        e10: 0.05822583
         e11: 0.0006854177
         e12: -0.9983032
         e13: 2.052748
@@ -58027,13 +58055,13 @@ MonoBehaviour:
         e01: 1.0000001
         e02: 0.00069189374
         e03: -1.3467278
-        e10: 0.058225825
+        e10: 0.05822583
         e11: 0.0006854177
         e12: -0.9983032
         e13: 2.062748
         e20: -0.9983038
         e21: 0.00013119087
-        e22: -0.05822577
+        e22: -0.05822579
         e23: 24.030062
         e30: 0
         e31: 0
@@ -58043,9 +58071,9 @@ MonoBehaviour:
       _value:
         e00: 0.9983034
         e01: -0.00013131004
-        e02: 0.058225747
+        e02: 0.058225766
         e03: -0.00006181754
-        e10: 0.058225825
+        e10: 0.05822583
         e11: 0.0006854177
         e12: -0.9983032
         e13: 2.052748
@@ -61113,8 +61141,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e96344bce86ab1429fa4dbb789346e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GantryController
-  connector: {fileID: 1118505433}
-  axisIndex: 2
 --- !u!1 &1706798330
 GameObject:
   m_ObjectHideFlags: 0
@@ -63322,6 +63348,9 @@ MonoBehaviour:
   - {fileID: 947734240}
   currentState: 0
   doneDuration: 0.3
+  onProgramCompleted:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &1765563805
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63362,6 +63391,9 @@ MonoBehaviour:
   - {fileID: 0}
   currentState: 0
   doneDuration: 0.3
+  onProgramCompleted:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1766209341
 GameObject:
   m_ObjectHideFlags: 0
@@ -66004,8 +66036,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e96344bce86ab1429fa4dbb789346e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GantryController
-  connector: {fileID: 1118505433}
-  axisIndex: 1
 --- !u!1 &1830430714
 GameObject:
   m_ObjectHideFlags: 0
@@ -66588,6 +66618,9 @@ MonoBehaviour:
   - {fileID: 1302001911}
   currentState: 0
   doneDuration: 0.3
+  onProgramCompleted:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &1843910572
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66627,6 +66660,9 @@ MonoBehaviour:
   - {fileID: 2125373133}
   currentState: 1
   doneDuration: 0.3
+  onProgramCompleted:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1847410786
 GameObject:
   m_ObjectHideFlags: 0
@@ -66941,8 +66977,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e96344bce86ab1429fa4dbb789346e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GantryController
-  connector: {fileID: 930643662}
-  axisIndex: 2
 --- !u!1 &1848020484
 GameObject:
   m_ObjectHideFlags: 0
@@ -77364,7 +77398,7 @@ Transform:
   m_GameObject: {fileID: 919132148602653083}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -2.73, y: 0.12899998, z: -33.511}
+  m_LocalPosition: {x: -2.7280006, y: 0.12899998, z: -27.342}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -83529,7 +83563,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &9023536690621713701
 Transform:
   m_ObjectHideFlags: 0
@@ -83739,9 +83773,11 @@ SceneRoots:
   - {fileID: 2111144827}
   - {fileID: 1793831602}
   - {fileID: 514866550}
-  - {fileID: 543450653077934881}
   - {fileID: 1309860245}
+  - {fileID: 543450653077934881}
+  - {fileID: 1754796560}
   - {fileID: 352795863}
+  - {fileID: 1404305307}
   - {fileID: 543450653297914687}
   - {fileID: 543450652444458930}
   - {fileID: 543450652588775595}
@@ -83757,6 +83793,4 @@ SceneRoots:
   - {fileID: 2128255817}
   - {fileID: 1974439412}
   - {fileID: 2020952685}
-  - {fileID: 1754796560}
-  - {fileID: 1404305307}
   - {fileID: 1317943255}
