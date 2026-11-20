@@ -567,8 +567,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 42592630}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -0.612, y: 0, z: 0.00000002675137}
+  m_LocalRotation: {x: -0, y: 0.7071809, z: 0, w: 0.7070327}
+  m_LocalPosition: {x: -0.612, y: 0, z: 0.0001282106}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -607,7 +607,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _position:
-    _value: -90
+    _value: -90.012
   _config:
     _name: 
     _type: 0
@@ -734,6 +734,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 69281969}
   m_CullTransparentMesh: 1
+--- !u!1 &73737519
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 73737520}
+  m_Layer: 0
+  m_Name: RobotArmCamera
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &73737520
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 73737519}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 20.25488, y: 0, z: -30.78146}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &76835424
 GameObject:
   m_ObjectHideFlags: 0
@@ -1509,8 +1540,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 129722221}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.5723}
+  m_LocalRotation: {x: 0, y: -0.00038397245, z: -0, w: 0.99999994}
+  m_LocalPosition: {x: 0.00043949482, y: 0, z: -0.57229984}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1549,7 +1580,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _position:
-    _value: 0
+    _value: 0.044
   _config:
     _name: 
     _type: 0
@@ -2425,19 +2456,19 @@ MonoBehaviour:
     _controller: {fileID: 186973345}
     _jointState:
       _robJoint:
-        _r1: 90
-        _r2: -90
-        _r3: 0
-        _r4: -90
-        _r5: 0
-        _r6: 0
+        _r1: 90.049
+        _r2: -90.012
+        _r3: 0.044
+        _r4: 269.941
+        _r5: -0.088
+        _r6: 0.027
       _extJoint:
-        _e1: 9e+9
-        _e2: 9e+9
-        _e3: 9e+9
-        _e4: 9e+9
-        _e5: 9e+9
-        _e6: 9e+9
+        _e1: 0
+        _e2: 0
+        _e3: 0
+        _e4: 0
+        _e5: 0
+        _e6: 0
     _initJointState:
       _robJoint:
         _r1: 90
@@ -2456,72 +2487,72 @@ MonoBehaviour:
   _poseObserver:
     _flange:
       _value:
-        e00: -0.00000008742276
-        e01: -0.00000004371142
-        e02: 1
-        e03: -0.000000073078496
+        e00: 0.00000020969613
+        e01: 0.0006806383
+        e02: 0.9999998
+        e03: 0.00005943659
         e10: 1
-        e11: 0.00000031391647
-        e12: 0.00000008742278
-        e13: 1.4273
-        e20: -0.00000031391647
-        e21: 1
-        e22: 0.000000043711395
-        e23: 0.25614104
+        e11: 0.0000010373649
+        e12: -0.00000021039055
+        e13: 1.4273001
+        e20: -0.0000010375078
+        e21: 0.99999976
+        e22: -0.00068063824
+        e23: 0.2561411
         e30: 0
         e31: 0
         e32: 0
         e33: 1
     _toolCenterPointBase:
       _value:
-        e00: 1.0000005
-        e01: -0.000000039017827
-        e02: -0.00000007549793
-        e03: -0.000000061896635
-        e10: -0.000000039017703
+        e00: 1.0000002
+        e01: -0.00000033637514
+        e02: -0.0006807577
+        e03: 0.000114729424
+        e10: -0.00000033683125
         e11: -0.99999976
-        e12: 0.00000003648009
-        e13: 1.25875
-        e20: -0.00000007549787
-        e21: -0.000000036480085
-        e22: -1.0000002
-        e23: 0.33742976
+        e12: -0.00000068696846
+        e13: 1.2587502
+        e20: -0.0006807578
+        e21: 0.0000006871972
+        e22: -1
+        e23: 0.3374299
         e30: 0
         e31: 0
         e32: 0
         e33: 1
     _toolCenterPointWorld:
       _value:
-        e00: 1.0000005
-        e01: -0.000000039017827
-        e02: -0.00000007549793
-        e03: 22.5
-        e10: -0.000000039017703
+        e00: 1.0000002
+        e01: -0.00000033637514
+        e02: -0.0006807577
+        e03: 22.500114
+        e10: -0.00000033683125
         e11: -0.99999976
-        e12: 0.00000003648009
-        e13: 1.25875
-        e20: -0.00000007549787
-        e21: -0.000000036480085
-        e22: -1.0000002
-        e23: 4.6074295
+        e12: -0.00000068696846
+        e13: 1.2587502
+        e20: -0.0006807578
+        e21: 0.0000006871972
+        e22: -1
+        e23: 4.60743
         e30: 0
         e31: 0
         e32: 0
         e33: 1
     _toolCenterPointFrame:
       _value:
-        e00: 1.0000005
-        e01: -0.000000039017827
-        e02: -0.00000007549793
-        e03: 0
-        e10: -0.000000039017703
+        e00: 1.0000002
+        e01: -0.00000033637514
+        e02: -0.0006807577
+        e03: 0.00011444092
+        e10: -0.00000033683125
         e11: -0.99999976
-        e12: 0.00000003648009
-        e13: 1.25875
-        e20: -0.00000007549787
-        e21: -0.000000036480085
-        e22: -1.0000002
-        e23: 0.33742952
+        e12: -0.00000068696846
+        e13: 1.2587502
+        e20: -0.0006807578
+        e21: 0.0000006871972
+        e22: -1
+        e23: 0.33743
         e30: 0
         e31: 0
         e32: 0
@@ -2769,8 +2800,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 203392660}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: 0.70710665, w: 0.7071069}
-  m_LocalPosition: {x: -0, y: 0.1157, z: 0}
+  m_LocalRotation: {x: 0.00067877356, y: 0.0006787738, z: 0.70710635, w: 0.70710665}
+  m_LocalPosition: {x: 0, y: 0.1157, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2809,7 +2840,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _position:
-    _value: 0
+    _value: -0.11
   _config:
     _name: 
     _type: 0
@@ -3628,8 +3659,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 247360205}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -0.612, y: 0, z: 0.00000002675137}
+  m_LocalRotation: {x: -0, y: 0.70729804, z: 0, w: 0.7069155}
+  m_LocalPosition: {x: -0.6119999, y: 0, z: 0.00033110147}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3668,7 +3699,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _position:
-    _value: -90
+    _value: -90.031
   _config:
     _name: 
     _type: 0
@@ -4413,6 +4444,8 @@ MonoBehaviour:
     description: M524
     comment: 
   feedbackTime: 0.3
+  agvBatteryVisibility: {fileID: 950182151}
+  robotBatteryVisibility: {fileID: 1468056030}
 --- !u!1 &285865829
 GameObject:
   m_ObjectHideFlags: 0
@@ -4965,7 +4998,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 320988138}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.5, y: -0.5, z: -0.5, w: 0.5}
+  m_LocalRotation: {x: 0.50021386, y: -0.50021374, z: -0.49978617, w: 0.49978614}
   m_LocalPosition: {x: -0, y: 0.1273, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -5005,7 +5038,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _position:
-    _value: 90
+    _value: 90.049
   _config:
     _name: 
     _type: 0
@@ -6790,19 +6823,19 @@ MonoBehaviour:
     _controller: {fileID: 457138408}
     _jointState:
       _robJoint:
-        _r1: -90
-        _r2: -90
-        _r3: 0
-        _r4: -90
-        _r5: 0
-        _r6: 0
+        _r1: -89.88
+        _r2: -90.031
+        _r3: 0.099
+        _r4: 269.925
+        _r5: -0.11
+        _r6: 0.006
       _extJoint:
-        _e1: 9e+9
-        _e2: 9e+9
-        _e3: 9e+9
-        _e4: 9e+9
-        _e5: 9e+9
-        _e6: 9e+9
+        _e1: 0
+        _e2: 0
+        _e3: 0
+        _e4: 0
+        _e5: 0
+        _e6: 0
     _initJointState:
       _robJoint:
         _r1: -90
@@ -6821,18 +6854,18 @@ MonoBehaviour:
   _poseObserver:
     _flange:
       _value:
-        e00: 0.00000008742279
-        e01: -0.000000043711356
+        e00: 0.000017802362
+        e01: 0.00017460139
         e02: -1
-        e03: 0.00000005068593
-        e10: 1
-        e11: 0.00000031391647
-        e12: 0.00000008742278
-        e13: 1.4273
-        e20: 0.00000031391647
-        e21: -1
-        e22: 0.00000004371138
-        e23: -0.25614104
+        e03: 0.000025504509
+        e10: 1.0000001
+        e11: 0.00000054914244
+        e12: 0.000017802364
+        e13: 1.4272995
+        e20: 0.00000055225087
+        e21: -0.99999994
+        e22: -0.00017460175
+        e23: -0.2561414
         e30: 0
         e31: 0
         e32: 0
@@ -6840,17 +6873,17 @@ MonoBehaviour:
     _toolCenterPointBase:
       _value:
         e00: -1.0000002
-        e01: -0.00000017171651
-        e02: -0.00000013510255
-        e03: 0.00000003239753
-        e10: 0.0000001717164
-        e11: -0.99999976
-        e12: 0.00000050009544
-        e13: 1.25875
-        e20: -0.00000013510251
-        e21: 0.00000050009527
-        e22: 1
-        e23: -0.33743083
+        e01: -0.000017886794
+        e02: -0.00017478019
+        e03: 0.00003669722
+        e10: 0.000017886661
+        e11: -0.9999999
+        e12: 0.00000026487274
+        e13: 1.2587495
+        e20: -0.00017478061
+        e21: 0.00000026174618
+        e22: 0.99999994
+        e23: -0.33743122
         e30: 0
         e31: 0
         e32: 0
@@ -6858,17 +6891,17 @@ MonoBehaviour:
     _toolCenterPointWorld:
       _value:
         e00: -1.0000002
-        e01: -0.00000017171651
-        e02: -0.00000013510255
-        e03: 19.5
-        e10: 0.0000001717164
-        e11: -0.99999976
-        e12: 0.00000050009544
-        e13: 1.25875
-        e20: -0.00000013510251
-        e21: 0.00000050009527
-        e22: 1
-        e23: 3.932569
+        e01: -0.000017886794
+        e02: -0.00017478019
+        e03: 19.500036
+        e10: 0.000017886661
+        e11: -0.9999999
+        e12: 0.00000026487274
+        e13: 1.2587495
+        e20: -0.00017478061
+        e21: 0.00000026174618
+        e22: 0.99999994
+        e23: 3.9325688
         e30: 0
         e31: 0
         e32: 0
@@ -6876,17 +6909,17 @@ MonoBehaviour:
     _toolCenterPointFrame:
       _value:
         e00: -1.0000002
-        e01: -0.00000017171651
-        e02: -0.00000013510255
-        e03: 0
-        e10: 0.0000001717164
-        e11: -0.99999976
-        e12: 0.00000050009544
-        e13: 1.25875
-        e20: -0.00000013510251
-        e21: 0.00000050009527
-        e22: 1
-        e23: -0.33743095
+        e01: -0.000017886794
+        e02: -0.00017478019
+        e03: 0.000036239624
+        e10: 0.000017886661
+        e11: -0.9999999
+        e12: 0.00000026487274
+        e13: 1.2587495
+        e20: -0.00017478061
+        e21: 0.00000026174618
+        e22: 0.99999994
+        e23: -0.3374312
         e30: 0
         e31: 0
         e32: 0
@@ -7124,8 +7157,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 463846099}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: 0.70710665, w: 0.7071069}
-  m_LocalPosition: {x: -0, y: 0.1157, z: 0}
+  m_LocalRotation: {x: 0.00054301886, y: 0.00054301904, z: 0.7071064, w: 0.70710677}
+  m_LocalPosition: {x: 0, y: 0.1157, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -7164,7 +7197,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _position:
-    _value: 0
+    _value: -0.088
   _config:
     _name: 
     _type: 0
@@ -8533,7 +8566,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _position:
-    _value: 0
+    _value: 0.006
   _config:
     _name: 
     _type: 0
@@ -8568,7 +8601,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 605654798}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: -0.00005235988, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0.0922, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -9359,7 +9392,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 680954889}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.5, y: -0.5, z: 0.5, w: -0.5}
+  m_LocalRotation: {x: 0.5002312, y: -0.5002312, z: 0.49976873, w: -0.4997687}
   m_LocalPosition: {x: 0, y: 0.163941, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -9399,7 +9432,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _position:
-    _value: -90
+    _value: 269.947
   _config:
     _name: 
     _type: 0
@@ -9434,8 +9467,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 690401378}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.5723}
+  m_LocalRotation: {x: 0, y: -0.00038397245, z: -0, w: 0.99999994}
+  m_LocalPosition: {x: 0.00043949482, y: 0, z: -0.57229984}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -9474,7 +9507,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _position:
-    _value: 0
+    _value: 0.044
   _config:
     _name: 
     _type: 0
@@ -12200,6 +12233,7 @@ GameObject:
   - component: {fileID: 950182148}
   - component: {fileID: 950182150}
   - component: {fileID: 950182149}
+  - component: {fileID: 950182151}
   m_Layer: 0
   m_Name: Battery pack cover_AGV
   m_TagString: Untagged
@@ -12279,6 +12313,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 950182147}
   m_Mesh: {fileID: 4249043406941840833, guid: f73ddc2107db81d4c9ea83b3cd2226a9, type: 3}
+--- !u!114 &950182151
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 950182147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44b1e1ab273ec7a42bfad7c0b4533239, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BatteryPackVisibility
+  targetObject: {fileID: 950182147}
+  initialVisible: 0
+  showWhenM524On: 1
 --- !u!1 &950667783
 GameObject:
   m_ObjectHideFlags: 0
@@ -12617,8 +12666,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 974493268}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: 0.70710665, w: 0.7071069}
-  m_LocalPosition: {x: -0, y: 0.1157, z: 0}
+  m_LocalRotation: {x: 0.00062323763, y: 0.0006232378, z: 0.7071065, w: 0.7071066}
+  m_LocalPosition: {x: 0, y: 0.1157, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -12657,7 +12706,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _position:
-    _value: 0
+    _value: -0.101
   _config:
     _name: 
     _type: 0
@@ -13374,6 +13423,37 @@ MonoBehaviour:
   - 0
   position: {x: 22.328867, y: 1.2480147, z: 6.3099775}
   rotation: {x: -1, y: 0.00000044703472, z: -0.000034955323, w: -0.000008865258}
+--- !u!1 &1006439497
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1006439498}
+  m_Layer: 0
+  m_Name: CoverCamera
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1006439498
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1006439497}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 20.25488, y: 0, z: -30.78146}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1032666550
 GameObject:
   m_ObjectHideFlags: 0
@@ -13400,7 +13480,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1032666550}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.5, y: -0.5, z: -0.5, w: 0.5}
+  m_LocalRotation: {x: 0.500301, y: -0.50030094, z: -0.49969885, w: 0.49969882}
   m_LocalPosition: {x: -0, y: 0.1273, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -13440,7 +13520,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _position:
-    _value: 90
+    _value: 90.069
   _config:
     _name: 
     _type: 0
@@ -13864,7 +13944,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1096064046}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.5, y: -0.5, z: 0.5, w: -0.5}
+  m_LocalRotation: {x: 0.5002573, y: -0.5002573, z: 0.49974257, w: -0.49974254}
   m_LocalPosition: {x: 0, y: 0.163941, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -13904,7 +13984,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _position:
-    _value: -90
+    _value: 269.941
   _config:
     _name: 
     _type: 0
@@ -15770,7 +15850,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1224080648}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.5, y: -0.5, z: 0.5, w: -0.5}
+  m_LocalRotation: {x: 0.5003272, y: -0.5003272, z: 0.4996726, w: -0.49967256}
   m_LocalPosition: {x: 0, y: 0.163941, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -15810,7 +15890,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _position:
-    _value: -90
+    _value: 269.925
   _config:
     _name: 
     _type: 0
@@ -17803,6 +17883,37 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1394745715}
   m_Mesh: {fileID: 506243113298568558, guid: 97a549a3be53286489bee3d6abd9e557, type: 3}
+--- !u!1 &1397308867
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1397308868}
+  m_Layer: 0
+  m_Name: ScrewCamera
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1397308868
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1397308867}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 20.25488, y: 0, z: -30.78146}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1406627601
 GameObject:
   m_ObjectHideFlags: 0
@@ -18867,6 +18978,7 @@ GameObject:
   - component: {fileID: 1468056027}
   - component: {fileID: 1468056029}
   - component: {fileID: 1468056028}
+  - component: {fileID: 1468056030}
   m_Layer: 0
   m_Name: Battery pack cover
   m_TagString: Untagged
@@ -18938,6 +19050,21 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.8, y: 0.05, z: 1.7}
   m_Center: {x: 0, y: 0.025, z: 0}
+--- !u!114 &1468056030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1468056026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44b1e1ab273ec7a42bfad7c0b4533239, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BatteryPackVisibility
+  targetObject: {fileID: 6815866555479284028}
+  initialVisible: 1
+  showWhenM524On: 0
 --- !u!1 &1473613929
 GameObject:
   m_ObjectHideFlags: 0
@@ -20955,7 +21082,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _position:
-    _value: 0
+    _value: 0.027
   _config:
     _name: 
     _type: 0
@@ -20990,7 +21117,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1647934071}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: -0.00023561949, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0.0922, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -21689,8 +21816,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1720654525}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.5723}
+  m_LocalRotation: {x: 0, y: -0.00086393784, z: -0, w: 0.99999964}
+  m_LocalPosition: {x: 0.000988863, y: 0, z: -0.5722992}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -21729,7 +21856,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _position:
-    _value: 0
+    _value: 0.099
   _config:
     _name: 
     _type: 0
@@ -21995,19 +22122,19 @@ MonoBehaviour:
     _controller: {fileID: 1749722055}
     _jointState:
       _robJoint:
-        _r1: 90
-        _r2: -90
-        _r3: 0
-        _r4: -90
-        _r5: 0
-        _r6: 0
+        _r1: 90.069
+        _r2: -90.01
+        _r3: 0.044
+        _r4: 269.947
+        _r5: -0.101
+        _r6: 0.019
       _extJoint:
-        _e1: 9e+9
-        _e2: 9e+9
-        _e3: 9e+9
-        _e4: 9e+9
-        _e5: 9e+9
-        _e6: 9e+9
+        _e1: 0
+        _e2: 0
+        _e3: 0
+        _e4: 0
+        _e5: 0
+        _e6: 0
     _initJointState:
       _robJoint:
         _r1: 90
@@ -22026,53 +22153,53 @@ MonoBehaviour:
   _poseObserver:
     _flange:
       _value:
-        e00: -0.00000008742276
-        e01: -0.00000004371142
-        e02: 1
-        e03: -0.000000073078496
+        e00: -0.000000060808325
+        e01: 0.0005584864
+        e02: 0.9999999
+        e03: 0.00004844041
         e10: 1
-        e11: 0.00000031391647
-        e12: 0.00000008742278
-        e13: 1.4273
-        e20: -0.00000031391647
-        e21: 1
-        e22: 0.000000043711395
-        e23: 0.25614104
+        e11: 0.00000089858423
+        e12: 0.00000006033223
+        e13: 1.4273001
+        e20: -0.0000008985504
+        e21: 0.9999999
+        e22: -0.00055848627
+        e23: 0.25614116
         e30: 0
         e31: 0
         e32: 0
         e33: 1
     _toolCenterPointBase:
       _value:
-        e00: 1.0000002
-        e01: -0.00000008116468
-        e02: 0.000000103316054
-        e03: -0.00000006189664
-        e10: -0.00000008116456
+        e00: 1.0000001
+        e01: -0.00000010795126
+        e02: -0.0005584268
+        e03: 0.000093849274
+        e10: -0.00000010825507
         e11: -0.99999976
-        e12: -0.000000005666772
-        e13: 1.2587501
-        e20: 0.000000103316005
-        e21: 0.000000005666752
-        e22: -1
-        e23: 0.33742976
+        e12: -0.00000059033454
+        e13: 1.2587502
+        e20: -0.0005584268
+        e21: 0.00000059039473
+        e22: -0.9999999
+        e23: 0.33742997
         e30: 0
         e31: 0
         e32: 0
         e33: 1
     _toolCenterPointWorld:
       _value:
-        e00: 1.0000002
-        e01: -0.00000008116468
-        e02: 0.000000103316054
-        e03: 22.5
-        e10: -0.00000008116456
+        e00: 1.0000001
+        e01: -0.00000010795126
+        e02: -0.0005584268
+        e03: 22.500093
+        e10: -0.00000010825507
         e11: -0.99999976
-        e12: -0.000000005666772
-        e13: 1.2587501
-        e20: 0.000000103316005
-        e21: 0.000000005666752
-        e22: -1
+        e12: -0.00000059033454
+        e13: 1.2587502
+        e20: -0.0005584268
+        e21: 0.00000059039473
+        e22: -0.9999999
         e23: 6.33743
         e30: 0
         e31: 0
@@ -22080,17 +22207,17 @@ MonoBehaviour:
         e33: 1
     _toolCenterPointFrame:
       _value:
-        e00: 1.0000002
-        e01: -0.00000008116468
-        e02: 0.000000103316054
-        e03: 0
-        e10: -0.00000008116456
+        e00: 1.0000001
+        e01: -0.00000010795126
+        e02: -0.0005584268
+        e03: 0.00009346008
+        e10: -0.00000010825507
         e11: -0.99999976
-        e12: -0.000000005666772
-        e13: 1.2587501
-        e20: 0.000000103316005
-        e21: 0.000000005666752
-        e22: -1
+        e12: -0.00000059033454
+        e13: 1.2587502
+        e20: -0.0005584268
+        e21: 0.00000059039473
+        e22: -0.9999999
         e23: 0.33743
         e30: 0
         e31: 0
@@ -23193,7 +23320,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _position:
-    _value: 0
+    _value: 0.019
   _config:
     _name: 
     _type: 0
@@ -23228,7 +23355,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1842770472}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: -0.00016580627, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0.0922, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -23903,6 +24030,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1874662508}
+  - component: {fileID: 1874662509}
   m_Layer: 0
   m_Name: Battery pack cover_copy
   m_TagString: Untagged
@@ -23926,6 +24054,21 @@ Transform:
   - {fileID: 1827626179}
   m_Father: {fileID: 492346381270477720}
   m_LocalEulerAnglesHint: {x: 180, y: 180, z: 0}
+--- !u!114 &1874662509
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1874662507}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44b1e1ab273ec7a42bfad7c0b4533239, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BatteryPackVisibility
+  targetObject: {fileID: 1827626178}
+  initialVisible: 1
+  showWhenM524On: 0
 --- !u!1001 &1884001770
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24297,8 +24440,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1926668499}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -0.612, y: 0, z: 0.00000002675137}
+  m_LocalRotation: {x: -0, y: 0.7071685, z: 0, w: 0.70704514}
+  m_LocalPosition: {x: -0.612, y: 0, z: 0.00010683446}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -24337,7 +24480,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _position:
-    _value: -90
+    _value: -90.01
   _config:
     _name: 
     _type: 0
@@ -24631,8 +24774,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1938445743}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.5, y: -0.5, z: 0.5, w: -0.5}
-  m_LocalPosition: {x: 0, y: 0.1273, z: -0}
+  m_LocalRotation: {x: -0.4994761, y: 0.49947608, z: -0.5005234, w: 0.5005233}
+  m_LocalPosition: {x: 0, y: 0.1273, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -24671,7 +24814,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _position:
-    _value: -90
+    _value: -89.88
   _config:
     _name: 
     _type: 0
@@ -26913,6 +27056,55 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2085763017}
   m_Mesh: {fileID: -806254544802898328, guid: 7d9d959446713704aae46ef36c8a72dc, type: 3}
+--- !u!1 &2091182037
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2091182038}
+  - component: {fileID: 2091182039}
+  m_Layer: 0
+  m_Name: AGVCamera
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2091182038
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2091182037}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 20.25488, y: 0, z: -30.78146}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2091182039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2091182037}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 618b0e3f6c65dd247a4a016150006c57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Core.Runtime::UnityEngine.Rendering.FreeCamera
+  m_LookSpeedController: 120
+  m_LookSpeedMouse: 4
+  m_MoveSpeed: 10
+  m_MoveSpeedIncrement: 2.5
+  m_Turbo: 10
 --- !u!1 &2095879460
 GameObject:
   m_ObjectHideFlags: 0
@@ -35886,3 +36078,7 @@ SceneRoots:
   - {fileID: 119938411}
   - {fileID: 278311306}
   - {fileID: 285206906}
+  - {fileID: 2091182038}
+  - {fileID: 73737520}
+  - {fileID: 1397308868}
+  - {fileID: 1006439498}
