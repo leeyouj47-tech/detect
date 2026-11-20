@@ -9,40 +9,53 @@ public class PackConnector : MXObject
     public PackController packController;
 
     // ==========================================
-    // AGV 이동 Waypoint ID
+    // 이동 Waypoint ID
     // ==========================================
 
-    [Header("AGV 이동 Waypoint ID")]
-    public int inspectionWaypoint = 2;  // M510
+    [Header("배터리팩 이동 Waypoint ID")]
+    public int inspectionWaypoint = 2;   // M510
+    public int nextAssemblyWaypoint = 3; // M503
 
     // ==========================================
-    // AGV 이동 상태
+    // 이동 상태
     // ==========================================
 
     private bool agvBusy = false;
+
+    // 0: M510 / 1: M503
     private bool[] moveCommandReceived = new bool[2];
+
     private DeviceAddress currentArrivedAddress;
 
     // ==========================================
-    // PLC -> Unity : AGV 이동 명령
+    // PLC -> Unity : 이동 명령
     // ==========================================
 
-    [Header("PLC -> Unity : AGV 이동 명령")]
-    public DeviceAddress inspectionMoveAddress = new DeviceAddress("M510");
-    public DeviceAddress nextAssemblyMoveAddress = new DeviceAddress("M503");
+    [Header("PLC -> Unity : 이동 명령")]
+    public DeviceAddress inspectionMoveAddress =
+        new DeviceAddress("M510");
 
+    public DeviceAddress nextAssemblyMoveAddress =
+        new DeviceAddress("M503");
 
     // ==========================================
-    // Unity -> PLC : AGV 도착 신호
+    // Unity -> PLC : 도착 신호
     // ==========================================
 
-    [Header("Unity -> PLC : AGV 도착 신호")]
+    [Header("Unity -> PLC : 도착 신호")]
+    public DeviceAddress inspectionArrivedAddress =
+        new DeviceAddress("M540");
 
-    public DeviceAddress inspectionArrivedAddress = new DeviceAddress("M540");
-    public DeviceAddress nextAssemblyArrivedAddress = new DeviceAddress("M523");
+    public DeviceAddress nextAssemblyArrivedAddress =
+        new DeviceAddress("M523");
 
     [Header("공통 설정")]
     public float feedbackTime = 2.0f;
+
+
+    // ==========================================
+    // 초기 설정
+    // ==========================================
 
     private void Start()
     {
@@ -58,15 +71,38 @@ public class PackConnector : MXObject
 
         packController.onCompleteMove.AddListener(OnCompletedMove);
 
-        // PLC 이동 명령 등록
         MXRequester.Get.AddDeviceAddress(
-            inspectionMoveAddress.address, InspectionMove);
+            inspectionMoveAddress.address,
+            InspectionMove);
 
         MXRequester.Get.AddDeviceAddress(
-            nextAssemblyMoveAddress.address, NextAssemblyMove);
+            nextAssemblyMoveAddress.address,
+            NextAssemblyMove);
 
         Debug.Log("[PackConnector] PLC 신호 등록 완료");
     }
+
+
+    // ==========================================
+    // M510 : 검사라인 이동
+    // ==========================================
+
+    private void InspectionMove(short value)
+    {
+        Debug.Log($"[PLC 수신] M510 = {value}");
+
+        MoveCommand(
+            value,
+            0,
+            inspectionWaypoint,
+            inspectionArrivedAddress
+        );
+    }
+
+
+    // ==========================================
+    // M503 : 다음 조립공정 이동
+    // ==========================================
 
     private void NextAssemblyMove(short value)
     {
@@ -75,14 +111,15 @@ public class PackConnector : MXObject
         MoveCommand(
             value,
             1,
-            3,
+            nextAssemblyWaypoint,
             nextAssemblyArrivedAddress
         );
     }
-    // ==========================================
-    // AGV 이동 공통 처리
-    // ==========================================
 
+
+    // ==========================================
+    // 공통 이동 처리
+    // ==========================================
 
     private void MoveCommand(
         short value,
@@ -90,10 +127,14 @@ public class PackConnector : MXObject
         int waypointID,
         DeviceAddress arrivedAddress)
     {
-        // PLC 명령 OFF 시 재수신 가능하도록 초기화
+        // PLC 명령 OFF
         if (value == 0)
         {
             moveCommandReceived[commandIndex] = false;
+
+            Debug.Log(
+                $"[PackConnector] 이동 명령 초기화 / Index: {commandIndex}");
+
             return;
         }
 
@@ -105,61 +146,44 @@ public class PackConnector : MXObject
             return;
         }
 
-        // 목적지 확인
-        if (waypointID < 0)
-        {
-            Debug.LogError("[PackConnector] 목적지 Waypoint가 잘못되었습니다.");
-            return;
-        }
-
         // 이동 중인지 확인
         if (agvBusy)
         {
-            Debug.LogWarning("[PackConnector] 이미 이동 중입니다.");
+            Debug.LogWarning(
+                "[PackConnector] 현재 배터리팩 이동 중입니다.");
             return;
         }
 
-        // Controller 확인
         if (packController == null)
         {
-            Debug.LogError("[PackConnector] PackController가 연결되지 않았습니다.");
+            Debug.LogError(
+                "[PackConnector] PackController가 연결되지 않았습니다.");
+            return;
+        }
+
+        if (waypointID < 0)
+        {
+            Debug.LogError(
+                "[PackConnector] 목적지 Waypoint가 잘못되었습니다.");
             return;
         }
 
         Debug.Log(
-            $"[PackConnector] 이동 명령 수신 / Waypoint: {waypointID}");
-
-        // ★ 이동 전에 도착 주소와 상태를 먼저 설정
-        currentArrivedAddress = arrivedAddress;
-        agvBusy = true;
+            $"[PackConnector] 이동 명령 실행 / 목적지: Waypoint {waypointID}");
 
         // 이동 명령 실행
-        currentArrivedAddress = arrivedAddress;
-        agvBusy = true;
-
         bool success = packController.Go(waypointID);
 
         if (!success)
         {
-            currentArrivedAddress = null;
-            agvBusy = false;
+            Debug.LogWarning(
+                $"[PackConnector] 이동 시작 실패 / 목적지: {waypointID}");
             return;
         }
 
-        moveCommandReceived[commandIndex] = true;
-
-        Debug.Log($"[PackConnector] Go 실행 결과: {success}");
-
-        if (!success)
-        {
-            Debug.LogError(
-                $"[PackConnector] 경로 탐색 실패 / Waypoint: {waypointID}");
-
-            currentArrivedAddress = null;
-            agvBusy = false;
-            return;
-        }
-
+        // 이동 성공 시에만 상태 변경
+        currentArrivedAddress = arrivedAddress;
+        agvBusy = true;
         moveCommandReceived[commandIndex] = true;
 
         Debug.Log(
@@ -167,44 +191,35 @@ public class PackConnector : MXObject
     }
 
 
-
     // ==========================================
-    // AGV 이동 명령별 처리
-    // ==========================================
-
-    // M510 : 배터리팩 커버 불량검사라인 이동
-    private void InspectionMove(short value)
-    {
-        Debug.Log(
-            $"[PLC 수신] M510 = {value}");
-
-        MoveCommand(
-            value,
-            0,
-            inspectionWaypoint,
-            inspectionArrivedAddress);
-    }
-
-    // ==========================================
-    // AGV 이동 완료 처리
+    // 이동 완료
     // ==========================================
 
     private void OnCompletedMove()
     {
         if (currentArrivedAddress == null)
+        {
+            Debug.LogWarning(
+                "[PackConnector] 도착 주소가 없습니다. 피드백 전송 생략");
             return;
+        }
 
-        Debug.Log(
-            "[PackConnector] AGV 목적지 도착");
+        Debug.Log("[PackConnector] 배터리팩 목적지 도착");
 
         StartCoroutine(CompleteMoveFeedback());
     }
 
 
+    // ==========================================
+    // 도착 피드백
+    // ==========================================
+
     private IEnumerator CompleteMoveFeedback()
     {
         DeviceAddress arrivedAddress = currentArrivedAddress;
 
+        if (arrivedAddress == null)
+            yield break;
 
         // 도착 신호 ON
         MXRequester.Get.AddSetDeviceRequest(
@@ -214,22 +229,21 @@ public class PackConnector : MXObject
         Debug.Log(
             $"[PackConnector] 도착 신호 ON: {arrivedAddress.address}");
 
-
         yield return new WaitForSeconds(feedbackTime);
-
 
         // 도착 신호 OFF
         MXRequester.Get.AddSetDeviceRequest(
             arrivedAddress.address,
             0);
 
+        Debug.Log(
+            $"[PackConnector] 도착 신호 OFF: {arrivedAddress.address}");
 
         currentArrivedAddress = null;
-
         agvBusy = false;
 
         Debug.Log(
-            "[PackConnector] AGV 도착 피드백 전송 완료");
+            "[PackConnector] 도착 피드백 전송 완료");
     }
 
 

@@ -147,8 +147,7 @@ public class PackController : MonoBehaviour
 
     public void SetRoute(List<WayPoint> newRoutes)
     {
-        Debug.Log(
-            "[PackController] 경로 설정 호출");
+        Debug.Log("[PackController] 경로 설정 호출");
 
         if (newRoutes == null || newRoutes.Count == 0)
         {
@@ -156,6 +155,24 @@ public class PackController : MonoBehaviour
                 "[PackController] 전달받은 경로가 비어 있습니다.");
 
             StopMovement();
+            return;
+        }
+
+        // 출발지와 목적지가 같은 경로인지 확인
+        if (newRoutes.Count == 1 ||
+            (newRoutes[0] != null &&
+             newRoutes[newRoutes.Count - 1] != null &&
+             newRoutes[0].id == newRoutes[newRoutes.Count - 1].id))
+        {
+            Debug.LogWarning(
+                "[PackController] 출발지와 목적지가 같습니다. 이동 및 완료 이벤트를 무시합니다.");
+
+            canMove = false;
+            currentRouteIndex = 0;
+
+            if (routes != null)
+                routes.Clear();
+
             return;
         }
 
@@ -179,20 +196,10 @@ public class PackController : MonoBehaviour
                 ? routes[currentRouteIndex].id.ToString()
                 : "없음"));
 
-        // 출발지와 목적지가 같은 경우
-        if (currentRouteIndex >= routes.Count)
-        {
-            CompleteMovement();
-            return;
-        }
-
         canMove = true;
 
-        Debug.Log(
-            "[PackController] 이동 시작");
+        Debug.Log("[PackController] 이동 시작");
     }
-
-
     // ==========================================
     // 목적지 이동 명령
     // ==========================================
@@ -233,6 +240,15 @@ public class PackController : MonoBehaviour
 
         Debug.Log(
             $"[PackController] 출발지: {startID} / 목적지: {destinationID}");
+
+        // 이미 목적지에 도착해 있다면 이동 명령 무시
+        if (startID == destinationID)
+        {
+            Debug.LogWarning(
+                $"[PackController] 이미 Waypoint {destinationID}에 있습니다. 이동 명령 무시");
+
+            return false;
+        }
 
         return manager.GetRoutes(
             this,
