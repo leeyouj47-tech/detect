@@ -3668,29 +3668,29 @@ MonoBehaviour:
   _e4: 0
   _e5: 0
   _e6: 0
+  _useTools: 0
   mountPoint: {fileID: 2427233139973025623}
-  availableTools:
-  - {fileID: 0}
+  availableTools: []
   currentAttachedTool: {fileID: 0}
   returnToOriginalParent: 0
   toolIndexToConnect: 0
-  _showErrorMassage: 0
+  _showErrorMassage: 1
   waypointContainer: {fileID: 583695908}
   waypoints: []
   _target:
     _value:
-      e00: 1
-      e01: 0
-      e02: 0
-      e03: 3.09687
-      e10: 0
-      e11: 1
-      e12: 0
-      e13: -0
-      e20: 0
-      e21: 0
-      e22: 1
-      e23: -85.74932
+      e00: -0.00000023841864
+      e01: -1.0000004
+      e02: 0.00000035762795
+      e03: 0.8279988
+      e10: -0.00000035762795
+      e11: -0.0000004768373
+      e12: -1.0000004
+      e13: 2.6250005
+      e20: 1.0000004
+      e21: -0.00000011920932
+      e22: -0.0000004768373
+      e23: -78.066
       e30: 0
       e31: 0
       e32: 0
@@ -3704,8 +3704,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1099712006}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.09687, y: -0, z: -85.74932}
+  m_LocalRotation: {x: -0.5000002, y: 0.50000006, z: -0.50000006, w: -0.49999982}
+  m_LocalPosition: {x: 0.8279988, y: 2.6250005, z: -78.066}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7608,8 +7608,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6150475044621384151}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: 1, z: 0, w: 0.00000004371139}
+  m_LocalPosition: {x: 0, y: 0, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8575,11 +8575,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Preliy.Flange::Preliy.Flange.Frame
   _config:
-    _name: 
+    _name: Flange
     _alpha: 0
     _a: 0
     _d: 0
-    _theta: 0
+    _theta: 3.1415927
 --- !u!4 &6613208366054209047
 Transform:
   m_ObjectHideFlags: 0
@@ -9064,7 +9064,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Preliy.Flange::Preliy.Flange.Controller
   _tool:
-    _value: 1
+    _value: 0
   _frame:
     _value: 0
   _configuration:
@@ -9131,17 +9131,17 @@ MonoBehaviour:
   _poseObserver:
     _flange:
       _value:
-        e00: -1
+        e00: 1
         e01: -0.00000031391656
-        e02: 0.00000031391647
+        e02: -0.00000040133926
         e03: -0.000000033589235
-        e10: 0.00000031391656
+        e10: -0.00000040133932
         e11: -0.0000003139164
-        e12: 1
+        e12: -1
         e13: 2.5649996
-        e20: -0.00000031391647
+        e20: 0.00000031391644
         e21: 1
-        e22: 0.00000031391647
+        e22: -0.0000003139165
         e23: 2.1720004
         e30: 0
         e31: 0
@@ -9149,54 +9149,54 @@ MonoBehaviour:
         e33: 1
     _toolCenterPointBase:
       _value:
-        e00: -1
-        e01: -0.0000003139165
-        e02: 0.00000031390752
-        e03: -0.0000007724868
-        e10: 0.00000031390726
+        e00: 1
+        e01: -0.00000031391656
+        e02: -0.00000040133926
+        e03: -0.000000033589235
+        e10: -0.00000040133932
         e11: -0.0000003139164
-        e12: 1
-        e13: 2.564999
-        e20: -0.00000031391647
+        e12: -1
+        e13: 2.5649996
+        e20: 0.00000031391644
         e21: 1
-        e22: 0.00000031391647
-        e23: 2.419
+        e22: -0.0000003139165
+        e23: 2.1720004
         e30: 0
         e31: 0
         e32: 0
         e33: 1
     _toolCenterPointWorld:
       _value:
-        e00: 0.0000004331259
+        e00: -0.00000043312588
         e01: -1.0000004
-        e02: -0.00000031391662
-        e03: 1.9570659
-        e10: 0.00000031390726
+        e02: 0.00000031391667
+        e03: 0.8279988
+        e10: -0.00000040133932
         e11: -0.0000003139164
-        e12: 1
-        e13: 2.564999
-        e20: -1.0000004
-        e21: -0.00000043312593
-        e22: 0.0000003139076
-        e23: -76.220314
+        e12: -1
+        e13: 2.6250005
+        e20: 1.0000004
+        e21: -0.000000433126
+        e22: -0.00000040133938
+        e23: -78.066
         e30: 0
         e31: 0
         e32: 0
         e33: 1
     _toolCenterPointFrame:
       _value:
-        e00: -1
-        e01: -0.0000003139165
-        e02: 0.00000031390752
-        e03: -0.00000349237
-        e10: 0.00000031390726
+        e00: 1
+        e01: -0.00000031391656
+        e02: -0.00000040133926
+        e03: -0.0000026977054
+        e10: -0.00000040133932
         e11: -0.0000003139164
-        e12: 1
-        e13: 2.564999
-        e20: -0.00000031391647
+        e12: -1
+        e13: 2.5649996
+        e20: 0.00000031391644
         e21: 1
-        e22: 0.00000031391647
-        e23: 2.4190001
+        e22: -0.0000003139165
+        e23: 2.1720006
         e30: 0
         e31: 0
         e32: 0
