@@ -6,6 +6,7 @@ namespace Preliy.Flange
 
     [DisallowMultipleComponent]
     [ExecuteAlways]
+    [DefaultExecutionOrder(10)]
     public class TargetScheduler : MonoBehaviour
     {
         [Header("References")]
@@ -33,6 +34,10 @@ namespace Preliy.Flange
         private float _e6;
 
         [Header("Tool Management")]
+        [SerializeField]
+        private bool _useTools = true;
+        public bool UseTools => _useTools;
+        private int ActiveToolIndex => _useTools ? _controller.Tool.Value : 0;
         [Tooltip("로봇 끝단(보통 J6)의 실제 Transform을 할당하세요.")]
         public Transform mountPoint;
         [Tooltip("연결할 툴(프리팹 또는 씬 오브젝트)들의 리스트입니다.")]
@@ -57,14 +62,36 @@ namespace Preliy.Flange
         [SerializeField]
         private Property<Matrix4x4> _target = new();
 
+        private Matrix4x4 _lastRobotBase;
+        private bool _refreshTarget = true;
+
         private void OnEnable()
         {
+            _refreshTarget = true;
             _target.OnValueChanged += JumpToTarget;
         }
 
         private void Update()
         {
-            _target.Value = transform.GetMatrix();
+            if (_controller == null || !_controller.IsValid.Value) return;
+
+            if (!_useTools && _controller.Tool.Value != 0)
+                _controller.Tool.Value = 0;
+
+            var externalJoints = new ExtJoint(_e1, _e2, _e3, _e4, _e5, _e6);
+            var robotBase = _controller.MechanicalGroup.GetRobotBaseWorld(externalJoints);
+            var target = transform.GetMatrix();
+            // A stationary world target still needs a new IK solution after the base moves.
+            if (_refreshTarget || robotBase != _lastRobotBase)
+            {
+                _refreshTarget = false;
+                _lastRobotBase = robotBase;
+                _target.SetValue(target);
+            }
+            else
+            {
+                _target.Value = target;
+            }
         }
 
         private void OnDisable()
@@ -104,14 +131,21 @@ namespace Preliy.Flange
         private void JumpTo(Controller controller, Matrix4x4 target, SolutionIgnoreMask ignoreMask, bool showErrorMassage = true)
         {
             var externalJoints = new ExtJoint(_e1, _e2, _e3, _e4, _e5, _e6);
-            var solution = controller.Solver.ComputeInverse(target, controller.Tool.Value, _configuration, externalJoints, ignoreMask);
+            // Avoid resolving a singular wrist again when the flange already matches the target.
+            if (!_useTools)
+            {
+                var actual = controller.Solver.ComputeForward(controller.MechanicalGroup.JointState, 0);
+                if (Vector3.Distance(actual.GetPosition(), target.GetPosition()) < 0.000001f &&
+                    Quaternion.Angle(actual.rotation, target.rotation) < 0.01f) return;
+            }
+            var solution = controller.Solver.ComputeInverse(target, ActiveToolIndex, _configuration, externalJoints, ignoreMask);
             controller.Solver.TryApplySolution(solution, showErrorMassage);
         }
 
         public IKSolution GetSolution(Matrix4x4 target)
         {
             var externalJoints = new ExtJoint(_e1, _e2, _e3, _e4, _e5, _e6);
-            return _controller.Solver.ComputeInverse(target, _controller.Tool.Value, _configuration, externalJoints, SolutionIgnoreMask.All);
+            return _controller.Solver.ComputeInverse(target, ActiveToolIndex, _configuration, externalJoints, SolutionIgnoreMask.All);
         }
 
         public void SetJointAngleFromInspector(int jointIndex, float angle)
@@ -126,7 +160,7 @@ namespace Preliy.Flange
 
             // 2. 순기구학(FK) 연산 수행
             Matrix4x4 lastPose = _controller.transform.GetMatrix();
-            if (currentAttachedTool != null)
+            if (_useTools && currentAttachedTool != null)
             {
                 Transform tcp = currentAttachedTool.Point;
                 transform.SetPositionAndRotation(tcp.position, tcp.rotation);
@@ -213,7 +247,7 @@ namespace Preliy.Flange
 
             // 2. [매우 중요] 로봇이 홈 자세가 된 후의 TCP(끝단) 위치를 스케줄러로 가져와야 합니다.
             Matrix4x4 lastPose = _controller.transform.GetMatrix();
-            if (currentAttachedTool != null)
+            if (_useTools && currentAttachedTool != null)
             {
                 Transform tcp = currentAttachedTool.Point;
                 transform.SetPositionAndRotation(tcp.position, tcp.rotation);
@@ -243,6 +277,7 @@ namespace Preliy.Flange
 
         public void ConnectTool()
         {
+            if (!_useTools) return;
             if (availableTools.Count == 0)
             {
                 Debug.LogWarning("유효하지 않은 툴 인덱스이거나 비어있는 슬롯입니다.");
@@ -257,6 +292,7 @@ namespace Preliy.Flange
         }
         public bool ConnectTool(int index)
         {
+            if (!_useTools || index < 0 || index >= availableTools.Count || availableTools[index] == null) return false;
             if (mountPoint == null)
             {
                 Debug.LogWarning("로봇 끝단(End Effector Mount Point)이 지정되지 않았습니다.");
@@ -269,7 +305,7 @@ namespace Preliy.Flange
             }
 
             // 기존에 연결된 툴이 있다면 연결 취소
-            if (currentAttachedTool != null)
+            if (_useTools && currentAttachedTool != null)
             {
                 Debug.LogWarning("툴이 이미 연결되어 연결을 취소합니다.");
                 return false;
@@ -301,9 +337,14 @@ namespace Preliy.Flange
         // ==========================================
         public void ReleaseTool()
         {
+            if (!_useTools)
+            {
+                if (_controller != null) _controller.Tool.Value = 0;
+                return;
+            }
             // 1. 로봇 끝단과의 부모-자식 관계를 끊어냄 (보통 작업대나 툴 스탠드에 내려놓음)
             // 여기서는 씬 최상단(null)으로 분리합니다.
-            if (currentAttachedTool != null)
+            if (_useTools && currentAttachedTool != null)
             {
                 string toolName = currentAttachedTool.gameObject.name;
 
@@ -336,13 +377,13 @@ namespace Preliy.Flange
         //연결된 툴 사용(켜기/끄기)
         public void ActTool(bool isOn)
         {
-            currentAttachedTool.IsOn = isOn;
+            if (_useTools && currentAttachedTool != null) currentAttachedTool.IsOn = isOn;
         }
 
 #if UNITY_EDITOR
         private void OnValidate()
         {
-            JumpToTarget(transform.GetMatrix());
+            _refreshTarget = true;
         }
 
         [HideInInspector]
