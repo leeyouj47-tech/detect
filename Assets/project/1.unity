@@ -4756,6 +4756,7 @@ MonoBehaviour:
   _e4: 0
   _e5: 0
   _e6: 0
+  _useTools: 1
   mountPoint: {fileID: 1297589294}
   availableTools:
   - {fileID: 234397323}
@@ -6600,6 +6601,7 @@ MonoBehaviour:
   _e4: 0
   _e5: 0
   _e6: 0
+  _useTools: 1
   mountPoint: {fileID: 1094690537}
   availableTools:
   - {fileID: 356618277}
@@ -11040,6 +11042,7 @@ MonoBehaviour:
   _e4: 0
   _e5: 0
   _e6: 0
+  _useTools: 1
   mountPoint: {fileID: 128860626}
   availableTools:
   - {fileID: 1340037044}
@@ -16308,6 +16311,7 @@ MonoBehaviour:
   _e4: 0
   _e5: 0
   _e6: 0
+  _useTools: 1
   mountPoint: {fileID: 665375846}
   availableTools:
   - {fileID: 987490097}
@@ -16335,7 +16339,7 @@ MonoBehaviour:
       e20: 0
       e21: 0
       e22: -1
-      e23: -9
+      e23: -9.000001
       e30: 0
       e31: 0
       e32: 0
@@ -16350,7 +16354,7 @@ Transform:
   m_GameObject: {fileID: 1219412948}
   serializedVersion: 2
   m_LocalRotation: {x: 1, y: -0, z: -0, w: 0}
-  m_LocalPosition: {x: 23.528996, y: 1.339, z: -9}
+  m_LocalPosition: {x: 23.528996, y: 1.339, z: -9.000001}
   m_LocalScale: {x: 1.0401, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -26064,6 +26068,7 @@ MonoBehaviour:
   _e4: 0
   _e5: 0
   _e6: 0
+  _useTools: 1
   mountPoint: {fileID: 5411756570655166674}
   availableTools:
   - {fileID: 211214801}
