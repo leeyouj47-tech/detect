@@ -19,10 +19,10 @@ public class BatterProgram : OfflineProgram
         Debug.Log("[TEST] Program1 시작!");
 
         this.MoveL(waypoints[1]);
+        this.MoveL(waypoints[2]);
 
         this.Action(true, 100);
 
-        this.MoveL(waypoints[2]);
         this.MoveL(waypoints[3]);
         this.MoveL(waypoints[4]);
         this.MoveL(waypoints[5]);
