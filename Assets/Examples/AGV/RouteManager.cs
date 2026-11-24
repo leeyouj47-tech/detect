@@ -8,19 +8,55 @@ public class RouteManager : MonoBehaviour
     //딕셔너리 - key, value
     private Dictionary<int, WayPoint> waypointDic = new Dictionary<int, WayPoint>();
 
+    /* public void InitializeWaypoints()
+     {
+         waypointDic.Clear();
+         foreach(WayPoint w in allWaypoints)
+         {
+             if (waypointDic.ContainsKey(w.id))
+             {
+                 continue;
+             }
+             waypointDic.Add(w.id, w);
+         }
+         Debug.Log($"[RouteManager]에 총 {waypointDic.Count}개의 웨이포인트가 로드되었습니다.");
+     }*/
+    //26.11.24 LYJ: 수정중
+
     public void InitializeWaypoints()
     {
         waypointDic.Clear();
-        foreach(WayPoint w in allWaypoints)
+
+        if (allWaypoints == null || allWaypoints.Length == 0)
         {
-            if (waypointDic.ContainsKey(w.id))
+            Debug.LogError(
+                $"[{name}] All Waypoints가 설정되지 않았습니다.");
+            return;
+        }
+
+        foreach (WayPoint w in allWaypoints)
+        {
+            if (w == null)
             {
+                Debug.LogWarning(
+                    $"[{name}] 비어 있는 Waypoint 항목이 있습니다.");
                 continue;
             }
+
+            if (waypointDic.ContainsKey(w.id))
+            {
+                Debug.LogWarning(
+                    $"[{name}] 중복 Waypoint ID: {w.id}");
+                continue;
+            }
+
             waypointDic.Add(w.id, w);
         }
-        Debug.Log($"[RouteManager]에 총 {waypointDic.Count}개의 웨이포인트가 로드되었습니다.");
+
+        Debug.Log(
+            $"[RouteManager] 총 {waypointDic.Count}개의 웨이포인트가 로드되었습니다.");
     }
+
 
     /// <summary>
     /// 해당 위치 기준 가장 가까운 웨이포인트의 ID를 검색해서 반환
