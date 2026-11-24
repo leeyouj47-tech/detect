@@ -23,8 +23,10 @@ public class TEST : OfflineProgram
         this.Action(true, 100);
 
         this.MoveL(waypoints[2]);
+        this.MoveL(waypoints[6]);
         this.MoveL(waypoints[3]);
         this.MoveL(waypoints[4]);
+        this.MoveL(waypoints[5]);
 
         this.Action(false);
 
