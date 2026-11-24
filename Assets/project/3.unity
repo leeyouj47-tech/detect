@@ -6464,7 +6464,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 195613879}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1e96344bce86ab1429fa4dbb789346e3, type: 3}
   m_Name: 
@@ -12832,7 +12832,7 @@ Transform:
   m_GameObject: {fileID: 352795862}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 2.783998, y: 0.13499999, z: -22.208}
+  m_LocalPosition: {x: 10.079, y: 0.13499999, z: -22.208}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -12863,12 +12863,19 @@ MonoBehaviour:
   speed: 1
   rotateSpeed: 90
   lockRotation: 1
-  stopWaypointIDs: 01000000
+  autoDestinationIDs: 0100000005000000
+  autoStart: 1
+  loop: 0
+  arriveWaitTime: 80
+  stopWaypointIDs: 0100000005000000
   carrier: {fileID: 4954954953770027172}
   onCompleteMove:
     m_PersistentCalls:
       m_Calls: []
   onArriveStop:
+    m_PersistentCalls:
+      m_Calls: []
+  onCompleteAutoRun:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &353197661
@@ -13330,7 +13337,19 @@ MonoBehaviour:
   doneDuration: 0.3
   onProgramCompleted:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 692758363}
+        m_TargetAssemblyTypeName: B1Connector, Assembly-CSharp
+        m_MethodName: B1CompletedCommand
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &367999716
 GameObject:
   m_ObjectHideFlags: 0
@@ -14893,7 +14912,19 @@ MonoBehaviour:
   doneDuration: 0.3
   onProgramCompleted:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1120296284}
+        m_TargetAssemblyTypeName: A1Connector, Assembly-CSharp
+        m_MethodName: A1CompletedCommand
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &413175440
 GameObject:
   m_ObjectHideFlags: 0
@@ -19694,24 +19725,47 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85838c353e7fc9d45a6e8a438ee1a784, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::A2Connector
-  a2Program: {fileID: 792243508}
-  startAddress:
+  A2Program: {fileID: 0}
+  A2On:
     useDevice: 1
     useDoubleWord: 0
-    isLocked: 1
+    isLocked: 0
     label: 
-    address: M32
+    address: 
     description: M32
     comment: 
-  completedAddress:
+  A2completed:
     useDevice: 1
     useDoubleWord: 0
-    isLocked: 1
+    isLocked: 0
     label: 
-    address: M72
+    address: 
     description: M72
     comment: 
-  feedbackTime: 0.3
+  A2Start:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: M77
+    comment: 
+  A2PositionNum:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: position No
+    comment: 
+  A2Positioning:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: positioning
+    comment: 
 --- !u!1 &537638678
 GameObject:
   m_ObjectHideFlags: 0
@@ -21683,7 +21737,19 @@ MonoBehaviour:
   doneDuration: 0.3
   onProgramCompleted:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2067700807}
+        m_TargetAssemblyTypeName: B2Connector, Assembly-CSharp
+        m_MethodName: B2CompletedCommand
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &616036183
 GameObject:
   m_ObjectHideFlags: 0
@@ -23853,23 +23919,46 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::B1Connector
   b1Program: {fileID: 365345407}
-  startAddress:
+  B1On:
     useDevice: 1
     useDoubleWord: 0
-    isLocked: 1
+    isLocked: 0
     label: 
-    address: M28
+    address: 
     description: M28
     comment: 
-  completedAddress:
+  B1Completed:
     useDevice: 1
     useDoubleWord: 0
-    isLocked: 1
+    isLocked: 0
     label: 
-    address: M68
+    address: 
     description: M68
     comment: 
-  feedbackTime: 0.3
+  B1Start:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: M28
+    comment: 
+  B1PositionNum:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: position No
+    comment: 
+  B1Positioning:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: positioning
+    comment: 
 --- !u!4 &692758364
 Transform:
   m_ObjectHideFlags: 0
@@ -24671,7 +24760,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 717612252}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1e96344bce86ab1429fa4dbb789346e3, type: 3}
   m_Name: 
@@ -26151,6 +26240,8 @@ GameObject:
   - component: {fileID: 776850088}
   - component: {fileID: 776850090}
   - component: {fileID: 776850091}
+  - component: {fileID: 776850092}
+  - component: {fileID: 776850093}
   m_Layer: 0
   m_Name: Axis1
   m_TagString: Untagged
@@ -26447,7 +26538,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 776850085}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1e96344bce86ab1429fa4dbb789346e3, type: 3}
   m_Name: 
@@ -26474,6 +26565,48 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &776850092
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 776850085}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c439fca027330d438a472b5dace9e27, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CPAnimator
+  CPAnim: {fileID: 776850091}
+  CPtrigger:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 1
+    label: 
+    address: M13
+    description: M13
+    comment: 
+  CPAssembled:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 1
+    label: 
+    address: M53
+    description: M53
+    comment: 
+--- !u!114 &776850093
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 776850085}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25a6e9a6e033e094e8e09189a514fb45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HolderEventRelay
+  holder: {fileID: 416418935}
 --- !u!1 &777754107
 GameObject:
   m_ObjectHideFlags: 0
@@ -27119,7 +27252,19 @@ MonoBehaviour:
   doneDuration: 0.3
   onProgramCompleted:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 537100190}
+        m_TargetAssemblyTypeName: A2Connector, Assembly-CSharp
+        m_MethodName: A2CompletedCommand
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &793613077
 GameObject:
   m_ObjectHideFlags: 0
@@ -30358,7 +30503,7 @@ Transform:
   m_GameObject: {fileID: 860572144}
   serializedVersion: 2
   m_LocalRotation: {x: 0.50000006, y: 0.49999994, z: 0.50000006, w: -0.49999994}
-  m_LocalPosition: {x: 0.718, y: 0.318, z: -0.006}
+  m_LocalPosition: {x: 0.766, y: 0.318, z: -0.006}
   m_LocalScale: {x: 0.6754351, y: 0.052258473, z: 0.38192686}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -31296,18 +31441,18 @@ MonoBehaviour:
   _showFrame: 0
   _showName: 0
   _offset:
-    e00: 1
-    e01: -1.0658175e-14
-    e02: 9.769971e-15
-    e03: 0.00000030924787
-    e10: -4.440843e-15
+    e00: 0.99999994
+    e01: 1.2720063e-14
+    e02: 0.000000017347165
+    e03: 0.00000027198521
+    e10: -1.0383929e-14
     e11: 1
-    e12: -1.0658165e-14
-    e13: 0.24000007
-    e20: -2.131634e-14
-    e21: -7.993595e-15
-    e22: 1
-    e23: -0.00000008684725
+    e12: -3.6731614e-14
+    e13: 0.24000008
+    e20: -0.000000017346895
+    e21: -4.450096e-15
+    e22: 0.99999994
+    e23: 0.00000017067077
     e30: 0
     e31: 0
     e32: 0
@@ -32346,7 +32491,6 @@ GameObject:
   m_Component:
   - component: {fileID: 930643660}
   - component: {fileID: 930643661}
-  - component: {fileID: 930643663}
   m_Layer: 0
   m_Name: Gantry CP
   m_TagString: Untagged
@@ -32397,27 +32541,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &930643663
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 930643659}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c439fca027330d438a472b5dace9e27, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CPAnimator
-  CP: {fileID: 776850091}
-  CPtrigger:
-    useDevice: 1
-    useDoubleWord: 0
-    isLocked: 1
-    label: 
-    address: M13
-    description: M13
-    comment: 
 --- !u!1 &932426359
 GameObject:
   m_ObjectHideFlags: 0
@@ -39674,7 +39797,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1118505432}
   - component: {fileID: 1118505431}
-  - component: {fileID: 1118505433}
   m_Layer: 0
   m_Name: Gantry FEM
   m_TagString: Untagged
@@ -39725,27 +39847,6 @@ Transform:
   - {fileID: 1657662127}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1118505433
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1118505430}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5779f8cc9cc5e894ebce1c6e113a5bec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::FEMAnimator
-  FEM: {fileID: 1829936734}
-  FEMtrigger:
-    useDevice: 1
-    useDoubleWord: 0
-    isLocked: 1
-    label: 
-    address: M19
-    description: M19
-    comment: 
 --- !u!1 &1120296283
 GameObject:
   m_ObjectHideFlags: 0
@@ -39776,23 +39877,46 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::A1Connector
   a1Program: {fileID: 408356725}
-  startAddress:
+  a1On:
     useDevice: 1
     useDoubleWord: 0
-    isLocked: 1
+    isLocked: 0
     label: 
-    address: M23
-    description: M23
+    address: 
+    description: M27
     comment: 
-  completedAddress:
+  a1Completed:
     useDevice: 1
     useDoubleWord: 0
-    isLocked: 1
+    isLocked: 0
     label: 
-    address: M63
+    address: 
     description: M63
     comment: 
-  feedbackTime: 0.3
+  a1Start:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: M23
+    comment: 
+  a1PositionNum:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: position No
+    comment: 
+  a1Positioning:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: positioning
+    comment: 
 --- !u!4 &1120296285
 Transform:
   m_ObjectHideFlags: 0
@@ -47133,7 +47257,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 0
   m_ImplicitTensor: 0
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -47382,7 +47506,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1333657854}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1e96344bce86ab1429fa4dbb789346e3, type: 3}
   m_Name: 
@@ -50955,7 +51079,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1397657701}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1e96344bce86ab1429fa4dbb789346e3, type: 3}
   m_Name: 
@@ -52419,7 +52543,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1453887229}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.7039598, y: 0.70396, z: 0.06663676, w: -0.06663678}
+  m_LocalRotation: {x: -0.7062715, y: 0.7062717, z: 0.034357186, w: -0.034357198}
   m_LocalPosition: {x: -0, y: 1.95, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -52441,7 +52565,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Preliy.Flange::Preliy.Flange.TransformJoint
   _position:
-    _value: 169.185
+    _value: 174.43
   _config:
     _name: 
     _type: 0
@@ -53476,7 +53600,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1490112900}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0.06520285, z: -0, w: 0.99787205}
+  m_LocalRotation: {x: 0, y: -0.027773347, z: -0, w: 0.9996143}
   m_LocalPosition: {x: -0, y: 0.225, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -53498,7 +53622,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Preliy.Flange::Preliy.Flange.TransformJoint
   _position:
-    _value: 7.477
+    _value: 3.183
   _config:
     _name: 
     _type: 0
@@ -56545,7 +56669,7 @@ Transform:
   m_GameObject: {fileID: 1597921879}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.0000019073486, z: -20.045002}
+  m_LocalPosition: {x: 0, y: 0.0000038146973, z: -26.426004}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -57008,8 +57132,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.2, y: 1.5, z: 3.5}
-  m_Center: {x: 0, y: 1, z: 0.48}
+  m_Size: {x: 2.2, y: 1.5, z: 3.8}
+  m_Center: {x: 0, y: 1, z: 0.5}
 --- !u!1 &1600123441
 GameObject:
   m_ObjectHideFlags: 0
@@ -57285,9 +57409,9 @@ MonoBehaviour:
         _r1: 0
         _r2: -0
         _r3: 0
-        _r4: 169.185
+        _r4: 174.43
         _r5: 0.04
-        _r6: 7.477
+        _r6: 3.183
       _extJoint:
         _e1: 0
         _e2: 0
@@ -57313,17 +57437,17 @@ MonoBehaviour:
   _poseObserver:
     _flange:
       _value:
-        e00: 0.9983034
-        e01: -0.00013131004
-        e02: 0.058225747
-        e03: -0.000029722927
-        e10: 0.058225825
-        e11: 0.0006854177
-        e12: -0.9983032
-        e13: 2.0525835
-        e20: 0.00009117827
+        e00: 0.99913234
+        e01: -0.00006807577
+        e02: 0.041648865
+        e03: -0.000015495218
+        e10: 0.041648902
+        e11: 0.0006945214
+        e12: -0.9991321
+        e13: 2.0525854
+        e20: 0.00003909066
         e21: 0.99999976
-        e22: 0.00069190044
+        e22: 0.000696754
         e23: 2.3850005
         e30: 0
         e31: 0
@@ -57331,17 +57455,17 @@ MonoBehaviour:
         e33: 1
     _toolCenterPointBase:
       _value:
-        e00: 0.9983034
-        e01: -0.00013131004
-        e02: 0.058225747
-        e03: -0.00006093368
-        e10: 0.058225825
-        e11: 0.0006854177
-        e12: -0.9983032
-        e13: 2.052748
-        e20: 0.00009117827
+        e00: 0.9991323
+        e01: -0.00006807577
+        e02: 0.04164888
+        e03: -0.00003155455
+        e10: 0.041648917
+        e11: 0.0006945214
+        e12: -0.99913204
+        e13: 2.0527518
+        e20: 0.000039090646
         e21: 0.99999976
-        e22: 0.00069190044
+        e22: 0.00069675397
         e23: 2.6250005
         e30: 0
         e31: 0
@@ -57349,35 +57473,35 @@ MonoBehaviour:
         e33: 1
     _toolCenterPointWorld:
       _value:
-        e00: 0.00009105929
+        e00: 0.000038971553
         e01: 1.0000001
-        e02: 0.00069189374
+        e02: 0.00069674925
         e03: -1.3467278
-        e10: 0.058225825
-        e11: 0.0006854177
-        e12: -0.9983032
-        e13: 2.062748
-        e20: -0.9983038
-        e21: 0.00013119087
-        e22: -0.05822577
-        e23: 24.030062
+        e10: 0.041648917
+        e11: 0.0006945214
+        e12: -0.99913204
+        e13: 2.0627518
+        e20: -0.99913263
+        e21: 0.000067956586
+        e22: -0.041648895
+        e23: 24.030031
         e30: 0
         e31: 0
         e32: 0
         e33: 1
     _toolCenterPointFrame:
       _value:
-        e00: 0.9983034
-        e01: -0.00013131004
-        e02: 0.058225747
-        e03: -0.00006181754
-        e10: 0.058225825
-        e11: 0.0006854177
-        e12: -0.9983032
-        e13: 2.052748
-        e20: 0.00009117827
+        e00: 0.9991323
+        e01: -0.00006807577
+        e02: 0.04164888
+        e03: -0.00003129997
+        e10: 0.041648917
+        e11: 0.0006945214
+        e12: -0.99913204
+        e13: 2.0527518
+        e20: 0.000039090646
         e21: 0.99999976
-        e22: 0.00069190044
+        e22: 0.00069675397
         e23: 2.6250005
         e30: 0
         e31: 0
@@ -60434,7 +60558,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1702582950}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1e96344bce86ab1429fa4dbb789346e3, type: 3}
   m_Name: 
@@ -62692,7 +62816,19 @@ MonoBehaviour:
   doneDuration: 0.3
   onProgramCompleted:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2128255818}
+        m_TargetAssemblyTypeName: C1Connector, Assembly-CSharp
+        m_MethodName: C1CompletedCommand
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1766209341
 GameObject:
   m_ObjectHideFlags: 0
@@ -65035,6 +65171,8 @@ GameObject:
   - component: {fileID: 1829936731}
   - component: {fileID: 1829936733}
   - component: {fileID: 1829936734}
+  - component: {fileID: 1829936735}
+  - component: {fileID: 1829936736}
   m_Layer: 0
   m_Name: Axis1
   m_TagString: Untagged
@@ -65331,7 +65469,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1829936728}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1e96344bce86ab1429fa4dbb789346e3, type: 3}
   m_Name: 
@@ -65358,6 +65496,48 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1829936735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1829936728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5779f8cc9cc5e894ebce1c6e113a5bec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FEMAnimator
+  FEMAnim: {fileID: 1829936734}
+  FEMtrigger:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 1
+    label: 
+    address: M19
+    description: M19
+    comment: 
+  FEMAssembled:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 1
+    label: 
+    address: M59
+    description: M59
+    comment: 
+--- !u!114 &1829936736
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1829936728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25a6e9a6e033e094e8e09189a514fb45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HolderEventRelay
+  holder: {fileID: 1249016063}
 --- !u!1 &1830430714
 GameObject:
   m_ObjectHideFlags: 0
@@ -65985,7 +66165,19 @@ MonoBehaviour:
   doneDuration: 0.3
   onProgramCompleted:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1974439413}
+        m_TargetAssemblyTypeName: C2Connector, Assembly-CSharp
+        m_MethodName: C2CompletedCommand
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1847410786
 GameObject:
   m_ObjectHideFlags: 0
@@ -66295,7 +66487,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1847410786}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1e96344bce86ab1429fa4dbb789346e3, type: 3}
   m_Name: 
@@ -70449,23 +70641,46 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::C2Connector
   c2Program: {fileID: 1843910572}
-  startAddress:
+  C2On:
     useDevice: 1
     useDoubleWord: 0
-    isLocked: 1
+    isLocked: 0
     label: 
-    address: M34
+    address: 
     description: M34
     comment: 
-  completedAddress:
+  C2Completed:
     useDevice: 1
     useDoubleWord: 0
-    isLocked: 1
+    isLocked: 0
     label: 
-    address: M74
+    address: 
     description: M74
     comment: 
-  feedbackTime: 0.3
+  C2Start:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: M81
+    comment: 
+  C2PositionNum:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: position No
+    comment: 
+  C2Positioning:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: positioning
+    comment: 
 --- !u!1 &1976457843
 GameObject:
   m_ObjectHideFlags: 0
@@ -73802,23 +74017,46 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::B2Connector
   b2Program: {fileID: 615549324}
-  startAddress:
+  B2On:
     useDevice: 1
     useDoubleWord: 0
-    isLocked: 1
+    isLocked: 0
     label: 
-    address: M35
+    address: 
     description: M35
     comment: 
-  completedAddress:
+  B2Completed:
     useDevice: 1
     useDoubleWord: 0
-    isLocked: 1
+    isLocked: 0
     label: 
-    address: M75
+    address: 
     description: M75
     comment: 
-  feedbackTime: 0.3
+  B2Start:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: M79
+    comment: 
+  B2PositionNum:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: position No
+    comment: 
+  B2Positioning:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: positioning
+    comment: 
 --- !u!1 &2068085467
 GameObject:
   m_ObjectHideFlags: 0
@@ -75946,24 +76184,47 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfdc8f7e3655f094cac3f91a5e7ddda5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::C1Connector
-  C1Program: {fileID: 1765563805}
-  startAddress:
+  c1Program: {fileID: 0}
+  C1On:
     useDevice: 1
     useDoubleWord: 0
-    isLocked: 1
+    isLocked: 0
     label: 
-    address: M33
+    address: 
     description: M33
     comment: 
-  completedAddress:
+  C1Completed:
     useDevice: 1
     useDoubleWord: 0
-    isLocked: 1
+    isLocked: 0
     label: 
-    address: M73
+    address: 
     description: M73
     comment: 
-  feedbackTime: 0.3
+  C1Start:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: M33
+    comment: 
+  C1PositionNum:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: position No
+    comment: 
+  C1Positioning:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: 
+    description: positioning
+    comment: 
 --- !u!1 &2129254214
 GameObject:
   m_ObjectHideFlags: 0
@@ -76721,7 +76982,7 @@ Transform:
   m_GameObject: {fileID: 919132148602653083}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -2.7280006, y: 0.12899998, z: -27.342}
+  m_LocalPosition: {x: -2.73, y: 0.12899998, z: -33.511}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -77002,12 +77263,19 @@ MonoBehaviour:
   speed: 1
   rotateSpeed: 90
   lockRotation: 1
-  stopWaypointIDs: 01000000
+  autoDestinationIDs: 0100000004000000
+  autoStart: 1
+  loop: 0
+  arriveWaitTime: 40
+  stopWaypointIDs: 0100000004000000
   carrier: {fileID: 1197302900517903580}
   onCompleteMove:
     m_PersistentCalls:
       m_Calls: []
   onArriveStop:
+    m_PersistentCalls:
+      m_Calls: []
+  onCompleteAutoRun:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &919132149565024645

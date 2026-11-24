@@ -42,10 +42,7 @@ public class A1Program : OfflineProgram
 
     public void Program1()
     {
-        // =================================
-        // P2 작업
-        // =================================
-
+        // P2
         this.MoveL(waypoints[10]);
         this.MoveL(waypoints[11]);
         this.MoveL(waypoints[12]);
@@ -53,15 +50,10 @@ public class A1Program : OfflineProgram
         this.MoveL(waypoints[14]);
         this.MoveL(waypoints[2]);
         this.Wait(100);
-        // 제품 잡기
         this.Action(true, 100);
 
-        // =================================
-        // P3 작업
-        // =================================
-
+        // P3
         this.Speed(100f, 60f, 30f);
-
         this.MoveL(waypoints[14]);
         this.MoveJ(waypoints[15]);
         this.MoveJ(waypoints[16]);
@@ -70,15 +62,13 @@ public class A1Program : OfflineProgram
         this.MoveJ(waypoints[19]);
         this.MoveL(waypoints[23]);
         this.MoveL(waypoints[21]);
-        this.MoveL(waypoints[4]);
+        this.MoveL(waypoints[4]);        
+    }
+    public void Program2()
+    {
         this.MoveL(waypoints[5]);
-
-        // 제품 놓기
         this.Action(false);
-
         this.MoveJ(waypoints[22]);
-
-        // Home 복귀
         Home();
     }
 }

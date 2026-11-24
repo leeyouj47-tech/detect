@@ -21,6 +21,25 @@ public class _Pr3Controller : MonoBehaviour
     // 이동 명령을 받아야 움직일 수 있음
     private bool canMove = false;
 
+    [Header("자동 이동 설정")]
+    [Tooltip("자동으로 방문할 목적지 Waypoint ID 목록 (순서대로 이동)")]
+    public int[] autoDestinationIDs;
+
+    [Tooltip("시작 시 자동 이동을 바로 시작합니다.")]
+    public bool autoStart = true;
+
+    [Tooltip("마지막 목적지에 도착하면 처음 목적지부터 반복합니다.")]
+    public bool loop = true;
+
+    [Tooltip("각 목적지 도착 후 다음 목적지로 출발하기 전 대기 시간(초)")]
+    public float arriveWaitTime = 0f;
+
+    // 자동 이동 상태
+    private bool isAutoRunning = false;
+    private int autoIndex = 0;
+    private bool isAutoWaiting = false;
+    private float autoWaitTimer = 0f;
+
     [Header("정지 설정")]
     [Tooltip("이 ID의 Waypoint에 도착하면 정지하고 대기합니다.")]
     public int[] stopWaypointIDs;
@@ -36,6 +55,9 @@ public class _Pr3Controller : MonoBehaviour
 
     [Header("정지 지점 도착 이벤트")]
     public UnityEvent onArriveStop = new UnityEvent();
+
+    [Header("자동 이동 전체 완료 이벤트 (loop가 꺼져 있을 때)")]
+    public UnityEvent onCompleteAutoRun = new UnityEvent();
 
 
     // ==========================================
@@ -58,11 +80,14 @@ public class _Pr3Controller : MonoBehaviour
                 "[Pr3Controller] 정지 지점이 설정되어 있지만 운반 도구(carrier)가 연결되지 않았습니다.");
         }
 
-        // 초기 routes가 설정되어 있어도 자동 이동하지 않음
         canMove = false;
         isRotating = false;
         isWaiting = false;
         routeIndex = 0;
+
+        // Pr3Route는 Awake에서 초기화되므로 Start에서 바로 사용 가능
+        if (autoStart)
+            StartAutoRun();
     }
 
 
@@ -72,6 +97,20 @@ public class _Pr3Controller : MonoBehaviour
 
     private void FixedUpdate()
     {
+        // 목적지 도착 후 다음 목적지 출발 전 대기
+        if (isAutoRunning && isAutoWaiting)
+        {
+            autoWaitTimer -= Time.fixedDeltaTime;
+
+            if (autoWaitTimer <= 0f)
+            {
+                isAutoWaiting = false;
+                GoNextAuto();
+            }
+
+            return;
+        }
+
         // 이동 명령을 받기 전에는 정지
         if (!canMove)
             return;
@@ -106,6 +145,7 @@ public class _Pr3Controller : MonoBehaviour
                 $"[Pr3Controller] Waypoint가 null입니다. Index: {routeIndex}");
 
             StopMovement();
+            StopAutoRun();
             return;
         }
 
@@ -184,6 +224,10 @@ public class _Pr3Controller : MonoBehaviour
 
                 onCompleteMove?.Invoke();
 
+                // 자동 이동 중이면 다음 목적지로 진행
+                if (isAutoRunning)
+                    OnAutoDestinationArrived();
+
                 return;
             }
 
@@ -199,6 +243,100 @@ public class _Pr3Controller : MonoBehaviour
                 onArriveStop?.Invoke();
             }
         }
+    }
+
+
+    // ==========================================
+    // 자동 이동
+    // ==========================================
+
+    /// <summary>
+    /// 저장된 목적지 목록을 처음부터 자동으로 순회하기 시작합니다.
+    /// </summary>
+    public void StartAutoRun()
+    {
+        if (autoDestinationIDs == null || autoDestinationIDs.Length == 0)
+        {
+            Debug.LogWarning(
+                "[Pr3Controller] 자동 이동 목적지 목록이 비어 있습니다.");
+
+            return;
+        }
+
+        isAutoRunning = true;
+        isAutoWaiting = false;
+        autoIndex = 0;
+
+        GoNextAuto();
+    }
+
+    /// <summary>
+    /// 자동 이동을 중단합니다. (진행 중인 이동은 그대로 두지 않고 정지)
+    /// </summary>
+    public void StopAutoRun()
+    {
+        isAutoRunning = false;
+        isAutoWaiting = false;
+    }
+
+    // 목적지 도착 시 호출: 대기 후 다음 목적지로
+    private void OnAutoDestinationArrived()
+    {
+        if (arriveWaitTime > 0f)
+        {
+            isAutoWaiting = true;
+            autoWaitTimer = arriveWaitTime;
+        }
+        else
+        {
+            GoNextAuto();
+        }
+    }
+
+    // 다음 목적지로 이동 명령 (실패하면 건너뜀)
+    private void GoNextAuto()
+    {
+        if (autoDestinationIDs == null || autoDestinationIDs.Length == 0)
+        {
+            StopAutoRun();
+            return;
+        }
+
+        int tryCount = autoDestinationIDs.Length;
+
+        for (int i = 0; i < tryCount; i++)
+        {
+            // 마지막까지 모두 방문한 경우
+            if (autoIndex >= autoDestinationIDs.Length)
+            {
+                if (!loop)
+                {
+                    Debug.Log(
+                        "[Pr3Controller] 자동 이동 목록을 모두 완료했습니다.");
+
+                    StopAutoRun();
+                    onCompleteAutoRun?.Invoke();
+                    return;
+                }
+
+                autoIndex = 0;
+            }
+
+            int destinationID = autoDestinationIDs[autoIndex];
+            autoIndex++;
+
+            if (MoveTo(destinationID))
+                return;
+
+            Debug.LogWarning(
+                $"[Pr3Controller] 자동 이동: 목적지 {destinationID} 이동 실패, 다음 목적지로 넘어갑니다.");
+        }
+
+        // 모든 목적지가 실패하면 무한 반복을 막기 위해 중단
+        Debug.LogError(
+            "[Pr3Controller] 자동 이동: 이동 가능한 목적지가 없어 중단합니다.");
+
+        StopAutoRun();
     }
 
 
@@ -289,7 +427,18 @@ public class _Pr3Controller : MonoBehaviour
     // 목적지 이동 명령
     // ==========================================
 
+    /// <summary>
+    /// 수동 이동 명령. 자동 이동 중이면 자동 이동을 중단하고 이 명령을 우선합니다.
+    /// </summary>
     public bool Go(int destinationID)
+    {
+        StopAutoRun();
+
+        return MoveTo(destinationID);
+    }
+
+    // 실제 이동 명령 (자동/수동 공통)
+    private bool MoveTo(int destinationID)
     {
         Debug.Log(
             $"[Pr3Controller] 이동 명령 / 목적지 ID: {destinationID}");

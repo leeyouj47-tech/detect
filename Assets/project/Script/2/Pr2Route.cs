@@ -1,14 +1,39 @@
 
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Pr2Route : MonoBehaviour
 {
     [Header("전체 Waypoint 등록")]
     public WayPoint[] allWaypoints;
 
+    [Header("이동 설정")]
+    public float moveSpeed = 2f;
+    public float rotateSpeed = 180f;
+    public float arrivalDistance = 0.05f;
+
+    [Header("이동 완료 이벤트")]
+    public UnityEvent onCompleteMove = new UnityEvent();
+
     private Dictionary<int, WayPoint> waypointDic =
         new Dictionary<int, WayPoint>();
+
+    private List<WayPoint> routes = new List<WayPoint>();
+
+    private int routeIndex = 0;
+
+    private bool canMove = false;
+    private bool isRotating = false;
+
+    // ==========================================
+    // 초기화
+    // ==========================================
+
+    private void Awake()
+    {
+        InitializeWaypoints();
+    }
 
     public void InitializeWaypoints()
     {
@@ -16,7 +41,7 @@ public class Pr2Route : MonoBehaviour
 
         if (allWaypoints == null || allWaypoints.Length == 0)
         {
-            Debug.LogError($"[{name}] Waypntrloint가 없습니다.");
+            Debug.LogError($"[{name}] Waypoint가 없습니다.");
             return;
         }
 
@@ -38,6 +63,10 @@ public class Pr2Route : MonoBehaviour
         Debug.Log(
             $"[{name}] 총 {waypointDic.Count}개 Waypoint 등록 완료");
     }
+
+    // ==========================================
+    // 가장 가까운 Waypoint 찾기
+    // ==========================================
 
     public int GetNearestWaypointID(Vector3 position)
     {
@@ -65,6 +94,10 @@ public class Pr2Route : MonoBehaviour
         return foundID;
     }
 
+    // ==========================================
+    // 최단 경로 탐색 (다익스트라)
+    // ==========================================
+
     private List<WayPoint> FindShortestPath(
         WayPoint start, WayPoint end)
     {
@@ -82,10 +115,17 @@ public class Pr2Route : MonoBehaviour
 
         foreach (WayPoint waypoint in waypointDic.Values)
         {
+            if (waypoint == null)
+                continue;
+
             distance[waypoint] = float.MaxValue;
             previous[waypoint] = null;
             unvisited.Add(waypoint);
         }
+
+        if (!distance.ContainsKey(start) ||
+            !distance.ContainsKey(end))
+            return null;
 
         distance[start] = 0f;
 
@@ -150,10 +190,191 @@ public class Pr2Route : MonoBehaviour
         return path;
     }
 
-    private void Awake()
+    // ==========================================
+    // 목적지 ID로 이동 명령
+    // ==========================================
+
+    public bool Go(int destinationID)
     {
-        InitializeWaypoints();
+        if (canMove)
+        {
+            Debug.LogWarning($"[{name}] 이미 이동 중입니다.");
+            return false;
+        }
+
+        if (!waypointDic.ContainsKey(destinationID))
+        {
+            Debug.LogError(
+                $"[{name}] 목적지 Waypoint ID가 없습니다: {destinationID}");
+            return false;
+        }
+
+        int startID = GetNearestWaypointID(transform.position);
+
+        if (startID == -1)
+            return false;
+
+        WayPoint start = waypointDic[startID];
+        WayPoint end = waypointDic[destinationID];
+
+        List<WayPoint> path = FindShortestPath(start, end);
+
+        if (path == null || path.Count == 0)
+            return false;
+
+        SetRoute(path);
+
+        Debug.Log(
+            $"[{name}] 이동 시작: {startID} -> {destinationID}");
+
+        return true;
     }
+
+    // ==========================================
+    // 지정된 경로 설정
+    // ==========================================
+
+    public void SetRoute(List<WayPoint> newRoutes)
+    {
+        if (newRoutes == null || newRoutes.Count == 0)
+        {
+            Debug.LogError($"[{name}] 이동 경로가 비어 있습니다.");
+            return;
+        }
+
+        routes.Clear();
+
+        foreach (WayPoint waypoint in newRoutes)
+        {
+            if (waypoint != null)
+                routes.Add(waypoint);
+        }
+
+        if (routes.Count == 0)
+            return;
+
+        // 현재 위치와 가장 가까운 시작 Waypoint는 건너뜀
+        routeIndex = 1;
+
+        if (routes.Count == 1)
+        {
+            CompleteMove();
+            return;
+        }
+
+        canMove = true;
+        isRotating = true;
+    }
+
+    // ==========================================
+    // 경로 이동 처리
+    // ==========================================
+
+    private void FixedUpdate()
+    {
+        if (!canMove)
+            return;
+
+        if (routeIndex >= routes.Count)
+        {
+            CompleteMove();
+            return;
+        }
+
+        WayPoint targetWaypoint = routes[routeIndex];
+
+        if (targetWaypoint == null)
+        {
+            Debug.LogError($"[{name}] 이동할 Waypoint가 없습니다.");
+            StopMovement();
+            return;
+        }
+
+        Vector3 targetPosition =
+            targetWaypoint.transform.position;
+
+        Vector3 direction =
+            targetPosition - transform.position;
+
+        // 도착 여부 확인
+        if (direction.sqrMagnitude <=
+            arrivalDistance * arrivalDistance)
+        {
+            transform.position = targetPosition;
+
+            routeIndex++;
+
+            if (routeIndex >= routes.Count)
+            {
+                CompleteMove();
+            }
+
+            return;
+        }
+
+        // 이동 방향 회전
+        if (direction.sqrMagnitude > 0.0001f)
+        {
+            Quaternion targetRotation =
+                Quaternion.LookRotation(direction.normalized);
+
+            transform.rotation = Quaternion.RotateTowards(
+                transform.rotation,
+                targetRotation,
+                rotateSpeed * Time.fixedDeltaTime);
+        }
+
+        // 목적지 방향으로 이동
+        transform.position = Vector3.MoveTowards(
+            transform.position,
+            targetPosition,
+            moveSpeed * Time.fixedDeltaTime);
+    }
+
+    // ==========================================
+    // 이동 완료
+    // ==========================================
+
+    private void CompleteMove()
+    {
+        canMove = false;
+        isRotating = false;
+        routeIndex = 0;
+
+        routes.Clear();
+
+        Debug.Log($"[{name}] 이동 완료");
+
+        onCompleteMove.Invoke();
+    }
+
+    // ==========================================
+    // 이동 중지
+    // ==========================================
+
+    public void StopMovement()
+    {
+        canMove = false;
+        isRotating = false;
+        routeIndex = 0;
+
+        routes.Clear();
+
+        Debug.Log($"[{name}] 이동 중지");
+    }
+
+    // ==========================================
+    // 이동 상태 확인
+    // ==========================================
+
+    public bool IsMoving()
+    {
+        return canMove || isRotating;
+    }
+
+    // ==========================================
+    // 시작 ID와 목적지 ID로 경로 설정
+    // ==========================================
 
     public bool GetRoutes(
         Pr2Controller controller,
@@ -175,11 +396,9 @@ public class Pr2Route : MonoBehaviour
         if (path == null || path.Count == 0)
             return false;
 
-        //controller.SetRoute(path);
-        //26.11.17 LYJ: 수정
-        controller.SetRoute(Pr2Vehicle.CarBody, path);
+        SetRoute(path);
 
-        Debug.Log($"[{name}] 경로 전달 완료");
+        Debug.Log($"[{name}] 경로 전달 및 이동 시작");
 
         return true;
     }

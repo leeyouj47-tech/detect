@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 public class B1Connector : MXObject
@@ -7,120 +6,65 @@ public class B1Connector : MXObject
     public B1Program b1Program;
 
     [Header("PLC -> Unity : 시작 신호")]
-    public DeviceAddress startAddress =
-        new DeviceAddress("M28");
+    public DeviceAddress B1On = new DeviceAddress("M28");
 
     [Header("Unity -> PLC : 완료 신호")]
-    public DeviceAddress completedAddress =
-        new DeviceAddress("M68");
+    public DeviceAddress B1Completed = new DeviceAddress("M68");
+    public DeviceAddress B1Start = new DeviceAddress("M78");
 
-    [Header("공통 설정")]
-    public float feedbackTime = 0.3f;
+    [Header("로봇팔 제어신호")]
+    public DeviceAddress B1PositionNum = new DeviceAddress("position No");
+    public DeviceAddress B1Positioning = new DeviceAddress("positioning");
 
-    private bool commandReceived = false;
-    private bool isRunning = false;
-    private bool completionSent = false;
-
-    // ==========================================
-    // 초기 설정
-    // ==========================================
+    private int positionId;
+    private bool needPositioning;
 
     private void Start()
     {
-        if (b1Program == null)
-        {
-            Debug.LogError(
-                "[B1Connector] B1Program이 연결되지 않았습니다."
-            );
-            return;
-        }
-
-        MXRequester.Get.AddDeviceAddress(
-            startAddress.address,
-            B1StartCommand
-        );
-
-        Debug.Log("[B1Connector] PLC 신호 등록 완료");
+        MXRequester.Get.AddDeviceAddress(B1On.address, B1ON);
+        MXRequester.Get.AddDeviceAddress(B1PositionNum.address, SetPosition);
+        MXRequester.Get.AddDeviceAddress(B1Positioning.address, StartPositioning);
     }
 
-    // ==========================================
-    // PLC -> Unity : M28 시작 명령
-    // ==========================================
-
-    private void B1StartCommand(short value)
+    private void B1ON(short obj)
     {
-        // PLC 시작 신호 OFF
-        if (value == 0)
-        {
-            commandReceived = false;
-            return;
-        }
-
-        // 이미 실행 중이거나 명령을 받은 경우 무시
-        if (commandReceived || isRunning)
-            return;
-
-        commandReceived = true;
-        isRunning = true;
-        completionSent = false;
-
-        Debug.Log("[B1Connector] M28 ON - B1 로봇팔 시작");
-
-        // Program1 실행
-        b1Program.Program1();
+        b1Program.IsOn = obj != 0;
     }
 
-    // ==========================================
-    // 로봇팔 실행 완료 확인
-    // ==========================================
+    private void SetPosition(short obj)
+    {
+        positionId = obj;
+        Debug.Log($"{positionId}번으로 설정됨");
 
+    }
+
+    private void StartPositioning(short obj)
+    {
+        if (obj != 0)
+        {
+            needPositioning = true;
+        }
+        else
+        {
+            if (B1Start.useDevice)
+                MXRequester.Get.AddSetDeviceRequest(B1Start.address, obj);
+        }
+    }
     private void Update()
     {
-        if (!isRunning || completionSent)
-            return;
-
-        // OfflineProgram의 실제 명령 큐 실행 완료 확인
-        if (b1Program.currentState == TaskState.Done)
+        if (needPositioning && positionId != 0)
         {
-            Debug.Log("[B1Connector] B1 로봇팔 동작 완료");
+            Debug.Log($"{positionId}번 프로그램 시작");
+            b1Program.RunProgram(positionId);
+            if (B1Start.useDevice)
+                MXRequester.Get.AddSetDeviceRequest(B1Start.address, 1);
 
-            completionSent = true;
-
-            SendCompletedFeedback();
-        }
-
-        // 실행 오류 확인
-        if (b1Program.currentState == TaskState.Error)
-        {
-            Debug.LogError(
-                "[B1Connector] 로봇팔 프로그램 실행 오류"
-            );
+            needPositioning = false;
         }
     }
 
-    // ==========================================
-    // Unity -> PLC : M68 완료 피드백
-    // ==========================================
-
-    private void SendCompletedFeedback()
+    public void B1CompletedCommand()
     {
-        MXRequester.Get.AddSetDeviceRequest(
-            completedAddress.address, 1
-        );
-
-        StartCoroutine(ResetCompletedFeedback());
-    }
-
-    private IEnumerator ResetCompletedFeedback()
-    {
-        yield return new WaitForSeconds(feedbackTime);
-
-        MXRequester.Get.AddSetDeviceRequest(
-            completedAddress.address, 0
-        );
-
-        isRunning = false;
-
-        Debug.Log("[B1Connector] M68 완료 신호 전송 완료");
+        MXRequester.Get.AddSetDeviceRequest(B1Completed.address, 1);
     }
 }

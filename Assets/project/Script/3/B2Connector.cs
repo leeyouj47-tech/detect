@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 public class B2Connector : MXObject
@@ -7,120 +6,67 @@ public class B2Connector : MXObject
     public B2Program b2Program;
 
     [Header("PLC -> Unity : 시작 신호")]
-    public DeviceAddress startAddress =
-        new DeviceAddress("M35");
+    public DeviceAddress B2On = new DeviceAddress("M35");
 
     [Header("Unity -> PLC : 완료 신호")]
-    public DeviceAddress completedAddress =
-        new DeviceAddress("M75");
+    public DeviceAddress B2Completed = new DeviceAddress("M75");
+    public DeviceAddress B2Start = new DeviceAddress("M79");
 
-    [Header("공통 설정")]
-    public float feedbackTime = 0.3f;
+    [Header("로봇팔 제어신호")]
+    public DeviceAddress B2PositionNum = new DeviceAddress("position No");
+    public DeviceAddress B2Positioning   = new DeviceAddress("positioning");
 
-    private bool commandReceived = false;
-    private bool isRunning = false;
-    private bool completionSent = false;
-
-    // ==========================================
-    // 초기 설정
-    // ==========================================
+    private int positionId;
+    private bool needPositioning;
 
     private void Start()
     {
-        if (b2Program == null)
-        {
-            Debug.LogError(
-                "[B2Connector] B2Program이 연결되지 않았습니다."
-            );
-            return;
-        }
-
-        MXRequester.Get.AddDeviceAddress(
-            startAddress.address,
-            B2StartCommand
-        );
-
-        Debug.Log("[B2Connector] PLC 신호 등록 완료");
+        MXRequester.Get.AddDeviceAddress(B2On.address, B2ON);
+        MXRequester.Get.AddDeviceAddress(B2PositionNum.address, SetPosition);
+        MXRequester.Get.AddDeviceAddress(B2Positioning.address, StartPositioning);
     }
 
-    // ==========================================
-    // PLC -> Unity : M35 시작 명령
-    // ==========================================
-
-    private void B2StartCommand(short value)
+    private void B2ON(short obj)
     {
-        // PLC 시작 신호 OFF
-        if (value == 0)
-        {
-            commandReceived = false;
-            return;
-        }
-
-        // 이미 실행 중이거나 명령을 받은 경우 무시
-        if (commandReceived || isRunning)
-            return;
-
-        commandReceived = true;
-        isRunning = true;
-        completionSent = false;
-
-        Debug.Log("[B2Connector] M35 ON - B2 로봇팔 시작");
-
-        // Program1 실행
-        b2Program.Program1();
+        b2Program.IsOn = obj != 0;
     }
 
-    // ==========================================
-    // 로봇팔 실행 완료 확인
-    // ==========================================
+
+    private void SetPosition(short obj)
+    {
+        positionId = obj;
+        Debug.Log($"{positionId}번으로 설정됨");
+    }
+
+    private void StartPositioning(short obj)
+    {
+        if (obj != 0)
+        {
+            needPositioning = true;
+        }
+        else
+        {
+            if (B2Start.useDevice)
+                MXRequester.Get.AddSetDeviceRequest(B2Start.address, obj);
+        }
+    }
 
     private void Update()
     {
-        if (!isRunning || completionSent)
-            return;
-
-        // OfflineProgram의 실제 명령 큐 실행 완료 확인
-        if (b2Program.currentState == TaskState.Done)
+        if (needPositioning && positionId != 0)
         {
-            Debug.Log("[B2Connector] B2 로봇팔 동작 완료");
+            Debug.Log($"{positionId}번 프로그램 시작");
+            b2Program.RunProgram(positionId);
+            if (B2Start.useDevice)
+                MXRequester.Get.AddSetDeviceRequest(B2Start.address, 1);
 
-            completionSent = true;
-
-            SendCompletedFeedback();
-        }
-
-        // 실행 오류 확인
-        if (b2Program.currentState == TaskState.Error)
-        {
-            Debug.LogError(
-                "[B2Connector] 로봇팔 프로그램 실행 오류"
-            );
+            needPositioning = false;
         }
     }
 
-    // ==========================================
-    // Unity -> PLC : M75 완료 피드백
-    // ==========================================
-
-    private void SendCompletedFeedback()
+    public void B2CompletedCommand()
     {
-        MXRequester.Get.AddSetDeviceRequest(
-            completedAddress.address, 1
-        );
-
-        StartCoroutine(ResetCompletedFeedback());
+        MXRequester.Get.AddSetDeviceRequest(B2Completed.address, 1);
     }
 
-    private IEnumerator ResetCompletedFeedback()
-    {
-        yield return new WaitForSeconds(feedbackTime);
-
-        MXRequester.Get.AddSetDeviceRequest(
-            completedAddress.address, 0
-        );
-
-        isRunning = false;
-
-        Debug.Log("[B2Connector] M75 완료 신호 전송 완료");
-    }
 }

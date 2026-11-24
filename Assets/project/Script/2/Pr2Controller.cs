@@ -1,297 +1,381 @@
+
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public enum Pr2Vehicle
+// ==========================================
+// 공통 Waypoint 이동 클래스
+// ==========================================
+public abstract class Pr2RouteBase : MonoBehaviour
 {
-    AGV,
-    Trolley,
-    ICCU,
-    CarBody
-}
+    [Header("전체 Waypoint 등록")]
+    public WayPoint[] allWaypoints;
 
-public class Pr2Controller : MonoBehaviour
-{
-    [System.Serializable]
-    private class VehicleMotion
-    {
-        public Transform target;
-        public float speed = 1f;
-        public float rotateSpeed = 90f;
-        public UnityEvent onCompleteMove = new UnityEvent();
-
-        [HideInInspector] public List<WayPoint> routes;
-        [HideInInspector] public int routeIndex;
-        [HideInInspector] public bool canMove;
-        [HideInInspector] public bool isRotating;
-        [HideInInspector] public bool isBusy;
-    }
-
-    [Header("이동 오브젝트")]
-    public Transform agv;
-    public Transform trolley;
-    public Transform iccu;
-    public Transform carBody;
-
-    [Header("개별 이동 속도")]
-    public float agvSpeed = 1f;
-    public float trolleySpeed = 1f;
-    public float iccuSpeed = 1f;
-    public float carBodySpeed = 1f;
-
-    [Header("개별 회전 속도")]
-    public float agvRotateSpeed = 90f;
-    public float trolleyRotateSpeed = 90f;
-    public float iccuRotateSpeed = 90f;
-    public float carBodyRotateSpeed = 90f;
-
-    [Header("경로 관리자")]
-    public RailRoute agvRailRoute;
-    public RailRoute trolleyRailRoute;
-    public ICCURoute iccuRoute;
-    public CarRoute carRoute;
+    [Header("이동 설정")]
+    public float speed = 1f;
+    public float rotateSpeed = 90f;
 
     [Header("이동 완료 이벤트")]
-    public UnityEvent onAGVCompleteMove = new UnityEvent();
-    public UnityEvent onTrolleyCompleteMove = new UnityEvent();
-    public UnityEvent onICCUCompleteMove = new UnityEvent();
-    public UnityEvent onCarBodyCompleteMove = new UnityEvent();
+    public UnityEvent onCompleteMove = new UnityEvent();
 
-    private VehicleMotion agvMotion;
-    private VehicleMotion trolleyMotion;
-    private VehicleMotion iccuMotion;
-    private VehicleMotion carBodyMotion;
+    private Dictionary<int, WayPoint> waypointDic =
+        new Dictionary<int, WayPoint>();
 
-    private void Awake()
+    private List<WayPoint> routes;
+    private int routeIndex;
+    private bool canMove;
+    private bool isRotating;
+
+    protected virtual void Awake()
     {
-        agvMotion = CreateMotion(agv, agvSpeed, agvRotateSpeed, onAGVCompleteMove);
-        trolleyMotion = CreateMotion(trolley, trolleySpeed, trolleyRotateSpeed, onTrolleyCompleteMove);
-        iccuMotion = CreateMotion(iccu, iccuSpeed, iccuRotateSpeed, onICCUCompleteMove);
-        carBodyMotion = CreateMotion(carBody, carBodySpeed, carBodyRotateSpeed, onCarBodyCompleteMove);
+        InitializeWaypoints();
     }
 
-    private VehicleMotion CreateMotion(
-        Transform target,
-        float moveSpeed,
-        float turnSpeed,
-        UnityEvent completeEvent)
+    private void InitializeWaypoints()
     {
-        VehicleMotion motion = new VehicleMotion();
-        motion.target = target;
-        motion.speed = moveSpeed;
-        motion.rotateSpeed = turnSpeed;
-        motion.onCompleteMove = completeEvent;
-        motion.canMove = false;
-        motion.isRotating = false;
-        motion.isBusy = false;
-        motion.routeIndex = 0;
-        return motion;
+        waypointDic.Clear();
+
+        if (allWaypoints == null || allWaypoints.Length == 0)
+        {
+            Debug.LogError($"[{name}] Waypoint가 등록되지 않았습니다.");
+            return;
+        }
+
+        foreach (WayPoint waypoint in allWaypoints)
+        {
+            if (waypoint == null)
+                continue;
+
+            if (waypointDic.ContainsKey(waypoint.id))
+            {
+                Debug.LogWarning(
+                    $"[{name}] 중복된 Waypoint ID: {waypoint.id}");
+                continue;
+            }
+
+            waypointDic.Add(waypoint.id, waypoint);
+        }
+
+        Debug.Log($"[{name}] Waypoint 등록 완료: {waypointDic.Count}개");
+    }
+
+    public int GetNearestWaypointID(Vector3 position)
+    {
+        if (waypointDic.Count == 0)
+            return -1;
+
+        int foundID = -1;
+        float minDistance = float.MaxValue;
+
+        foreach (var pair in waypointDic)
+        {
+            if (pair.Value == null)
+                continue;
+
+            float distance =
+                (pair.Value.transform.position - position).sqrMagnitude;
+
+            if (distance < minDistance)
+            {
+                minDistance = distance;
+                foundID = pair.Key;
+            }
+        }
+
+        return foundID;
+    }
+
+    private List<WayPoint> FindShortestPath(
+        WayPoint start, WayPoint end)
+    {
+        if (start == null || end == null)
+            return null;
+
+        Dictionary<WayPoint, float> distance =
+            new Dictionary<WayPoint, float>();
+
+        Dictionary<WayPoint, WayPoint> previous =
+            new Dictionary<WayPoint, WayPoint>();
+
+        List<WayPoint> unvisited =
+            new List<WayPoint>();
+
+        foreach (WayPoint waypoint in waypointDic.Values)
+        {
+            distance[waypoint] = float.MaxValue;
+            previous[waypoint] = null;
+            unvisited.Add(waypoint);
+        }
+
+        distance[start] = 0f;
+
+        while (unvisited.Count > 0)
+        {
+            unvisited.Sort(
+                (a, b) => distance[a].CompareTo(distance[b]));
+
+            WayPoint current = unvisited[0];
+            unvisited.RemoveAt(0);
+
+            if (current == end)
+                break;
+
+            if (distance[current] == float.MaxValue)
+                break;
+
+            if (current.neighbors == null)
+                continue;
+
+            foreach (WayPoint neighbor in current.neighbors)
+            {
+                if (neighbor == null ||
+                    !distance.ContainsKey(neighbor) ||
+                    !unvisited.Contains(neighbor))
+                    continue;
+
+                float alt = distance[current] +
+                    Vector3.Distance(
+                        current.transform.position,
+                        neighbor.transform.position);
+
+                if (alt < distance[neighbor])
+                {
+                    distance[neighbor] = alt;
+                    previous[neighbor] = current;
+                }
+            }
+        }
+
+        List<WayPoint> path = new List<WayPoint>();
+        WayPoint point = end;
+
+        while (point != null)
+        {
+            path.Insert(0, point);
+            point = previous[point];
+        }
+
+        if (path.Count == 0 || path[0] != start)
+        {
+            Debug.LogError(
+                $"[{name}] 경로 탐색 실패: {start.id} -> {end.id}");
+            return null;
+        }
+
+        return path;
+    }
+
+    public bool Go(int destinationID)
+    {
+        if (!waypointDic.TryGetValue(
+            destinationID, out WayPoint destination))
+        {
+            Debug.LogError(
+                $"[{name}] 목적지 Waypoint를 찾을 수 없습니다: {destinationID}");
+            return false;
+        }
+
+        int startID = GetNearestWaypointID(transform.position);
+
+        if (!waypointDic.TryGetValue(startID, out WayPoint start))
+        {
+            Debug.LogError($"[{name}] 출발 Waypoint를 찾을 수 없습니다.");
+            return false;
+        }
+
+        List<WayPoint> path = FindShortestPath(start, destination);
+
+        if (path == null || path.Count == 0)
+            return false;
+
+        SetRoute(path);
+        return true;
+    }
+
+    public void SetRoute(List<WayPoint> newRoutes)
+    {
+        if (newRoutes == null || newRoutes.Count == 0)
+        {
+            Debug.LogError($"[{name}] 경로가 비어 있습니다.");
+            StopMovement();
+            return;
+        }
+
+        routes = new List<WayPoint>(newRoutes);
+        routeIndex = 0;
+        isRotating = true;
+        canMove = true;
+
+        Debug.Log(
+            $"[{name}] 이동 시작: {routes[0].id} -> " +
+            $"{routes[routes.Count - 1].id}");
     }
 
     private void FixedUpdate()
     {
-        UpdateMotion(agvMotion, "AGV");
-        UpdateMotion(trolleyMotion, "Trolley");
-        UpdateMotion(iccuMotion, "ICCU");
-        UpdateMotion(carBodyMotion, "CarBody");
-    }
-
-    private void UpdateMotion(VehicleMotion motion, string objectName)
-    {
-        if (motion == null || !motion.canMove)
+        if (!canMove || routes == null || routes.Count == 0)
             return;
 
-        if (motion.target == null)
+        if (routeIndex >= routes.Count)
+            return;
+
+        WayPoint targetWaypoint = routes[routeIndex];
+
+        if (targetWaypoint == null)
         {
-            Debug.LogError("[Pr2Controller] " + objectName + " Transform이 연결되지 않았습니다.");
-            StopMotion(motion);
+            Debug.LogError($"[{name}] Waypoint가 null입니다.");
+            StopMovement();
             return;
         }
 
-        if (motion.routes == null || motion.routes.Count == 0)
-        {
-            StopMotion(motion);
-            return;
-        }
+        Vector3 targetPosition =
+            targetWaypoint.transform.position;
 
-        if (motion.routeIndex >= motion.routes.Count)
-            return;
-
-        WayPoint waypoint = motion.routes[motion.routeIndex];
-
-        if (waypoint == null)
-        {
-            Debug.LogError("[Pr2Controller] " + objectName + " 경로에 null Waypoint가 있습니다.");
-            StopMotion(motion);
-            return;
-        }
-
-        Vector3 targetPosition = waypoint.transform.position;
-        Vector3 toward = targetPosition - motion.target.position;
+        Vector3 toward = targetPosition - transform.position;
         toward.y = 0f;
 
-        // 1. 목표 방향으로 회전
-        if (motion.isRotating)
+        if (isRotating)
         {
             if (toward.sqrMagnitude > 0.001f)
             {
-                Quaternion targetRotation = Quaternion.LookRotation(toward);
+                Quaternion targetRotation =
+                    Quaternion.LookRotation(toward);
 
-                motion.target.rotation = Quaternion.RotateTowards(
-                    motion.target.rotation,
+                transform.rotation = Quaternion.RotateTowards(
+                    transform.rotation,
                     targetRotation,
-                    motion.rotateSpeed * Time.fixedDeltaTime);
+                    rotateSpeed * Time.fixedDeltaTime);
 
-                if (Quaternion.Angle(motion.target.rotation, targetRotation) < 0.1f)
+                if (Quaternion.Angle(
+                    transform.rotation, targetRotation) < 0.1f)
                 {
-                    motion.target.rotation = targetRotation;
-                    motion.isRotating = false;
+                    transform.rotation = targetRotation;
+                    isRotating = false;
                 }
             }
             else
             {
-                motion.isRotating = false;
+                isRotating = false;
             }
 
             return;
         }
 
-        // 2. 목표 위치로 이동 (현재 Y 높이 유지)
-        targetPosition.y = motion.target.position.y;
-
-        motion.target.position = Vector3.MoveTowards(
-            motion.target.position,
+        transform.position = Vector3.MoveTowards(
+            transform.position,
             targetPosition,
-            motion.speed * Time.fixedDeltaTime);
+            speed * Time.fixedDeltaTime);
 
-        // 3. Waypoint 도착 확인
-        if (Vector3.Distance(motion.target.position, targetPosition) < 0.001f)
+        if (Vector3.Distance(
+            transform.position, targetPosition) < 0.001f)
         {
-            motion.target.position = targetPosition;
+            transform.position = targetPosition;
 
-            Debug.Log("[Pr2Controller] " + objectName + " Waypoint " + waypoint.id + " 도착");
+            Debug.Log(
+                $"[{name}] Waypoint {targetWaypoint.id} 도착");
 
-            motion.routeIndex++;
-            motion.isRotating = true;
+            routeIndex++;
+            isRotating = true;
 
-            // 4. 최종 목적지 도착
-            if (motion.routeIndex >= motion.routes.Count)
+            if (routeIndex >= routes.Count)
             {
-                UnityEvent completed = motion.onCompleteMove;
-                StopMotion(motion);
+                StopMovement();
 
-                Debug.Log("[Pr2Controller] " + objectName + " 최종 목적지 도착");
-                if (completed != null)
-                    completed.Invoke();
+                Debug.Log($"[{name}] 목적지 도착 완료");
+                onCompleteMove?.Invoke();
             }
         }
     }
 
-    private void StopMotion(VehicleMotion motion)
+    public void StopMovement()
     {
-        if (motion == null)
-            return;
-
-        motion.canMove = false;
-        motion.isBusy = false;
-        motion.routes = null;
-        motion.routeIndex = 0;
-        motion.isRotating = false;
+        canMove = false;
+        routes = null;
+        routeIndex = 0;
+        isRotating = false;
     }
 
-    public bool IsBusy(Pr2Vehicle vehicle)
+    public bool IsMoving()
     {
-        VehicleMotion motion = GetMotion(vehicle);
-        return motion != null && motion.isBusy;
+        return canMove;
+    }
+}
+
+// ==========================================
+// Project 2 전체 컨트롤러
+// ==========================================
+public class Pr2Controller : MonoBehaviour
+{
+    [Header("장치별 Waypoint Controller")]
+    public AGVRoute agv;
+    public LiftRoute lift;
+    public RailRoute rail;
+    public ICCURoute iccu;
+
+    [Header("Unity 작업 이벤트")]
+    public UnityEvent onBatteryCoupling;
+    public UnityEvent onAGVLeave;
+    public UnityEvent onRobotArm;
+    public UnityEvent onICCUInspection;
+    public UnityEvent onChassisInspection;
+
+    [Header("전체 정지 이벤트")]
+    public UnityEvent onProcessStop;
+
+    public bool MoveAGV(int waypointID)
+    {
+        return agv != null && agv.Go(waypointID);
     }
 
-    public bool Go(Pr2Vehicle vehicle, int destinationID)
+    public bool MoveLift(int waypointID)
     {
-        VehicleMotion motion = GetMotion(vehicle);
-
-        if (motion == null || motion.target == null)
-        {
-            Debug.LogError("[Pr2Controller] " + vehicle + " 오브젝트가 연결되지 않았습니다.");
-            return false;
-        }
-
-        if (motion.isBusy)
-        {
-            Debug.LogWarning("[Pr2Controller] " + vehicle + " 이미 이동 중입니다.");
-            return false;
-        }
-
-        int startID = GetNearestWaypointID(vehicle, motion.target.position);
-        if (startID < 0)
-        {
-            Debug.LogError("[Pr2Controller] " + vehicle + " 출발 Waypoint를 찾지 못했습니다.");
-            return false;
-        }
-
-        bool result = false;
-
-        if (vehicle == Pr2Vehicle.AGV && agvRailRoute != null)
-            result = agvRailRoute.GetRoutes(this, vehicle, startID, destinationID);
-        else if (vehicle == Pr2Vehicle.Trolley && trolleyRailRoute != null)
-            result = trolleyRailRoute.GetRoutes(this, vehicle, startID, destinationID);
-        else if (vehicle == Pr2Vehicle.ICCU && iccuRoute != null)
-            result = iccuRoute.GetRoutes(this, startID, destinationID);
-        else if (vehicle == Pr2Vehicle.CarBody && carRoute != null)
-            result = carRoute.GetRoutes(this, startID, destinationID);
-
-        if (!result)
-            Debug.LogError("[Pr2Controller] " + vehicle + " 경로 생성 실패: " + startID + " -> " + destinationID);
-
-        return result;
+        return lift != null && lift.Go(waypointID);
     }
 
-    public int GetNearestWaypointID(Pr2Vehicle vehicle, Vector3 position)
+    public bool MoveRail(int waypointID)
     {
-        if (vehicle == Pr2Vehicle.AGV && agvRailRoute != null)
-            return agvRailRoute.GetNearestWaypointID(position);
-        if (vehicle == Pr2Vehicle.Trolley && trolleyRailRoute != null)
-            return trolleyRailRoute.GetNearestWaypointID(position);
-        if (vehicle == Pr2Vehicle.ICCU && iccuRoute != null)
-            return iccuRoute.GetNearestWaypointID(position);
-        if (vehicle == Pr2Vehicle.CarBody && carRoute != null)
-            return carRoute.GetNearestWaypointID(position);
-
-        return -1;
+        return rail != null && rail.Go(waypointID);
     }
 
-    public void SetRoute(Pr2Vehicle vehicle, List<WayPoint> newRoutes)
+    public bool MoveICCU(int waypointID)
     {
-        VehicleMotion motion = GetMotion(vehicle);
-
-        if (motion == null || newRoutes == null || newRoutes.Count == 0)
-        {
-            Debug.LogError("[Pr2Controller] " + vehicle + " 전달받은 경로가 비어 있습니다.");
-            return;
-        }
-
-        if (motion.isBusy)
-        {
-            Debug.LogWarning("[Pr2Controller] " + vehicle + " 이동 중 경로 변경을 거부했습니다.");
-            return;
-        }
-
-        motion.routes = new List<WayPoint>(newRoutes);
-        motion.routeIndex = 0;
-        motion.isRotating = true;
-        motion.canMove = true;
-        motion.isBusy = true;
-
-        Debug.Log("[Pr2Controller] " + vehicle + " 경로 설정 완료 / Waypoint 수: " + newRoutes.Count);
-        Debug.Log("[Pr2Controller] " + vehicle + " 출발: " + newRoutes[0].id +
-                  " / 목적지: " + newRoutes[newRoutes.Count - 1].id);
+        return iccu != null && iccu.Go(waypointID);
     }
 
-    private VehicleMotion GetMotion(Pr2Vehicle vehicle)
+    public void PlayBatteryCoupling()
     {
-        if (vehicle == Pr2Vehicle.AGV) return agvMotion;
-        if (vehicle == Pr2Vehicle.Trolley) return trolleyMotion;
-        if (vehicle == Pr2Vehicle.ICCU) return iccuMotion;
-        if (vehicle == Pr2Vehicle.CarBody) return carBodyMotion;
-        return null;
+        onBatteryCoupling?.Invoke();
+    }
+
+    public void PlayAGVLeave()
+    {
+        onAGVLeave?.Invoke();
+    }
+
+    public void RunRobotArm()
+    {
+        onRobotArm?.Invoke();
+    }
+
+    public void StartICCUInspection()
+    {
+        onICCUInspection?.Invoke();
+    }
+
+    public void StartChassisInspection()
+    {
+        onChassisInspection?.Invoke();
+    }
+
+    public void StopAllDevices()
+    {
+        if (agv != null) agv.StopMovement();
+        if (lift != null) lift.StopMovement();
+        if (rail != null) rail.StopMovement();
+        if (iccu != null) iccu.StopMovement();
+
+        onProcessStop?.Invoke();
+
+        Debug.LogWarning("[Pr2Controller] 전체 장치 정지");
     }
 }
