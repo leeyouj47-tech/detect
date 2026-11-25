@@ -301,4 +301,9 @@ public class MXRequester : MonoBehaviour
     {
         throw new NotImplementedException();
     }
+
+    internal void AddDeviceAddress(string address, DeviceAddress programStart)
+    {
+        throw new NotImplementedException();
+    }
 }

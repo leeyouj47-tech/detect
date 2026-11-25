@@ -10,7 +10,7 @@ public class B1Connector : MXObject
 
     [Header("Unity -> PLC : 완료 신호")]
     public DeviceAddress B1Completed = new DeviceAddress("M68");
-    public DeviceAddress B1Start = new DeviceAddress("M78");
+    public DeviceAddress B1Start = new DeviceAddress("기동완료");
 
     [Header("로봇팔 제어신호")]
     public DeviceAddress B1PositionNum = new DeviceAddress("position No");
