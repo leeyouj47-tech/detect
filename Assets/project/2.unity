@@ -222,7 +222,7 @@ MonoBehaviour:
     useDoubleWord: 0
     isLocked: 1
     label: 
-    address: M700
+    address: X00
     description: 
     comment: "\n2\uCC28\uACF5\uC815\n\n"
   needCallback: 0
@@ -333,7 +333,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 14241779}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.50000006, y: 0.5000001, z: -0.5000001, w: -0.49999973}
+  m_LocalRotation: {x: 0.5213339, y: -0.4777145, z: 0.5213339, w: 0.4777141}
   m_LocalPosition: {x: -4.8068514, y: 2.6250005, z: 9.043152}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -360,7 +360,7 @@ MonoBehaviour:
   - 0
   - 0
   position: {x: 0.5449988, y: 2.6250005, z: -76.085}
-  rotation: {x: -0.50000006, y: 0.5000001, z: -0.5000001, w: -0.49999973}
+  rotation: {x: 0.5213339, y: -0.4777145, z: 0.5213339, w: 0.4777141}
 --- !u!1 &15054803
 GameObject:
   m_ObjectHideFlags: 0
@@ -1636,7 +1636,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 332704321}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6ed4b8d9a51b01f4fa5af6cb859fd4c2, type: 3}
   m_Name: 
@@ -1684,7 +1684,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 332704321}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4b7edbe74cc36ca4587d4f2afa42c6a7, type: 3}
   m_Name: 
@@ -3120,8 +3120,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 763590322}
-  - component: {fileID: 763590321}
-  - component: {fileID: 763590320}
   - component: {fileID: 763590323}
   m_Layer: 0
   m_Name: 'ICCUWayPoint '
@@ -3130,41 +3128,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &763590320
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 763590319}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23261e6eacf09b64b8103b4e04f94772, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Pr1Route
-  allWaypoints:
-  - {fileID: 52879172}
-  - {fileID: 1815308913}
-  - {fileID: 796168291}
---- !u!114 &763590321
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 763590319}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eec8d10be5575374e85953f49ddf970d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::RouteManager
-  allWaypoints:
-  - {fileID: 52879172}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 1815308913}
-  - {fileID: 796168291}
 --- !u!4 &763590322
 Transform:
   m_ObjectHideFlags: 0
@@ -3195,6 +3158,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 955515ab13f8365419c6356f846004f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ICCURoute
+  moveTarget: {fileID: 8855681593541590327}
   allWaypoints:
   - {fileID: 1815308913}
   - {fileID: 796168291}
@@ -3202,9 +3166,13 @@ MonoBehaviour:
   moveSpeed: 2
   rotateSpeed: 90
   arrivalDistance: 0.05
+  rotateToDirection: 0
+  useWaypointGraph: 0
+  keepStartOffset: 1
   onCompleteMove:
     m_PersistentCalls:
       m_Calls: []
+  arrivalEvents: []
 --- !u!1 &796168290
 GameObject:
   m_ObjectHideFlags: 0
@@ -3762,6 +3730,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Pr2Connector
   controller: {fileID: 931791591}
   feedbackTime: 0.3
+  agvWaypointIDs: 01000000020000000300000004000000
+  railWaypointIDs: 01000000
+  iccuWaypointIDs: 0100000002000000
+  liftWaypointIDs: 00000000010000000200000003000000
   agvWP1Command:
     useDevice: 1
     useDoubleWord: 0
@@ -3848,7 +3820,7 @@ MonoBehaviour:
     isLocked: 1
     label: 
     address: M830
-    description: M730
+    description: M830
     comment: 
   batteryCouplingCommand:
     useDevice: 1
@@ -3856,7 +3828,7 @@ MonoBehaviour:
     isLocked: 1
     label: 
     address: M831
-    description: M731
+    description: M831
     comment: 
   agvLeaveCommand:
     useDevice: 1
@@ -3864,7 +3836,7 @@ MonoBehaviour:
     isLocked: 1
     label: 
     address: M832
-    description: M732
+    description: M832
     comment: 
   robotArmCommand:
     useDevice: 1
@@ -3872,7 +3844,7 @@ MonoBehaviour:
     isLocked: 1
     label: 
     address: M833
-    description: M733
+    description: M833
     comment: 
   iccuInspectionCommand:
     useDevice: 1
@@ -3880,7 +3852,7 @@ MonoBehaviour:
     isLocked: 1
     label: 
     address: M834
-    description: M734
+    description: M834
     comment: 
   chassisInspectionCommand:
     useDevice: 1
@@ -3888,7 +3860,7 @@ MonoBehaviour:
     isLocked: 1
     label: 
     address: M835
-    description: M735
+    description: M835
     comment: 
   agvWP1Arrived:
     useDevice: 1
@@ -4074,15 +4046,35 @@ MonoBehaviour:
   lift: {fileID: 1900692849}
   rail: {fileID: 1342129552}
   iccu: {fileID: 763590323}
+  batteryCouplingTime: 1
   onBatteryCoupling:
     m_PersistentCalls:
       m_Calls: []
+  agvObject: {fileID: 543450653057986855}
+  agvBatteryPack: {fileID: 7630247528968323831}
+  agvTurnAngle: -90
+  agvTurnDuration: 1
+  agvExitSpeed: 1
+  agvExitDuration: 5
+  liftWaypointAfterAGVLeave: 4
+  moveCarBodyOnAGVRoute: 1
   onAGVLeave:
     m_PersistentCalls:
       m_Calls: []
+  skid: {fileID: 543450653244640760}
+  skidJoinWaypointID: 2
+  carBody: {fileID: 7330076245126442979}
+  liftCarrier: {fileID: 8676390145552058382}
+  liftReceiveWaypointID: 0
+  robotProgram: {fileID: 1099712009}
+  robotProgramNumber: 1
+  robotTimeout: 60
   onRobotArm:
     m_PersistentCalls:
       m_Calls: []
+  inspectionTime: 5
+  iccuDefect: 0
+  chassisDefect: 0
   onICCUInspection:
     m_PersistentCalls:
       m_Calls: []
@@ -4543,7 +4535,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1028703930}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6ed4b8d9a51b01f4fa5af6cb859fd4c2, type: 3}
   m_Name: 
@@ -4591,7 +4583,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1028703930}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4b7edbe74cc36ca4587d4f2afa42c6a7, type: 3}
   m_Name: 
@@ -4838,17 +4830,17 @@ MonoBehaviour:
   - {fileID: 1256604560}
   _target:
     _value:
-      e00: -0.0000008344654
-      e01: -1.0000007
-      e02: 0.00000038743036
+      e00: -0.0000004768372
+      e01: -0.99619484
+      e02: 0.087156236
       e03: 0.5449984
-      e10: -0.00000029802337
-      e11: -0.0000007152561
-      e12: -1.0000008
+      e10: -0.0000004470349
+      e11: -0.0871563
+      e12: -0.9961947
       e13: 2.6250005
-      e20: 1.0000008
-      e21: -0.0000005066397
-      e22: -0.00000059604673
+      e20: 1.0000001
+      e21: -0.0000004470349
+      e22: -0.00000047683716
       e23: -76.085
       e30: 0
       e31: 0
@@ -4863,7 +4855,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1099712006}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.70710695, y: 0.0000002682209, z: -0.000000059604645, w: -0.7071067}
+  m_LocalRotation: {x: 0.7372775, y: -0.0000003, z: 0, w: 0.67559}
   m_LocalPosition: {x: 0, y: 2.5649996, z: 2.1720014}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -5434,7 +5426,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1256604558}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.50000006, y: 0.5000001, z: -0.5000001, w: -0.49999973}
+  m_LocalRotation: {x: 0.5213339, y: -0.4777145, z: 0.5213339, w: 0.4777141}
   m_LocalPosition: {x: -4.8068514, y: 2.6250005, z: 9.043152}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -5461,7 +5453,7 @@ MonoBehaviour:
   - 0.048
   - 98.331
   position: {x: 0.54499865, y: 2.6250005, z: -76.085}
-  rotation: {x: -0.50000006, y: 0.5000001, z: -0.5000001, w: -0.49999973}
+  rotation: {x: 0.5213339, y: -0.4777145, z: 0.5213339, w: 0.4777141}
 --- !u!1 &1303684090
 GameObject:
   m_ObjectHideFlags: 0
@@ -5505,8 +5497,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1342129551}
-  - component: {fileID: 1342129550}
-  - component: {fileID: 1342129549}
   - component: {fileID: 1342129552}
   m_Layer: 0
   m_Name: RailWayPoint
@@ -5515,41 +5505,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1342129549
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1342129548}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23261e6eacf09b64b8103b4e04f94772, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Pr1Route
-  allWaypoints:
-  - {fileID: 565504715}
-  - {fileID: 713446036}
-  - {fileID: 1835857180}
---- !u!114 &1342129550
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1342129548}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eec8d10be5575374e85953f49ddf970d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::RouteManager
-  allWaypoints:
-  - {fileID: 565504715}
-  - {fileID: 713446036}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 1835857180}
-  - {fileID: 0}
 --- !u!4 &1342129551
 Transform:
   m_ObjectHideFlags: 0
@@ -5580,6 +5535,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1724f843922f8a0408b5da1ad0824cb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RailRoute
+  moveTarget: {fileID: 3264551926815315650}
   allWaypoints:
   - {fileID: 1835857180}
   - {fileID: 565504715}
@@ -5587,9 +5543,13 @@ MonoBehaviour:
   moveSpeed: 2
   rotateSpeed: 180
   arrivalDistance: 0.05
+  rotateToDirection: 0
+  useWaypointGraph: 0
+  keepStartOffset: 1
   onCompleteMove:
     m_PersistentCalls:
       m_Calls: []
+  arrivalEvents: []
 --- !u!1 &1373896953
 GameObject:
   m_ObjectHideFlags: 0
@@ -6427,9 +6387,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1596955115}
-  - component: {fileID: 1596955116}
-  - component: {fileID: 1596955117}
-  - component: {fileID: 1596955118}
   - component: {fileID: 1596955119}
   m_Layer: 0
   m_Name: mainWayPoint
@@ -6458,66 +6415,6 @@ Transform:
   - {fileID: 301624024}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
---- !u!114 &1596955116
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1596955114}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eec8d10be5575374e85953f49ddf970d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::RouteManager
-  allWaypoints:
-  - {fileID: 470890532}
-  - {fileID: 1898978402}
-  - {fileID: 1769375877}
-  - {fileID: 1406627602}
-  - {fileID: 301624023}
---- !u!114 &1596955117
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1596955114}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23261e6eacf09b64b8103b4e04f94772, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Pr1Route
-  allWaypoints:
-  - {fileID: 470890532}
-  - {fileID: 1898978402}
-  - {fileID: 1769375877}
-  - {fileID: 1406627602}
-  - {fileID: 301624023}
---- !u!114 &1596955118
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1596955114}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: afb235f77c012c24b8620164f0072c2c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Pr2Route
-  allWaypoints:
-  - {fileID: 1406627602}
-  - {fileID: 470890532}
-  - {fileID: 1898978402}
-  - {fileID: 1769375877}
-  - {fileID: 301624023}
-  moveSpeed: 2
-  rotateSpeed: 180
-  arrivalDistance: 0.05
-  onCompleteMove:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &1596955119
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6530,6 +6427,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c362c4db02ecce94b9577b2d356634b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AGVRoute
+  moveTarget: {fileID: 543450653057986855}
   allWaypoints:
   - {fileID: 1406627602}
   - {fileID: 470890532}
@@ -6539,9 +6437,13 @@ MonoBehaviour:
   moveSpeed: 2
   rotateSpeed: 180
   arrivalDistance: 0.05
+  rotateToDirection: 0
+  useWaypointGraph: 0
+  keepStartOffset: 1
   onCompleteMove:
     m_PersistentCalls:
       m_Calls: []
+  arrivalEvents: []
 --- !u!1 &1627753844
 GameObject:
   m_ObjectHideFlags: 0
@@ -7427,7 +7329,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1900692848}
-  - component: {fileID: 1900692847}
   - component: {fileID: 1900692849}
   m_Layer: 0
   m_Name: LIFT WAYPOINT
@@ -7436,24 +7337,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1900692847
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1900692846}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23261e6eacf09b64b8103b4e04f94772, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Pr1Route
-  allWaypoints:
-  - {fileID: 624677516}
-  - {fileID: 79598540}
-  - {fileID: 670876528}
-  - {fileID: 618316611}
-  - {fileID: 1242395956}
 --- !u!4 &1900692848
 Transform:
   m_ObjectHideFlags: 0
@@ -7486,6 +7369,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cd8facc98244c8458aff05a8f281b5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LiftRoute
+  moveTarget: {fileID: 8676390145552058382}
   allWaypoints:
   - {fileID: 624677516}
   - {fileID: 79598540}
@@ -7495,9 +7379,13 @@ MonoBehaviour:
   moveSpeed: 2
   rotateSpeed: 180
   arrivalDistance: 0.05
+  rotateToDirection: 0
+  useWaypointGraph: 0
+  keepStartOffset: 1
   onCompleteMove:
     m_PersistentCalls:
       m_Calls: []
+  arrivalEvents: []
 --- !u!1 &1902973399
 GameObject:
   m_ObjectHideFlags: 0
@@ -7959,18 +7847,18 @@ MonoBehaviour:
   _showFrame: 0
   _showName: 0
   _offset:
-    e00: 0.99999994
-    e01: -4.6724246e-11
-    e02: 5.379753e-10
-    e03: 0.0000072438625
-    e10: -3.334264e-11
+    e00: 1
+    e01: 2.1316316e-14
+    e02: 9.769971e-15
+    e03: -0.000002590567
+    e10: -9.770001e-15
     e11: 1
-    e12: -1.0496565e-12
-    e13: 0.0000000056356804
-    e20: 0.000000001740214
-    e21: -5.995338e-12
+    e12: 7.105471e-15
+    e13: -0.000000023384038
+    e20: -2.131634e-14
+    e21: 7.99359e-15
     e22: 1
-    e23: 0.000000009616633
+    e23: -0.00000026926656
     e30: 0
     e31: 0
     e32: 0
@@ -8759,8 +8647,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8558209098402119737}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.70710665, z: -0, w: 0.7071069}
-  m_LocalPosition: {x: 1.4, y: 0, z: 0.00000043948305}
+  m_LocalRotation: {x: -0, y: 0.7061928, z: -0, w: 0.7080197}
+  m_LocalPosition: {x: 1.3999953, y: 0, z: 0.0036168399}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -8776,8 +8664,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9169712558193746813}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: 0.70710665, w: 0.7071069}
-  m_LocalPosition: {x: -0, y: 0, z: 0.065}
+  m_LocalRotation: {x: 0.010471244, y: 0.010471247, z: 0.70702916, w: 0.70702934}
+  m_LocalPosition: {x: 0.0019249038, y: 0, z: 0.06497149}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -8793,7 +8681,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8739286760980868494}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.00029619216, y: -0.00029619227, z: 0.70710665, w: 0.7071069}
+  m_LocalRotation: {x: -0.040395886, y: -0.040395897, z: 0.70595187, w: 0.70595205}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -8984,7 +8872,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Preliy.Flange::Preliy.Flange.TransformJoint
   _position:
-    _value: 0
+    _value: 0.148
   _config:
     _name: 
     _type: 0
@@ -9057,7 +8945,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Preliy.Flange::Preliy.Flange.TransformJoint
   _position:
-    _value: -0
+    _value: -1.697
   _config:
     _name: 
     _type: 0
@@ -9421,7 +9309,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Preliy.Flange::Preliy.Flange.TransformJoint
   _position:
-    _value: 98.331
+    _value: 0.001
   _config:
     _name: 
     _type: 0
@@ -9690,8 +9578,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5406642883032868353}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0.75660145, z: 0, w: 0.6538763}
-  m_LocalPosition: {x: -0, y: 0.372, z: -0}
+  m_LocalRotation: {x: 0, y: -0.000008726646, z: -0, w: 1}
+  m_LocalPosition: {x: -0, y: 0.372, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -10131,7 +10019,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Preliy.Flange::Preliy.Flange.TransformJoint
   _position:
-    _value: 0.048
+    _value: 6.55
   _config:
     _name: 
     _type: 0
@@ -10153,7 +10041,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Preliy.Flange::Preliy.Flange.TransformJoint
   _position:
-    _value: -97.259
+    _value: -0.001
   _config:
     _name: 
     _type: 0
@@ -10453,7 +10341,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &6099778228889864613
 GameObject:
   m_ObjectHideFlags: 0
@@ -10708,7 +10596,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6215223496051607837}
-  m_Mesh: {fileID: 1168067908655533041, guid: 64dfcbcc3be6f8d42b52b89121fc0ec8, type: 3}
+  m_Mesh: {fileID: 1168067908655533041, guid: c1fb9112234086b43a6e3ea98f7e57c5, type: 3}
 --- !u!114 &6820823100085089983
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10908,7 +10796,7 @@ Animator:
   m_GameObject: {fileID: 637941478571917092}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 1fea0f0c9d6932148a0da292346a248a, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -11226,11 +11114,11 @@ MonoBehaviour:
     _jointState:
       _robJoint:
         _r1: 0
-        _r2: 0
-        _r3: -0
-        _r4: -97.259
-        _r5: 0.048
-        _r6: 98.331
+        _r2: 0.148
+        _r3: -1.697
+        _r4: -0.001
+        _r5: 6.55
+        _r6: 0.001
       _extJoint:
         _e1: 0
         _e2: 0
@@ -11256,72 +11144,72 @@ MonoBehaviour:
   _poseObserver:
     _flange:
       _value:
-        e00: 0.99982464
-        e01: 0.00083072955
-        e02: -0.018709162
-        e03: 0.00030911458
-        e10: -0.018709257
-        e11: 0.000105540625
-        e12: -0.99982494
-        e13: 2.565039
-        e20: -0.00082860957
-        e21: 0.99999964
-        e22: 0.00012106445
-        e23: 2.1720004
+        e00: 1
+        e01: 0.0000016496194
+        e02: -0.00000051406676
+        e03: 0.00000070702015
+        e10: -0.00000036830625
+        e11: -0.08717351
+        e12: -0.9961932
+        e13: 2.5649807
+        e20: -0.0000016881527
+        e21: 0.9961932
+        e22: -0.08717351
+        e23: 2.1720052
         e30: 0
         e31: 0
         e32: 0
         e33: 1
     _toolCenterPointBase:
       _value:
-        e00: 0.99982464
-        e01: 0.00083072955
-        e02: -0.018709162
-        e03: 0.00030911458
-        e10: -0.018709257
-        e11: 0.000105540625
-        e12: -0.99982494
-        e13: 2.565039
-        e20: -0.00082860957
-        e21: 0.99999964
-        e22: 0.00012106445
-        e23: 2.1720004
+        e00: 1
+        e01: 0.0000016496194
+        e02: -0.00000051406676
+        e03: 0.00000070702015
+        e10: -0.00000036830625
+        e11: -0.08717351
+        e12: -0.9961932
+        e13: 2.5649807
+        e20: -0.0000016881527
+        e21: 0.9961932
+        e22: -0.08717351
+        e23: 2.1720052
         e30: 0
         e31: 0
         e32: 0
         e33: 1
     _toolCenterPointWorld:
       _value:
-        e00: 0.00082849065
-        e01: -1
-        e02: -0.00012106226
-        e03: 0.5449988
-        e10: -0.018709257
-        e11: 0.000105540625
-        e12: -0.99982494
-        e13: 2.6250398
-        e20: 0.999825
-        e21: 0.00083061063
-        e22: -0.01870917
-        e23: -76.084694
+        e00: 0.000001568944
+        e01: -0.9961935
+        e02: 0.08717354
+        e03: 0.54499406
+        e10: -0.00000036830625
+        e11: -0.08717351
+        e12: -0.9961932
+        e13: 2.6249816
+        e20: 1.0000004
+        e21: 0.0000015308646
+        e22: -0.00000050367504
+        e23: -76.085
         e30: 0
         e31: 0
         e32: 0
         e33: 1
     _toolCenterPointFrame:
       _value:
-        e00: 0.99982464
-        e01: 0.00083072955
-        e02: -0.018709162
-        e03: 0.00030180323
-        e10: -0.018709257
-        e11: 0.000105540625
-        e12: -0.99982494
-        e13: 2.565039
-        e20: -0.00082860957
-        e21: 0.99999964
-        e22: 0.00012106445
-        e23: 2.1720004
+        e00: 1
+        e01: 0.0000016496194
+        e02: -0.00000051406676
+        e03: -0.0000033724305
+        e10: -0.00000036830625
+        e11: -0.08717351
+        e12: -0.9961932
+        e13: 2.5649807
+        e20: -0.0000016881527
+        e21: 0.9961932
+        e22: -0.08717351
+        e23: 2.1720052
         e30: 0
         e31: 0
         e32: 0
@@ -11613,7 +11501,7 @@ Animator:
   m_GameObject: {fileID: 7348906372047782239}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 2c064ebf77c69f4408da23e05726408d, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -11689,7 +11577,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8191594525587842957}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6ed4b8d9a51b01f4fa5af6cb859fd4c2, type: 3}
   m_Name: 
@@ -11737,7 +11625,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8191594525587842957}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4b7edbe74cc36ca4587d4f2afa42c6a7, type: 3}
   m_Name: 
@@ -11882,8 +11770,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7006738157456998354}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.5306493, y: 0.5306494, z: -0.46734485, w: 0.46734497}
-  m_LocalPosition: {x: 0, y: 1.2, z: -0}
+  m_LocalRotation: {x: -0.0000061706696, y: 0.0000061706714, z: -0.70710665, w: 0.7071069}
+  m_LocalPosition: {x: 0, y: 1.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

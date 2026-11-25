@@ -1,8 +1,18 @@
-
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
+// ==========================================
+// 2공정 PLC <-> Unity 신호 처리
+// 주소표: docu/공정비트.xlsx (sheet4)
+//
+// 명령 처리 방식
+// - PLC 명령 비트가 ON이고 아직 처리하지 않았으면 매 프레임 실행 시도
+//   (장비가 이동 중이면 끝날 때까지 기다렸다가 실행 -> 명령 유실 없음)
+// - 명령 비트가 OFF가 되면 다음 ON을 받을 준비
+// - 도착/완료 신호는 feedbackTime 동안 ON 후 OFF (펄스)
+// ==========================================
 public class Pr2Connector : MXObject
 {
     [Header("전체 컨트롤러")]
@@ -10,6 +20,17 @@ public class Pr2Connector : MXObject
 
     [Header("공통 설정")]
     public float feedbackTime = 0.3f;
+
+    // ==========================================
+    // PLC 명령 번호 -> Unity Waypoint ID
+    // ==========================================
+
+    [Header("Waypoint ID 매핑 (PLC WP1, WP2... 순서)")]
+    public int[] agvWaypointIDs = { 1, 2, 3, 4 };
+    public int[] railWaypointIDs = { 1 };
+    public int[] iccuWaypointIDs = { 1, 2 };
+    [Tooltip("PLC 리프트 WP1~4 -> Unity 리프트 WP0~3 (WP4는 AGV 빠지기 후 자동 이동)")]
+    public int[] liftWaypointIDs = { 0, 1, 2, 3 };
 
     // ==========================================
     // PLC -> Unity : 이동 명령
@@ -32,18 +53,18 @@ public class Pr2Connector : MXObject
     public DeviceAddress liftWP1Command = new DeviceAddress("M727");
     public DeviceAddress liftWP2Command = new DeviceAddress("M728");
     public DeviceAddress liftWP3Command = new DeviceAddress("M729");
-    public DeviceAddress liftWP4Command = new DeviceAddress("M730");
+    public DeviceAddress liftWP4Command = new DeviceAddress("M830");
 
     // ==========================================
     // PLC -> Unity : 작업 명령
     // ==========================================
 
     [Header("작업 명령")]
-    public DeviceAddress batteryCouplingCommand = new DeviceAddress("M731");
-    public DeviceAddress agvLeaveCommand = new DeviceAddress("M732");
-    public DeviceAddress robotArmCommand = new DeviceAddress("M733");
-    public DeviceAddress iccuInspectionCommand = new DeviceAddress("M734");
-    public DeviceAddress chassisInspectionCommand = new DeviceAddress("M735");
+    public DeviceAddress batteryCouplingCommand = new DeviceAddress("M831");
+    public DeviceAddress agvLeaveCommand = new DeviceAddress("M832");
+    public DeviceAddress robotArmCommand = new DeviceAddress("M833");
+    public DeviceAddress iccuInspectionCommand = new DeviceAddress("M834");
+    public DeviceAddress chassisInspectionCommand = new DeviceAddress("M835");
 
     // ==========================================
     // Unity -> PLC : 도착 및 완료 신호
@@ -95,14 +116,25 @@ public class Pr2Connector : MXObject
     public DeviceAddress processFaultAddress = new DeviceAddress("M717");
 
     // ==========================================
-    // 명령 중복 수신 방지
+    // 내부 상태
     // ==========================================
 
-    private bool[] moveCommandReceived = new bool[11];
-    private bool[] workCommandReceived = new bool[5];
+    private enum ExecResult { Done, Busy, Failed }
 
-    private DeviceAddress[] currentArrivedAddress =
-        new DeviceAddress[4];
+    private class Command
+    {
+        public string name;
+        public short value;
+        public bool handled;
+        public bool busyLogged;
+        public Func<ExecResult> execute;
+    }
+
+    private readonly List<Command> commands = new List<Command>();
+
+    // 이동 명령을 받은 장비 -> 도착 시 보낼 주소
+    private readonly Dictionary<Pr2Route, DeviceAddress> pendingArrival =
+        new Dictionary<Pr2Route, DeviceAddress>();
 
     private bool faulted;
 
@@ -114,356 +146,227 @@ public class Pr2Connector : MXObject
     {
         if (controller == null)
         {
-            Debug.LogError(
-                "[Pr2Connector] Pr2Controller가 연결되지 않았습니다.");
+            Debug.LogError("[Pr2Connector] Pr2Controller가 연결되지 않았습니다.");
+            enabled = false;
             return;
         }
 
-        if (controller.agv == null ||
-            controller.lift == null ||
-            controller.rail == null ||
-            controller.iccu == null)
+        if (controller.agv == null || controller.lift == null ||
+            controller.rail == null || controller.iccu == null)
         {
-            Debug.LogError(
-                "[Pr2Connector] 장치별 Route가 연결되지 않았습니다.");
+            Debug.LogError("[Pr2Connector] 장치별 Route가 연결되지 않았습니다.");
+            enabled = false;
             return;
         }
 
-        // 이동 완료 이벤트 등록
-        controller.agv.onCompleteMove.AddListener(OnAGVCompleted);
-        controller.lift.onCompleteMove.AddListener(OnLiftCompleted);
-        controller.rail.onCompleteMove.AddListener(OnRailCompleted);
-        controller.iccu.onCompleteMove.AddListener(OnICCUCompleted);
+        if (MXRequester.Get == null)
+        {
+            Debug.LogError("[Pr2Connector] 씬에 MXRequester가 없습니다.");
+            enabled = false;
+            return;
+        }
 
-        // AGV 명령 등록
-        MXRequester.Get.AddDeviceAddress(
-            agvWP1Command.address, AGVWP1Move);
+        controller.agv.Arrived += OnAGVArrived;
+        controller.lift.Arrived += OnLiftArrived;
+        controller.rail.Arrived += OnRailArrived;
+        controller.iccu.Arrived += OnICCUArrived;
 
-        MXRequester.Get.AddDeviceAddress(
-            agvWP2Command.address, AGVWP2Move);
+        // 이동 명령
+        RegisterMove("AGV WP1", agvWP1Command, controller.agv, agvWaypointIDs, 0, agvWP1Arrived);
+        RegisterMove("AGV WP2", agvWP2Command, controller.agv, agvWaypointIDs, 1, agvWP2Arrived);
+        RegisterMove("AGV WP3", agvWP3Command, controller.agv, agvWaypointIDs, 2, agvWP3Arrived);
+        RegisterMove("AGV WP4", agvWP4Command, controller.agv, agvWaypointIDs, 3, agvWP4Arrived);
 
-        MXRequester.Get.AddDeviceAddress(
-            agvWP3Command.address, AGVWP3Move);
+        RegisterMove("Rail WP1", railWP1Command, controller.rail, railWaypointIDs, 0, railWP1Arrived);
 
-        MXRequester.Get.AddDeviceAddress(
-            agvWP4Command.address, AGVWP4Move);
+        RegisterMove("ICCU WP1", iccuWP1Command, controller.iccu, iccuWaypointIDs, 0, iccuWP1Arrived);
+        RegisterMove("ICCU WP2", iccuWP2Command, controller.iccu, iccuWaypointIDs, 1, iccuWP2Arrived);
 
-        // Rail 명령 등록
-        MXRequester.Get.AddDeviceAddress(
-            railWP1Command.address, RailWP1Move);
+        RegisterMove("Lift WP1", liftWP1Command, controller.lift, liftWaypointIDs, 0, liftWP1Arrived);
+        RegisterMove("Lift WP2", liftWP2Command, controller.lift, liftWaypointIDs, 1, liftWP2Arrived);
+        RegisterMove("Lift WP3", liftWP3Command, controller.lift, liftWaypointIDs, 2, liftWP3Arrived);
+        RegisterMove("Lift WP4", liftWP4Command, controller.lift, liftWaypointIDs, 3, liftWP4Arrived);
 
-        // ICCU 명령 등록
-        MXRequester.Get.AddDeviceAddress(
-            iccuWP1Command.address, ICCUWP1Move);
+        // 작업 명령
+        Register("배터리 결합", batteryCouplingCommand, BatteryCoupling);
+        Register("AGV 빠지기", agvLeaveCommand, AGVLeave);
+        Register("로봇팔 동작", robotArmCommand, RobotArm);
+        Register("ICCU 검사", iccuInspectionCommand, ICCUInspection);
+        Register("차체 검사", chassisInspectionCommand, ChassisInspection);
 
-        MXRequester.Get.AddDeviceAddress(
-            iccuWP2Command.address, ICCUWP2Move);
-
-        // Lift 명령 등록
-        MXRequester.Get.AddDeviceAddress(
-            liftWP1Command.address, LiftWP1Move);
-
-        MXRequester.Get.AddDeviceAddress(
-            liftWP2Command.address, LiftWP2Move);
-
-        MXRequester.Get.AddDeviceAddress(
-            liftWP3Command.address, LiftWP3Move);
-
-        MXRequester.Get.AddDeviceAddress(
-            liftWP4Command.address, LiftWP4Move);
-
-        // 작업 명령 등록
-        MXRequester.Get.AddDeviceAddress(
-            batteryCouplingCommand.address, BatteryCoupling);
-
-        MXRequester.Get.AddDeviceAddress(
-            agvLeaveCommand.address, AGVLeave);
-
-        MXRequester.Get.AddDeviceAddress(
-            robotArmCommand.address, RobotArm);
-
-        MXRequester.Get.AddDeviceAddress(
-            iccuInspectionCommand.address, ICCUInspection);
-
-        MXRequester.Get.AddDeviceAddress(
-            chassisInspectionCommand.address, ChassisInspection);
-
-        // 불량 정지 신호 등록
-        MXRequester.Get.AddDeviceAddress(
-            processFaultAddress.address, OnProcessFault);
+        // 공정 이상
+        MXRequester.Get.AddDeviceAddress(processFaultAddress.address, OnProcessFault);
 
         Debug.Log("[Pr2Connector] PLC 주소 등록 완료");
     }
 
-    // ==========================================
-    // 이동 명령 공통 처리
-    // ==========================================
-
-
-    private void MoveCommand(
-        short value,
-        int commandIndex,
-        int deviceIndex,
-        int waypointID,
-        DeviceAddress arrivedAddress,
-        Pr2Route route,
-        System.Func<bool> moveAction)
+    private void Register(string commandName, DeviceAddress address, Func<ExecResult> execute)
     {
-        // PLC 명령 OFF
-        if (value == 0)
+        if (address == null || string.IsNullOrEmpty(address.address))
         {
-            moveCommandReceived[commandIndex] = false;
+            Debug.LogError($"[Pr2Connector] {commandName} 주소가 비어 있습니다.");
             return;
         }
 
-        // 불량 발생 또는 이미 처리한 명령
-        if (faulted || moveCommandReceived[commandIndex])
-            return;
+        var command = new Command { name = commandName, execute = execute };
+        commands.Add(command);
 
-        // Route 확인
-        if (route == null)
+        MXRequester.Get.AddDeviceAddress(address.address, value =>
         {
-            Debug.LogError("[Pr2Connector] Route가 연결되지 않았습니다.");
-            return;
-        }
+            command.value = value;
 
-        // 이미 이동 중인지 확인
-        if (route.IsMoving())
+            if (value == 0)
+            {
+                command.handled = false;
+                command.busyLogged = false;
+            }
+        });
+    }
+
+    private void RegisterMove(
+        string commandName, DeviceAddress address, Pr2Route route,
+        int[] waypointIDs, int index, DeviceAddress arrivedAddress)
+    {
+        Register(commandName, address, () =>
         {
-            Debug.LogWarning(
-                $"[Pr2Connector] 장치 이동 중: {route.name}");
+            if (waypointIDs == null || index >= waypointIDs.Length)
+            {
+                Debug.LogError($"[Pr2Connector] {commandName}: Waypoint ID 매핑이 없습니다.");
+                return ExecResult.Failed;
+            }
+
+            if (route.IsMoving())
+                return ExecResult.Busy;
+
+            if (!route.Go(waypointIDs[index]))
+                return ExecResult.Failed;
+
+            pendingArrival[route] = arrivedAddress;
+            return ExecResult.Done;
+        });
+    }
+
+    // ==========================================
+    // 명령 실행 (매 프레임)
+    // ==========================================
+
+    private void Update()
+    {
+        if (faulted)
             return;
-        }
 
-        // 이동 실행 및 성공 여부 확인
-        bool success = moveAction != null && moveAction.Invoke();
-
-        if (!success)
+        foreach (Command command in commands)
         {
-            Debug.LogError(
-                $"[Pr2Connector] 이동 실패: {route.name}, WP{waypointID}");
-            return;
+            if (command.value == 0 || command.handled)
+                continue;
+
+            ExecResult result = command.execute();
+
+            switch (result)
+            {
+                case ExecResult.Done:
+                    command.handled = true;
+                    Debug.Log($"[Pr2Connector] 명령 실행: {command.name}");
+                    break;
+
+                case ExecResult.Failed:
+                    command.handled = true;
+                    Debug.LogError($"[Pr2Connector] 명령 실행 실패: {command.name}");
+                    break;
+
+                case ExecResult.Busy:
+                    if (!command.busyLogged)
+                    {
+                        command.busyLogged = true;
+                        Debug.Log($"[Pr2Connector] 장비 동작 중, 대기: {command.name}");
+                    }
+                    break;
+            }
+
+            if (faulted)
+                return;
         }
-
-        // 이동 성공 후 도착 주소 저장
-        currentArrivedAddress[deviceIndex] = arrivedAddress;
-        moveCommandReceived[commandIndex] = true;
-
-        Debug.Log(
-            $"[Pr2Connector] 이동 시작: {route.name} / WP{waypointID}");
     }
-
-
-
-    // ==========================================
-    // AGV 이동 명령
-    // ==========================================
-
-    private void AGVWP1Move(short value)
-    {
-        MoveCommand(value, 0, 0, 1, agvWP1Arrived,
-            controller.agv,
-            () => controller.MoveAGV(1));
-    }
-
-    private void AGVWP2Move(short value)
-    {
-        MoveCommand(value, 1, 0, 2, agvWP2Arrived,
-            controller.agv,
-            () => controller.MoveAGV(2));
-    }
-
-    private void AGVWP3Move(short value)
-    {
-        MoveCommand(value, 2, 0, 3, agvWP3Arrived,
-            controller.agv,
-            () => controller.MoveAGV(3));
-    }
-
-    private void AGVWP4Move(short value)
-    {
-        MoveCommand(value, 3, 0, 4, agvWP4Arrived,
-            controller.agv,
-            () => controller.MoveAGV(4));
-    }
-
-    // ==========================================
-    // Rail 이동 명령
-    // ==========================================
-
-    private void RailWP1Move(short value)
-    {
-        MoveCommand(value, 4, 2, 1, railWP1Arrived,
-            controller.rail,
-            () => controller.MoveRail(1));
-    }
-
-    // ==========================================
-    // ICCU 이동 명령
-    // ==========================================
-
-    private void ICCUWP1Move(short value)
-    {
-        MoveCommand(value, 5, 3, 1, iccuWP1Arrived,
-            controller.iccu,
-            () => controller.MoveICCU(1));
-    }
-
-    private void ICCUWP2Move(short value)
-    {
-        MoveCommand(value, 6, 3, 2, iccuWP2Arrived,
-            controller.iccu,
-            () => controller.MoveICCU(2));
-    }
-
-    // ==========================================
-    // Lift 이동 명령
-    // ==========================================
-
-    private void LiftWP1Move(short value)
-    {
-        MoveCommand(value, 7, 1, 1, liftWP1Arrived,
-            controller.lift,
-            () => controller.MoveLift(1));
-    }
-
-    private void LiftWP2Move(short value)
-    {
-        MoveCommand(value, 8, 1, 2, liftWP2Arrived,
-            controller.lift,
-            () => controller.MoveLift(2));
-    }
-
-    private void LiftWP3Move(short value)
-    {
-        MoveCommand(value, 9, 1, 3, liftWP3Arrived,
-            controller.lift,
-            () => controller.MoveLift(3));
-    }
-
-    private void LiftWP4Move(short value)
-    {
-        MoveCommand(value, 10, 1, 4, liftWP4Arrived,
-            controller.lift,
-            () => controller.MoveLift(4));
-    }
-
 
     // ==========================================
     // 이동 완료 처리
     // ==========================================
 
-    private void OnAGVCompleted()
-    {
-        CompleteMoveFeedback(0);
-    }
+    private void OnAGVArrived(int id) => OnRouteArrived(controller.agv);
+    private void OnLiftArrived(int id) => OnRouteArrived(controller.lift);
+    private void OnRailArrived(int id) => OnRouteArrived(controller.rail);
+    private void OnICCUArrived(int id) => OnRouteArrived(controller.iccu);
 
-    private void OnLiftCompleted()
+    private void OnRouteArrived(Pr2Route route)
     {
-        CompleteMoveFeedback(1);
-    }
-
-    private void OnRailCompleted()
-    {
-        CompleteMoveFeedback(2);
-    }
-
-    private void OnICCUCompleted()
-    {
-        CompleteMoveFeedback(3);
-    }
-
-    private void CompleteMoveFeedback(int deviceIndex)
-    {
-        DeviceAddress address = currentArrivedAddress[deviceIndex];
-
-        if (address == null)
+        if (!pendingArrival.TryGetValue(route, out DeviceAddress address))
             return;
 
-        currentArrivedAddress[deviceIndex] = null;
+        pendingArrival.Remove(route);
 
-        Debug.Log($"[Pr2Connector] 이동 완료: {address.address}");
-
-        StartCoroutine(SendFeedbackCoroutine(address));
+        Debug.Log($"[Pr2Connector] 도착 신호: {route.name} -> {address.address}");
+        SendFeedback(address);
     }
 
     // ==========================================
-    // 작업 명령 공통 처리
+    // 작업 명령
     // ==========================================
 
-    private void ExecuteWorkCommand(
-        short value,
-        int index,
-        UnityEvent action,
-        string workName)
+    private ExecResult BatteryCoupling()
     {
-        if (value == 0)
+        controller.RunBatteryCoupling(() => SendFeedback(batteryCouplingCompleted));
+        return ExecResult.Done;
+    }
+
+    private ExecResult AGVLeave()
+    {
+        if (!controller.CanRunAGVLeave())
+            return ExecResult.Busy;
+
+        controller.RunAGVLeave(() => SendFeedback(agvLeaveCompleted));
+        return ExecResult.Done;
+    }
+
+    private ExecResult RobotArm()
+    {
+        return controller.RunRobotArm(() => SendFeedback(robotArmCompleted))
+            ? ExecResult.Done
+            : ExecResult.Busy;
+    }
+
+    private ExecResult ICCUInspection()
+    {
+        ClearICCUResult();
+
+        controller.RunICCUInspection(good =>
         {
-            workCommandReceived[index] = false;
-            return;
-        }
+            if (good) ICCUInspectionGood();
+            else ICCUInspectionBad();
+        });
 
-        if (faulted || workCommandReceived[index])
-            return;
-
-        workCommandReceived[index] = true;
-
-        Debug.Log($"[Pr2Connector] 작업 명령 수신: {workName}");
-
-        if (action != null)
-            action.Invoke();
-        else
-            Debug.LogWarning(
-                $"[{workName}] UnityEvent가 연결되지 않았습니다.");
+        return ExecResult.Done;
     }
 
-    private void BatteryCoupling(short value)
+    private ExecResult ChassisInspection()
     {
-        ExecuteWorkCommand(
-            value, 0,
-            controller.onBatteryCoupling,
-            "배터리 결합");
-    }
+        ClearChassisResult();
 
-    private void AGVLeave(short value)
-    {
-        ExecuteWorkCommand(
-            value, 1,
-            controller.onAGVLeave,
-            "AGV 이탈");
-    }
+        controller.RunChassisInspection(good =>
+        {
+            if (good) ChassisInspectionGood();
+            else ChassisInspectionBad();
+        });
 
-    private void RobotArm(short value)
-    {
-        ExecuteWorkCommand(
-            value, 2,
-            controller.onRobotArm,
-            "로봇팔");
-    }
-
-    private void ICCUInspection(short value)
-    {
-        ExecuteWorkCommand(
-            value, 3,
-            controller.onICCUInspection,
-            "ICCU 검사");
-    }
-
-    private void ChassisInspection(short value)
-    {
-        ExecuteWorkCommand(
-            value, 4,
-            controller.onChassisInspection,
-            "차체 검사");
+        return ExecResult.Done;
     }
 
     // ==========================================
-    // Unity -> PLC : 완료 신호
+    // Unity -> PLC : 완료 신호 (펄스)
     // ==========================================
 
     public void SendFeedback(DeviceAddress address)
     {
-        if (address == null)
+        if (address == null || string.IsNullOrEmpty(address.address))
             return;
 
         StartCoroutine(SendFeedbackCoroutine(address));
@@ -471,58 +374,26 @@ public class Pr2Connector : MXObject
 
     private IEnumerator SendFeedbackCoroutine(DeviceAddress address)
     {
-        MXRequester.Get.AddSetDeviceRequest(
-            address.address, (short)1);
+        MXRequester.Get.AddSetDeviceRequest(address.address, (short)1);
 
         yield return new WaitForSeconds(feedbackTime);
 
-        MXRequester.Get.AddSetDeviceRequest(
-            address.address, (short)0);
+        MXRequester.Get.AddSetDeviceRequest(address.address, (short)0);
     }
 
-    // ==========================================
-    // 배터리 결합 완료
-    // Animation Event에서 호출
-    // ==========================================
-
-    public void OnBatteryCouplingCompleted()
-    {
-        SendFeedback(batteryCouplingCompleted);
-    }
+    // 외부(Animation Event, 버튼 등)에서 수동 호출용
+    public void OnBatteryCouplingCompleted() => SendFeedback(batteryCouplingCompleted);
+    public void OnAGVLeaveCompleted() => SendFeedback(agvLeaveCompleted);
+    public void OnRobotArmCompleted() => SendFeedback(robotArmCompleted);
 
     // ==========================================
-    // AGV 이탈 완료
-    // Animation Event에서 호출
-    // ==========================================
-
-    public void OnAGVLeaveCompleted()
-    {
-        SendFeedback(agvLeaveCompleted);
-    }
-
-    // ==========================================
-    // 로봇팔 완료
-    // RobotArmConnector 등에서 호출
-    // ==========================================
-
-    public void OnRobotArmCompleted()
-    {
-        SendFeedback(robotArmCompleted);
-    }
-
-    // ==========================================
-    // ICCU 검사 결과
-    // 검사 결과에 따라 UnityEvent에서 호출
+    // ICCU 검사 결과 (결과 비트는 다음 검사 시작까지 유지)
     // ==========================================
 
     public void ICCUInspectionGood()
     {
-        MXRequester.Get.AddSetDeviceRequest(
-            iccuGood.address, (short)1);
-
-        MXRequester.Get.AddSetDeviceRequest(
-            iccuBad.address, (short)0);
-
+        MXRequester.Get.AddSetDeviceRequest(iccuGood.address, (short)1);
+        MXRequester.Get.AddSetDeviceRequest(iccuBad.address, (short)0);
         SendFeedback(iccuInspectionCompleted);
 
         Debug.Log("[ICCU] 정상품 판정");
@@ -530,12 +401,8 @@ public class Pr2Connector : MXObject
 
     public void ICCUInspectionBad()
     {
-        MXRequester.Get.AddSetDeviceRequest(
-            iccuGood.address, (short)0);
-
-        MXRequester.Get.AddSetDeviceRequest(
-            iccuBad.address, (short)1);
-
+        MXRequester.Get.AddSetDeviceRequest(iccuGood.address, (short)0);
+        MXRequester.Get.AddSetDeviceRequest(iccuBad.address, (short)1);
         SendFeedback(iccuInspectionCompleted);
 
         Debug.LogWarning("[ICCU] 불량품 판정");
@@ -543,11 +410,8 @@ public class Pr2Connector : MXObject
 
     public void ClearICCUResult()
     {
-        MXRequester.Get.AddSetDeviceRequest(
-            iccuGood.address, (short)0);
-
-        MXRequester.Get.AddSetDeviceRequest(
-            iccuBad.address, (short)0);
+        MXRequester.Get.AddSetDeviceRequest(iccuGood.address, (short)0);
+        MXRequester.Get.AddSetDeviceRequest(iccuBad.address, (short)0);
     }
 
     // ==========================================
@@ -556,12 +420,8 @@ public class Pr2Connector : MXObject
 
     public void ChassisInspectionGood()
     {
-        MXRequester.Get.AddSetDeviceRequest(
-            chassisGood.address, (short)1);
-
-        MXRequester.Get.AddSetDeviceRequest(
-            chassisBad.address, (short)0);
-
+        MXRequester.Get.AddSetDeviceRequest(chassisGood.address, (short)1);
+        MXRequester.Get.AddSetDeviceRequest(chassisBad.address, (short)0);
         SendFeedback(chassisInspectionCompleted);
 
         Debug.Log("[차체] 정상품 판정");
@@ -569,12 +429,8 @@ public class Pr2Connector : MXObject
 
     public void ChassisInspectionBad()
     {
-        MXRequester.Get.AddSetDeviceRequest(
-            chassisGood.address, (short)0);
-
-        MXRequester.Get.AddSetDeviceRequest(
-            chassisBad.address, (short)1);
-
+        MXRequester.Get.AddSetDeviceRequest(chassisGood.address, (short)0);
+        MXRequester.Get.AddSetDeviceRequest(chassisBad.address, (short)1);
         SendFeedback(chassisInspectionCompleted);
 
         Debug.LogWarning("[차체] 불량품 판정");
@@ -582,16 +438,12 @@ public class Pr2Connector : MXObject
 
     public void ClearChassisResult()
     {
-        MXRequester.Get.AddSetDeviceRequest(
-            chassisGood.address, (short)0);
-
-        MXRequester.Get.AddSetDeviceRequest(
-            chassisBad.address, (short)0);
+        MXRequester.Get.AddSetDeviceRequest(chassisGood.address, (short)0);
+        MXRequester.Get.AddSetDeviceRequest(chassisBad.address, (short)0);
     }
 
     // ==========================================
-    // PLC 불량 신호 수신
-    // M717 ON -> 전체 장치 정지
+    // PLC 공정 이상 (M717) -> 전체 장치 정지
     // ==========================================
 
     private void OnProcessFault(short value)
@@ -601,29 +453,19 @@ public class Pr2Connector : MXObject
         if (isFault && !faulted)
         {
             faulted = true;
-
-            Debug.LogError(
-                "[Pr2Connector] 불량 신호 수신. 전체 공정 정지");
-
+            pendingArrival.Clear();
             controller.StopAllDevices();
+
+            Debug.LogError("[Pr2Connector] 공정 이상 신호 수신. 전체 공정 정지");
         }
-        else if (!isFault)
+        else if (!isFault && faulted)
         {
             faulted = false;
-
-            Debug.Log(
-                "[Pr2Connector] 공정 이상 신호 OFF");
+            Debug.Log("[Pr2Connector] 공정 이상 신호 OFF");
         }
     }
 
-    // ==========================================
-    // 외부에서 공정 정지 상태 확인
-    // ==========================================
-
-    public bool IsFaulted()
-    {
-        return faulted;
-    }
+    public bool IsFaulted() => faulted;
 
     // ==========================================
     // 종료 처리
@@ -634,16 +476,9 @@ public class Pr2Connector : MXObject
         if (controller == null)
             return;
 
-        if (controller.agv != null)
-            controller.agv.onCompleteMove.RemoveListener(OnAGVCompleted);
-
-        if (controller.lift != null)
-            controller.lift.onCompleteMove.RemoveListener(OnLiftCompleted);
-
-        if (controller.rail != null)
-            controller.rail.onCompleteMove.RemoveListener(OnRailCompleted);
-
-        if (controller.iccu != null)
-            controller.iccu.onCompleteMove.RemoveListener(OnICCUCompleted);
+        if (controller.agv != null) controller.agv.Arrived -= OnAGVArrived;
+        if (controller.lift != null) controller.lift.Arrived -= OnLiftArrived;
+        if (controller.rail != null) controller.rail.Arrived -= OnRailArrived;
+        if (controller.iccu != null) controller.iccu.Arrived -= OnICCUArrived;
     }
 }

@@ -9552,14 +9552,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1184516373}
-        m_TargetAssemblyTypeName: MXRequester, Assembly-CSharp
-        m_MethodName: Open
-        m_Mode: 1
+      - m_Target: {fileID: 1169744934}
+        m_TargetAssemblyTypeName: CameraSwitcher, Assembly-CSharp
+        m_MethodName: SwitchTo
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 2
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -14446,14 +14446,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2091182037}
-        m_TargetAssemblyTypeName: MXRequester, Assembly-CSharp
-        m_MethodName: 
-        m_Mode: 1
+      - m_Target: {fileID: 1169744934}
+        m_TargetAssemblyTypeName: CameraSwitcher, Assembly-CSharp
+        m_MethodName: SwitchTo
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -14579,14 +14579,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 73737519}
-        m_TargetAssemblyTypeName: MXRequester, Assembly-CSharp
-        m_MethodName: 
-        m_Mode: 1
+      - m_Target: {fileID: 1169744934}
+        m_TargetAssemblyTypeName: CameraSwitcher, Assembly-CSharp
+        m_MethodName: SwitchTo
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 3
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -15645,6 +15645,26 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1164112375}
   m_Mesh: {fileID: 3198946089140860706, guid: 7d9d959446713704aae46ef36c8a72dc, type: 3}
+--- !u!114 &1169744934
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1228036612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 987a1db827ed41ffb3b86d16c7484e7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CameraSwitcher
+  cameras:
+  - {fileID: 961739752}
+  - {fileID: 2091182040}
+  - {fileID: 1006439500}
+  - {fileID: 73737522}
+  - {fileID: 1397308870}
+  startIndex: 0
+  toggleBackToDefault: 1
 --- !u!1 &1173211734
 GameObject:
   m_ObjectHideFlags: 0
@@ -16707,6 +16727,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1228036613}
+  - component: {fileID: 1169744934}
   m_Layer: 0
   m_Name: CAM
   m_TagString: Untagged
@@ -16727,7 +16748,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2091182038}
   - {fileID: 73737520}
   - {fileID: 1397308868}
   - {fileID: 1006439498}
@@ -17132,14 +17152,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11500000, guid: 1fd6ecae41fecb44ba389fb9db826d27, type: 3}
-        m_TargetAssemblyTypeName: UnityEditor.MonoScript, UnityEditor.CoreModule
-        m_MethodName: set_name
-        m_Mode: 5
+      - m_Target: {fileID: 1169744934}
+        m_TargetAssemblyTypeName: CameraSwitcher, Assembly-CSharp
+        m_MethodName: SwitchTo
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 4
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -28332,13 +28352,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2091182037}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1987.5374, y: -136.05414, z: -43.9637}
+  m_LocalRotation: {x: 0.17364818, y: 0, z: 0, w: 0.9848078}
+  m_LocalPosition: {x: 0, y: 2.5, z: -4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1228036613}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Father: {fileID: 627368011891514095}
+  m_LocalEulerAnglesHint: {x: 20, y: 0, z: 0}
 --- !u!114 &2091182039
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28441,7 +28461,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2091182037}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 618b0e3f6c65dd247a4a016150006c57, type: 3}
   m_Name: 
@@ -29578,6 +29598,7 @@ Transform:
   m_Children:
   - {fileID: 4324531349836593858}
   - {fileID: 950182148}
+  - {fileID: 2091182038}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &641162222533678278

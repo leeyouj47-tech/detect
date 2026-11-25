@@ -132,11 +132,12 @@ namespace Preliy.Flange
         {
             var externalJoints = new ExtJoint(_e1, _e2, _e3, _e4, _e5, _e6);
             // Avoid resolving a singular wrist again when the flange already matches the target.
-            if (!_useTools)
+            // (26.11.25) Apply to tool mode as well: on scene load the target equals the current TCP,
+            // and re-solving at a singular wrist (J5 ~ 0) raises "Target in not reachable!".
             {
-                var actual = controller.Solver.ComputeForward(controller.MechanicalGroup.JointState, 0);
-                if (Vector3.Distance(actual.GetPosition(), target.GetPosition()) < 0.000001f &&
-                    Quaternion.Angle(actual.rotation, target.rotation) < 0.01f) return;
+                var actual = controller.Solver.ComputeForward(controller.MechanicalGroup.JointState, ActiveToolIndex);
+                if (Vector3.Distance(actual.GetPosition(), target.GetPosition()) < 0.0001f &&
+                    Quaternion.Angle(actual.rotation, target.rotation) < 0.05f) return;
             }
             var solution = controller.Solver.ComputeInverse(target, ActiveToolIndex, _configuration, externalJoints, ignoreMask);
             controller.Solver.TryApplySolution(solution, showErrorMassage);

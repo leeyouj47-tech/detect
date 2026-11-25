@@ -182,6 +182,7 @@ public class MoveJ : IRobotCommand
         float currentRotatedAngle = 0f;
         while (currentRotatedAngle < maxDiff)
         {
+            if (scheduler == null) return; // destroyed (Play mode exited)
             float dt = Time.deltaTime;
             float remainingAngle = maxDiff - currentRotatedAngle;
             //회전 가감속 프로파일 제어
@@ -330,6 +331,7 @@ public class MoveL : IRobotCommand
 
         while (currentTraveledDistance < totalDistance || currentRotatedAngle < totalAngle)
         {
+            if (scheduler == null) return; // destroyed (Play mode exited)
             float dt = Time.deltaTime;
             float remainingDistance = totalDistance - currentTraveledDistance;
             float remainingAngle = totalAngle - currentRotatedAngle;
@@ -522,6 +524,7 @@ public class MoveC : IRobotCommand
         // 8. Cartesian Space(직교 공간) 원호 보간 루프
         while (currentTraveledDistance < arcLength || currentRotatedAngle < totalAngle)
         {
+            if (scheduler == null) return; // destroyed (Play mode exited)
             float dt = Time.deltaTime;
             float remainingDistance = arcLength - currentTraveledDistance;
             float remainingAngle = totalAngle - currentRotatedAngle;

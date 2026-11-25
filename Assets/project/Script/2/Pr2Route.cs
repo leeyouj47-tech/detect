@@ -1,38 +1,103 @@
-
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+// ==========================================
+// Waypointë³„ ë„ì°© ì´ë²¤íŠ¸ (ë¶€ì°©/ë¶„ë¦¬ ë“± ì—°ì¶œìš©)
+// ==========================================
+[Serializable]
+public class WaypointArrivalEvent
+{
+    public int waypointID;
+    public UnityEvent onArrived = new UnityEvent();
+}
+
+// ==========================================
+// 2ê³µì • ê³µí†µ Waypoint ì´ë™
+// AGVRoute / LiftRoute / RailRoute / ICCURoute ê°€ ìƒì†
+// ==========================================
 public class Pr2Route : MonoBehaviour
 {
-    [Header("ÀüÃ¼ Waypoint µî·Ï")]
+    [Header("ì´ë™ì‹œí‚¬ ì¥ë¹„ (ë¹„ìš°ë©´ ì´ ì˜¤ë¸Œì íŠ¸)")]
+    [Tooltip("ì‹¤ì œë¡œ ì›€ì§ì¼ ì¥ë¹„. Waypointë“¤ì˜ ë¶€ëª¨ë¥¼ ì›€ì§ì´ë©´ Waypointë„ ê°™ì´ ì›€ì§ì—¬ì„œ ë„ì°©í•˜ì§€ ëª»í•˜ë¯€ë¡œ ë°˜ë“œì‹œ ì¥ë¹„ë¥¼ ì§€ì •í•˜ì„¸ìš”.")]
+    public Transform moveTarget;
+
+    [Header("ì „ì²´ Waypoint ë“±ë¡")]
     public WayPoint[] allWaypoints;
 
-    [Header("ÀÌµ¿ ¼³Á¤")]
+    [Header("ì´ë™ ì„¤ì •")]
     public float moveSpeed = 2f;
     public float rotateSpeed = 180f;
     public float arrivalDistance = 0.05f;
 
-    [Header("ÀÌµ¿ ¿Ï·á ÀÌº¥Æ®")]
+    [Tooltip("true: ì´ë™ ë°©í–¥(ìˆ˜í‰)ìœ¼ë¡œ íšŒì „ / false: íšŒì „ ì—†ì´ í‰í–‰ì´ë™")]
+    public bool rotateToDirection = false;
+
+    [Tooltip("true: neighbors ì—°ê²°ì„ ë”°ë¼ ìµœë‹¨ê²½ë¡œ ì´ë™ / false: ëª©ì ì§€ë¡œ ë°”ë¡œ ì§ì„  ì´ë™")]
+    public bool useWaypointGraph = false;
+
+    [Tooltip("ì‹œì‘ ì‹œ ì¥ë¹„ì™€ ê°€ì¥ ê°€ê¹Œìš´ Waypoint ì‚¬ì´ì˜ ìœ„ì¹˜ ì°¨ì´ë¥¼ ìœ ì§€í•œ ì±„ ì´ë™")]
+    public bool keepStartOffset = true;
+
+    [Header("ì´ë™ ì™„ë£Œ ì´ë²¤íŠ¸")]
     public UnityEvent onCompleteMove = new UnityEvent();
 
-    private Dictionary<int, WayPoint> waypointDic =
+    [Header("Waypointë³„ ë„ì°© ì´ë²¤íŠ¸")]
+    public WaypointArrivalEvent[] arrivalEvents;
+
+    /// <summary>ìµœì¢… ëª©ì ì§€ ë„ì°© ì‹œ (ëª©ì ì§€ ID)</summary>
+    public event Action<int> Arrived;
+
+    public int CurrentWaypointID { get; private set; } = -1;
+
+    private readonly Dictionary<int, WayPoint> waypointDic =
         new Dictionary<int, WayPoint>();
 
-    private List<WayPoint> routes = new List<WayPoint>();
+    private readonly List<WayPoint> routes = new List<WayPoint>();
 
-    private int routeIndex = 0;
+    private int routeIndex;
+    private int destinationID = -1;
+    private bool canMove;
+    private Vector3 offset;
 
-    private bool canMove = false;
-    private bool isRotating = false;
+    private Transform Target => moveTarget != null ? moveTarget : transform;
 
     // ==========================================
-    // ÃÊ±âÈ­
+    // ì´ˆê¸°í™”
     // ==========================================
 
     private void Awake()
     {
         InitializeWaypoints();
+
+        int nearestID = GetNearestWaypointID(Target.position);
+
+        if (nearestID >= 0)
+        {
+            CurrentWaypointID = nearestID;
+
+            if (keepStartOffset)
+                offset = Target.position - waypointDic[nearestID].transform.position;
+        }
+    }
+
+    // ë¹„í™œì„± ì»´í¬ë„ŒíŠ¸ëŠ” Startê°€ í˜¸ì¶œë˜ì§€ ì•Šìœ¼ë¯€ë¡œ ì‹¤ì œ ì‚¬ìš©í•˜ëŠ” Routeë§Œ ê²€ì‚¬
+    private void Start()
+    {
+        if (moveTarget != null)
+            return;
+
+        foreach (WayPoint waypoint in waypointDic.Values)
+        {
+            if (waypoint.transform.IsChildOf(transform))
+            {
+                Debug.LogError(
+                    $"[{name}] Move Targetì´ ë¹„ì–´ ìˆê³  Waypointê°€ ì´ ì˜¤ë¸Œì íŠ¸ì˜ ìì‹ì…ë‹ˆë‹¤. " +
+                    "ì´ëŒ€ë¡œëŠ” Waypointê°€ ê°™ì´ ì›€ì§ì—¬ ë„ì°©í•˜ì§€ ëª»í•©ë‹ˆë‹¤. Move Targetì— ì¥ë¹„ë¥¼ ì§€ì •í•˜ì„¸ìš”.");
+                break;
+            }
+        }
     }
 
     public void InitializeWaypoints()
@@ -41,7 +106,7 @@ public class Pr2Route : MonoBehaviour
 
         if (allWaypoints == null || allWaypoints.Length == 0)
         {
-            Debug.LogError($"[{name}] Waypoint°¡ ¾ø½À´Ï´Ù.");
+            Debug.LogError($"[{name}] Waypointê°€ ì—†ìŠµë‹ˆë‹¤.");
             return;
         }
 
@@ -52,27 +117,22 @@ public class Pr2Route : MonoBehaviour
 
             if (waypointDic.ContainsKey(waypoint.id))
             {
-                Debug.LogWarning(
-                    $"[{name}] Áßº¹ ID: {waypoint.id}");
+                Debug.LogWarning($"[{name}] ì¤‘ë³µ ID: {waypoint.id}");
                 continue;
             }
 
             waypointDic.Add(waypoint.id, waypoint);
         }
 
-        Debug.Log(
-            $"[{name}] ÃÑ {waypointDic.Count}°³ Waypoint µî·Ï ¿Ï·á");
+        Debug.Log($"[{name}] ì´ {waypointDic.Count}ê°œ Waypoint ë“±ë¡ ì™„ë£Œ");
     }
 
     // ==========================================
-    // °¡Àå °¡±î¿î Waypoint Ã£±â
+    // ê°€ì¥ ê°€ê¹Œìš´ Waypoint ì°¾ê¸°
     // ==========================================
 
     public int GetNearestWaypointID(Vector3 position)
     {
-        if (waypointDic.Count == 0)
-            return -1;
-
         int foundID = -1;
         float minDistance = float.MaxValue;
 
@@ -82,7 +142,7 @@ public class Pr2Route : MonoBehaviour
                 continue;
 
             float distance =
-                (pair.Value.transform.position - position).sqrMagnitude;
+                (pair.Value.transform.position + offset - position).sqrMagnitude;
 
             if (distance < minDistance)
             {
@@ -95,23 +155,17 @@ public class Pr2Route : MonoBehaviour
     }
 
     // ==========================================
-    // ÃÖ´Ü °æ·Î Å½»ö (´ÙÀÍ½ºÆ®¶ó)
+    // ìµœë‹¨ ê²½ë¡œ íƒìƒ‰ (ë‹¤ìµìŠ¤íŠ¸ë¼)
     // ==========================================
 
-    private List<WayPoint> FindShortestPath(
-        WayPoint start, WayPoint end)
+    private List<WayPoint> FindShortestPath(WayPoint start, WayPoint end)
     {
         if (start == null || end == null)
             return null;
 
-        Dictionary<WayPoint, float> distance =
-            new Dictionary<WayPoint, float>();
-
-        Dictionary<WayPoint, WayPoint> previous =
-            new Dictionary<WayPoint, WayPoint>();
-
-        List<WayPoint> unvisited =
-            new List<WayPoint>();
+        var distance = new Dictionary<WayPoint, float>();
+        var previous = new Dictionary<WayPoint, WayPoint>();
+        var unvisited = new List<WayPoint>();
 
         foreach (WayPoint waypoint in waypointDic.Values)
         {
@@ -123,24 +177,19 @@ public class Pr2Route : MonoBehaviour
             unvisited.Add(waypoint);
         }
 
-        if (!distance.ContainsKey(start) ||
-            !distance.ContainsKey(end))
+        if (!distance.ContainsKey(start) || !distance.ContainsKey(end))
             return null;
 
         distance[start] = 0f;
 
         while (unvisited.Count > 0)
         {
-            unvisited.Sort(
-                (a, b) => distance[a].CompareTo(distance[b]));
+            unvisited.Sort((a, b) => distance[a].CompareTo(distance[b]));
 
             WayPoint current = unvisited[0];
             unvisited.RemoveAt(0);
 
-            if (current == end)
-                break;
-
-            if (distance[current] == float.MaxValue)
+            if (current == end || distance[current] == float.MaxValue)
                 break;
 
             if (current.neighbors == null)
@@ -154,9 +203,7 @@ public class Pr2Route : MonoBehaviour
                     continue;
 
                 float alt = distance[current] +
-                    Vector3.Distance(
-                        current.transform.position,
-                        neighbor.transform.position);
+                    Vector3.Distance(current.transform.position, neighbor.transform.position);
 
                 if (alt < distance[neighbor])
                 {
@@ -166,82 +213,66 @@ public class Pr2Route : MonoBehaviour
             }
         }
 
-        List<WayPoint> path = new List<WayPoint>();
-        WayPoint point = end;
+        var path = new List<WayPoint>();
 
-        while (point != null)
-        {
+        for (WayPoint point = end; point != null; point = previous[point])
             path.Insert(0, point);
-            point = previous[point];
-        }
 
         if (path.Count == 0 || path[0] != start)
-        {
-            Debug.LogError(
-                $"[{name}] °æ·Î Å½»ö ½ÇÆĞ: {start.id} -> {end.id}");
             return null;
-        }
-
-        Debug.Log(
-            $"[{name}] °æ·Î: " +
-            string.Join(" -> ",
-                path.ConvertAll(w => w.id.ToString())));
 
         return path;
     }
 
     // ==========================================
-    // ¸ñÀûÁö ID·Î ÀÌµ¿ ¸í·É
+    // ëª©ì ì§€ IDë¡œ ì´ë™ ì‹œì‘
+    // ë„ì°© ì²˜ë¦¬ëŠ” í•­ìƒ FixedUpdateì—ì„œ ì¼ì–´ë‚¨ (í˜¸ì¶œ ì§í›„ ë™ê¸° ì™„ë£Œ ì—†ìŒ)
     // ==========================================
 
     public bool Go(int destinationID)
     {
         if (canMove)
         {
-            Debug.LogWarning($"[{name}] ÀÌ¹Ì ÀÌµ¿ ÁßÀÔ´Ï´Ù.");
+            Debug.LogWarning($"[{name}] ì´ë¯¸ ì´ë™ ì¤‘ì…ë‹ˆë‹¤.");
             return false;
         }
 
-        if (!waypointDic.ContainsKey(destinationID))
+        if (!waypointDic.TryGetValue(destinationID, out WayPoint end))
         {
-            Debug.LogError(
-                $"[{name}] ¸ñÀûÁö Waypoint ID°¡ ¾ø½À´Ï´Ù: {destinationID}");
+            Debug.LogError($"[{name}] ëª©ì ì§€ Waypoint IDê°€ ì—†ìŠµë‹ˆë‹¤: {destinationID}");
             return false;
         }
 
-        int startID = GetNearestWaypointID(transform.position);
+        var path = new List<WayPoint>();
 
-        if (startID == -1)
-            return false;
+        if (useWaypointGraph)
+        {
+            int startID = GetNearestWaypointID(Target.position);
 
-        WayPoint start = waypointDic[startID];
-        WayPoint end = waypointDic[destinationID];
+            if (startID >= 0)
+                path = FindShortestPath(waypointDic[startID], end);
 
-        List<WayPoint> path = FindShortestPath(start, end);
+            if (path == null || path.Count == 0)
+            {
+                Debug.LogWarning(
+                    $"[{name}] ê²½ë¡œ íƒìƒ‰ ì‹¤íŒ¨({startID} -> {destinationID}). ëª©ì ì§€ë¡œ ì§ì„  ì´ë™í•©ë‹ˆë‹¤.");
+                path = new List<WayPoint>();
+            }
+        }
 
-        if (path == null || path.Count == 0)
-            return false;
+        if (path.Count == 0)
+            path.Add(end);
 
-        SetRoute(path);
+        SetRoute(path, destinationID);
 
-        Debug.Log(
-            $"[{name}] ÀÌµ¿ ½ÃÀÛ: {startID} -> {destinationID}");
+        Debug.Log($"[{name}] ì´ë™ ì‹œì‘ -> WP{destinationID} " +
+                  $"({string.Join(" -> ", path.ConvertAll(w => w.id.ToString()))})");
 
         return true;
     }
 
-    // ==========================================
-    // ÁöÁ¤µÈ °æ·Î ¼³Á¤
-    // ==========================================
-
-    public void SetRoute(List<WayPoint> newRoutes)
+    private void SetRoute(List<WayPoint> newRoutes, int destination)
     {
-        if (newRoutes == null || newRoutes.Count == 0)
-        {
-            Debug.LogError($"[{name}] ÀÌµ¿ °æ·Î°¡ ºñ¾î ÀÖ½À´Ï´Ù.");
-            return;
-        }
-
         routes.Clear();
 
         foreach (WayPoint waypoint in newRoutes)
@@ -250,24 +281,13 @@ public class Pr2Route : MonoBehaviour
                 routes.Add(waypoint);
         }
 
-        if (routes.Count == 0)
-            return;
-
-        // ÇöÀç À§Ä¡¿Í °¡Àå °¡±î¿î ½ÃÀÛ Waypoint´Â °Ç³Ê¶Ü
-        routeIndex = 1;
-
-        if (routes.Count == 1)
-        {
-            CompleteMove();
-            return;
-        }
-
-        canMove = true;
-        isRotating = true;
+        routeIndex = 0;
+        destinationID = destination;
+        canMove = routes.Count > 0;
     }
 
     // ==========================================
-    // °æ·Î ÀÌµ¿ Ã³¸®
+    // ê²½ë¡œ ì´ë™ ì²˜ë¦¬
     // ==========================================
 
     private void FixedUpdate()
@@ -285,121 +305,125 @@ public class Pr2Route : MonoBehaviour
 
         if (targetWaypoint == null)
         {
-            Debug.LogError($"[{name}] ÀÌµ¿ÇÒ Waypoint°¡ ¾ø½À´Ï´Ù.");
+            Debug.LogError($"[{name}] ì´ë™í•  Waypointê°€ ì—†ìŠµë‹ˆë‹¤.");
             StopMovement();
             return;
         }
 
-        Vector3 targetPosition =
-            targetWaypoint.transform.position;
+        Transform target = Target;
+        Vector3 targetPosition = targetWaypoint.transform.position + offset;
+        Vector3 direction = targetPosition - target.position;
 
-        Vector3 direction =
-            targetPosition - transform.position;
-
-        // µµÂø ¿©ºÎ È®ÀÎ
-        if (direction.sqrMagnitude <=
-            arrivalDistance * arrivalDistance)
+        // ë„ì°© í™•ì¸
+        if (direction.sqrMagnitude <= arrivalDistance * arrivalDistance)
         {
-            transform.position = targetPosition;
+            target.position = targetPosition;
+            CurrentWaypointID = targetWaypoint.id;
+            InvokeArrivalEvent(targetWaypoint.id);
 
             routeIndex++;
 
             if (routeIndex >= routes.Count)
-            {
                 CompleteMove();
-            }
 
             return;
         }
 
-        // ÀÌµ¿ ¹æÇâ È¸Àü
-        if (direction.sqrMagnitude > 0.0001f)
+        // ì´ë™ ë°©í–¥ íšŒì „ (ìˆ˜í‰ ë°©í–¥ë§Œ)
+        if (rotateToDirection)
         {
-            Quaternion targetRotation =
-                Quaternion.LookRotation(direction.normalized);
+            Vector3 flat = new Vector3(direction.x, 0f, direction.z);
 
-            transform.rotation = Quaternion.RotateTowards(
-                transform.rotation,
-                targetRotation,
-                rotateSpeed * Time.fixedDeltaTime);
+            if (flat.sqrMagnitude > 0.0001f)
+            {
+                target.rotation = Quaternion.RotateTowards(
+                    target.rotation,
+                    Quaternion.LookRotation(flat.normalized),
+                    rotateSpeed * Time.fixedDeltaTime);
+            }
         }
 
-        // ¸ñÀûÁö ¹æÇâÀ¸·Î ÀÌµ¿
-        transform.position = Vector3.MoveTowards(
-            transform.position,
+        target.position = Vector3.MoveTowards(
+            target.position,
             targetPosition,
             moveSpeed * Time.fixedDeltaTime);
     }
 
+    private void InvokeArrivalEvent(int waypointID)
+    {
+        if (arrivalEvents == null)
+            return;
+
+        foreach (WaypointArrivalEvent arrivalEvent in arrivalEvents)
+        {
+            if (arrivalEvent != null && arrivalEvent.waypointID == waypointID)
+                arrivalEvent.onArrived?.Invoke();
+        }
+    }
+
     // ==========================================
-    // ÀÌµ¿ ¿Ï·á
+    // ì´ë™ ì™„ë£Œ
     // ==========================================
 
     private void CompleteMove()
     {
-        canMove = false;
-        isRotating = false;
-        routeIndex = 0;
+        int arrivedID = destinationID;
 
+        canMove = false;
+        routeIndex = 0;
+        destinationID = -1;
         routes.Clear();
 
-        Debug.Log($"[{name}] ÀÌµ¿ ¿Ï·á");
+        Debug.Log($"[{name}] ì´ë™ ì™„ë£Œ: WP{arrivedID}");
 
-        onCompleteMove.Invoke();
+        onCompleteMove?.Invoke();
+        Arrived?.Invoke(arrivedID);
     }
 
     // ==========================================
-    // ÀÌµ¿ ÁßÁö
+    // ì´ë™ ì •ì§€
     // ==========================================
 
     public void StopMovement()
     {
-        canMove = false;
-        isRotating = false;
-        routeIndex = 0;
+        if (!canMove)
+            return;
 
+        canMove = false;
+        routeIndex = 0;
+        destinationID = -1;
         routes.Clear();
 
-        Debug.Log($"[{name}] ÀÌµ¿ ÁßÁö");
+        Debug.Log($"[{name}] ì´ë™ ì •ì§€");
     }
-
-    // ==========================================
-    // ÀÌµ¿ »óÅÂ È®ÀÎ
-    // ==========================================
 
     public bool IsMoving()
     {
-        return canMove || isRotating;
+        return canMove;
     }
 
     // ==========================================
-    // ½ÃÀÛ ID¿Í ¸ñÀûÁö ID·Î °æ·Î ¼³Á¤
+    // ì´ë™ ëŒ€ìƒ êµì²´ (ì˜ˆ: AGV ë¹ ì§„ ë’¤ ì°¨ì²´ë§Œ ì´ë™)
+    // ìƒˆ ëŒ€ìƒê³¼ ê°€ì¥ ê°€ê¹Œìš´ Waypoint ì‚¬ì´ì˜ ìœ„ì¹˜ ì°¨ì´ë¥¼ ìœ ì§€
     // ==========================================
 
-    public bool GetRoutes(
-        Pr2Controller controller,
-        int startID,
-        int endID)
+    public void SetMoveTarget(Transform newTarget)
     {
-        if (controller == null || waypointDic.Count == 0)
-            return false;
+        if (newTarget == null)
+            return;
 
-        if (!waypointDic.TryGetValue(startID, out WayPoint start))
-            return false;
+        StopMovement();
+        moveTarget = newTarget;
 
-        if (!waypointDic.TryGetValue(endID, out WayPoint end))
-            return false;
+        offset = Vector3.zero;
+        int nearestID = GetNearestWaypointID(newTarget.position);
 
-        List<WayPoint> path =
-            FindShortestPath(start, end);
+        if (nearestID >= 0)
+        {
+            CurrentWaypointID = nearestID;
 
-        if (path == null || path.Count == 0)
-            return false;
-
-        SetRoute(path);
-
-        Debug.Log($"[{name}] °æ·Î Àü´Ş ¹× ÀÌµ¿ ½ÃÀÛ");
-
-        return true;
+            if (keepStartOffset)
+                offset = newTarget.position - waypointDic[nearestID].transform.position;
+        }
     }
 }

@@ -121,6 +121,13 @@ public abstract class OfflineProgram : MonoBehaviour
 
             if (isOn = value)
             {
+                // Ignore power-on while a program is running (prevents a second concurrent run)
+                if (currentState == TaskState.Run)
+                {
+                    Debug.LogWarning("[OfflineProgram] Program is running. Power ON ignored.");
+                    return;
+                }
+
                 currentState = TaskState.Wait;
                 Home();
                 RunProgram();
@@ -148,7 +155,20 @@ public abstract class OfflineProgram : MonoBehaviour
         Debug.LogWarning($"위치결정 기동");
         while (taskQueue.Count > 0)
         {
+            // Stop when the scene/objects were destroyed (e.g. Play mode exited mid-move)
+            if (this == null || scheduler == null)
+            {
+                taskQueue.Clear();
+                return;
+            }
+
             await taskQueue.Dequeue().ExecuteCommand(scheduler);
+
+            if (this == null || scheduler == null)
+            {
+                taskQueue.Clear();
+                return;
+            }
         }
 
         /*if (currentState == TaskState.Run)
