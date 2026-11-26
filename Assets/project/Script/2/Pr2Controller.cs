@@ -31,6 +31,19 @@ public class Pr2Controller : MonoBehaviour
     public GameObject carBodyBattery;
     public UnityEvent onBatteryCoupling;
 
+    [Header("배터리 결합 연출")]
+    [Tooltip("배터리가 아래에서 밀려 올라오는 거리(m)")]
+    public float batteryRiseDistance = 0.3f;
+    [Tooltip("결합 연출 중 상승 구간 비율 (나머지는 볼트 체결)")]
+    [Range(0.1f, 0.9f)] public float batteryRiseRatio = 0.5f;
+    [Tooltip("볼트 체결 표시 색")]
+    public Color boltColor = new Color(1f, 0.75f, 0.1f);
+    [Tooltip("결합 중 이 카메라로 자동 전환 (비우면 전환 안 함)")]
+    public CameraSwitcher cameraSwitcher;
+    public int couplingCameraIndex = 5;
+    [Tooltip("결합이 끝난 뒤 원래 카메라로 돌아가기 전 대기 시간(초)")]
+    public float couplingCameraHold = 1.5f;
+
     [Header("AGV 빠지기 (M832)")]
     [Tooltip("빠져나갈 AGV 본체")]
     public Transform agvObject;
@@ -55,6 +68,16 @@ public class Pr2Controller : MonoBehaviour
     public Transform skid;
     public int skidJoinWaypointID = 2;
 
+    [Header("ICCU 표시 (레일 위에는 움직이는 ICCU만 표시)")]
+    [Tooltip("레일(컨베이어)을 따라 움직이는 ICCU")]
+    public GameObject iccuOnConveyor;
+    [Tooltip("로봇이 집어서 차체에 결합하는 ICCU (도착 전까지 숨김)")]
+    public GameObject iccuForRobot;
+    [Tooltip("움직이는 ICCU가 이 Waypoint에 도착하면 로봇용 ICCU로 교체")]
+    public int iccuHandoverWaypointID = 2;
+    [Tooltip("로봇이 내려놓은 ICCU를 차체에 고정해 계속 보이게 함")]
+    public bool attachICCUToCarBody = true;
+
     [Header("로봇팔 (M833)")]
     public OfflineProgram robotProgram;
     public int robotProgramNumber = 1;
@@ -71,6 +94,14 @@ public class Pr2Controller : MonoBehaviour
     public UnityEvent onICCUInspection;
     public UnityEvent onChassisInspection;
 
+    [Header("불량검사 조명 연출 (초록불 스캔, 불량 시 빨강)")]
+    public InspectionLight iccuInspectionLight;
+    [Tooltip("ICCU 검사 대상 (비우면 ICCU Route의 이동 대상)")]
+    public Transform iccuInspectionTarget;
+    public InspectionLight chassisInspectionLight;
+    [Tooltip("차체 검사 대상 (비우면 Car Body)")]
+    public Transform chassisInspectionTarget;
+
     [Header("전체 정지 이벤트")]
     public UnityEvent onProcessStop;
 
@@ -85,6 +116,27 @@ public class Pr2Controller : MonoBehaviour
 
         if (agv != null)
             agv.Arrived += OnAGVRouteArrived;
+
+        if (iccu != null)
+            iccu.Arrived += OnICCUArrived;
+
+        // 레일 위에는 움직이는 ICCU만 보이게: 로봇용 ICCU는 도착 전까지 숨김
+        if (iccuOnConveyor != null && iccuForRobot != null && iccuOnConveyor != iccuForRobot)
+            iccuForRobot.SetActive(false);
+    }
+
+    // 움직이는 ICCU가 로봇 집는 위치에 도착하면 로봇용 ICCU와 교체
+    private void OnICCUArrived(int waypointID)
+    {
+        if (waypointID != iccuHandoverWaypointID || iccuForRobot == null)
+            return;
+
+        iccuForRobot.SetActive(true);
+
+        if (iccuOnConveyor != null && iccuOnConveyor != iccuForRobot)
+            iccuOnConveyor.SetActive(false);
+
+        Debug.Log("[Pr2Controller] ICCU 집는 위치 도착: 로봇용 ICCU로 교체");
     }
 
     private void OnDestroy()
@@ -94,6 +146,9 @@ public class Pr2Controller : MonoBehaviour
 
         if (agv != null)
             agv.Arrived -= OnAGVRouteArrived;
+
+        if (iccu != null)
+            iccu.Arrived -= OnICCUArrived;
     }
 
     // 차체가 스키드 위치에 도착하면 스키드에 올리고, 이후 이동 대상을 스키드로 변경
@@ -156,11 +211,117 @@ public class Pr2Controller : MonoBehaviour
     {
         onBatteryCoupling?.Invoke();
 
+        // 결합 장면 카메라로 전환
+        int previousCamera = -1;
+        if (cameraSwitcher != null && couplingCameraIndex > 0 &&
+            cameraSwitcher.cameras != null && couplingCameraIndex < cameraSwitcher.cameras.Length)
+        {
+            previousCamera = cameraSwitcher.CurrentIndex;
+            if (previousCamera != couplingCameraIndex)
+                cameraSwitcher.SwitchTo(couplingCameraIndex);
+        }
+
         AttachBatteryToCarBody();
 
-        yield return new WaitForSeconds(batteryCouplingTime);
+        if (carBodyBattery != null)
+            yield return StartCoroutine(BatteryCouplingAnimation(carBodyBattery.transform, batteryCouplingTime));
+        else
+            yield return new WaitForSeconds(batteryCouplingTime);
 
         onDone?.Invoke();
+
+        // 잠시 결합 상태를 보여준 뒤 원래 카메라로 복귀
+        if (previousCamera >= 0 && previousCamera != couplingCameraIndex)
+        {
+            yield return new WaitForSeconds(couplingCameraHold);
+            if (cameraSwitcher.CurrentIndex == couplingCameraIndex)
+                cameraSwitcher.SwitchTo(previousCamera);
+        }
+    }
+
+    // 배터리가 아래에서 밀려 올라와 차체에 닿고, 볼트 4개가 차례로 조여지는 연출
+    // 최종 위치는 결합 전 AGV 배터리 위치와 같음
+    private IEnumerator BatteryCouplingAnimation(Transform battery, float duration)
+    {
+        duration = Mathf.Max(0.5f, duration);
+        Vector3 finalPos = battery.position;
+        Vector3 startPos = finalPos - Vector3.up * batteryRiseDistance;
+
+        float riseTime = duration * batteryRiseRatio;
+        float boltTime = duration - riseTime;
+
+        // 1. 상승 (가감속)
+        for (float t = 0f; t < riseTime; t += Time.deltaTime)
+        {
+            battery.position = Vector3.Lerp(startPos, finalPos, Mathf.SmoothStep(0f, 1f, t / riseTime));
+            yield return null;
+        }
+        battery.position = finalPos;
+
+        // 2. 볼트 체결: 모서리 4곳 볼트가 차례로 회전하며 조여지고, 살짝 진동
+        GameObject[] bolts = CreateBolts(battery);
+        for (float t = 0f; t < boltTime; t += Time.deltaTime)
+        {
+            float k = t / boltTime;
+            for (int i = 0; i < bolts.Length; i++)
+            {
+                float local = Mathf.Clamp01(k * bolts.Length - i);
+                Transform b = bolts[i].transform;
+                if (local > 0f && local < 1f)
+                    b.Rotate(Vector3.up, 900f * Time.deltaTime, Space.World);
+                b.localScale = Vector3.Lerp(BoltStartScale, BoltEndScale, local);
+            }
+
+            float shake = Mathf.Sin(t * 60f) * 0.003f * (1f - k);
+            battery.position = finalPos + new Vector3(shake, 0f, -shake);
+            yield return null;
+        }
+        battery.position = finalPos;
+
+        foreach (GameObject b in bolts)
+            Destroy(b);
+    }
+
+    private static readonly Vector3 BoltStartScale = new Vector3(0.07f, 0.06f, 0.07f);
+    private static readonly Vector3 BoltEndScale = new Vector3(0.09f, 0.01f, 0.09f);
+
+    private GameObject[] CreateBolts(Transform battery)
+    {
+        Bounds bounds = new Bounds(battery.position, Vector3.zero);
+        bool found = false;
+        foreach (Renderer r in battery.GetComponentsInChildren<Renderer>())
+        {
+            if (!found) { bounds = r.bounds; found = true; }
+            else bounds.Encapsulate(r.bounds);
+        }
+
+        Shader shader = Shader.Find("Universal Render Pipeline/Unlit");
+        if (shader == null) shader = Shader.Find("Unlit/Color");
+        Material mat = new Material(shader);
+        Color c = boltColor * 2f;
+        if (mat.HasProperty("_BaseColor")) mat.SetColor("_BaseColor", c);
+        if (mat.HasProperty("_Color")) mat.SetColor("_Color", c);
+
+        Vector3 e = bounds.extents * 0.8f;
+        Vector3[] corners =
+        {
+            new Vector3(-e.x, 0f, -e.z), new Vector3(e.x, 0f, -e.z),
+            new Vector3(e.x, 0f, e.z), new Vector3(-e.x, 0f, e.z)
+        };
+
+        GameObject[] bolts = new GameObject[corners.Length];
+        for (int i = 0; i < corners.Length; i++)
+        {
+            GameObject bolt = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+            bolt.name = "Coupling Bolt " + (i + 1);
+            Destroy(bolt.GetComponent<Collider>());
+            bolt.GetComponent<Renderer>().sharedMaterial = mat;
+            bolt.transform.SetParent(null);
+            bolt.transform.position = new Vector3(bounds.center.x, bounds.max.y + 0.02f, bounds.center.z) + corners[i];
+            bolt.transform.localScale = BoltStartScale;
+            bolts[i] = bolt;
+        }
+        return bolts;
     }
 
     // AGV 배터리는 숨기고, 같은 위치에 차체 배터리를 보이게 함 (이후 차체와 같이 이동)
@@ -294,6 +455,9 @@ public class Pr2Controller : MonoBehaviour
         robotProgram.onProgramCompleted.AddListener(handler);
         robotProgram.RunProgram(robotProgramNumber);
 
+        if (attachICCUToCarBody && iccuForRobot != null && carBody != null)
+            StartCoroutine(WatchICCURelease(() => completed));
+
         float elapsed = 0f;
 
         while (!completed && (robotTimeout <= 0f || elapsed < robotTimeout))
@@ -313,28 +477,77 @@ public class Pr2Controller : MonoBehaviour
         onDone?.Invoke();
     }
 
+    // 로봇이 ICCU를 집었다가 놓는 순간 차체에 고정 (떨어지거나 남지 않고 차체와 같이 이동)
+    private IEnumerator WatchICCURelease(Func<bool> robotDone)
+    {
+        Transform part = iccuForRobot.transform;
+        Transform startParent = part.parent;
+
+        // 집을 때까지 대기 (부모가 그리퍼로 바뀜)
+        while (part.parent == startParent && !robotDone())
+            yield return null;
+
+        // 놓을 때까지 대기 (그리퍼가 부모를 해제)
+        while (part.parent != null && part.parent != startParent && !robotDone())
+            yield return null;
+
+        if (part.parent == startParent)
+        {
+            Debug.LogWarning("[Pr2Controller] 로봇이 ICCU를 집지 않았습니다. 차체 고정을 건너뜁니다.");
+            yield break;
+        }
+
+        Rigidbody body = part.GetComponent<Rigidbody>();
+        if (body != null)
+        {
+            if (!body.isKinematic)
+            {
+                body.linearVelocity = Vector3.zero;
+                body.angularVelocity = Vector3.zero;
+            }
+            body.isKinematic = true;
+        }
+
+        part.SetParent(carBody, true);
+        Debug.Log("[Pr2Controller] ICCU를 차체에 결합: 이후 차체와 같이 이동");
+    }
+
     // ==========================================
     // 불량검사 (inspectionTime 동안 실행 후 결과 전달)
     // ==========================================
 
     public void RunICCUInspection(Action<bool> onDone)
     {
-        StartCoroutine(InspectionRoutine(onICCUInspection, () => !iccuDefect, onDone));
+        Transform target = iccuInspectionTarget != null ? iccuInspectionTarget
+            : (iccu != null && iccu.moveTarget != null ? iccu.moveTarget : null);
+        StartCoroutine(InspectionRoutine(onICCUInspection, () => !iccuDefect, onDone,
+            iccuInspectionLight, target));
     }
 
     public void RunChassisInspection(Action<bool> onDone)
     {
-        StartCoroutine(InspectionRoutine(onChassisInspection, () => !chassisDefect, onDone));
+        Transform target = chassisInspectionTarget != null ? chassisInspectionTarget : carBody;
+        StartCoroutine(InspectionRoutine(onChassisInspection, () => !chassisDefect, onDone,
+            chassisInspectionLight, target));
     }
 
     private IEnumerator InspectionRoutine(
-        UnityEvent startEvent, Func<bool> isGood, Action<bool> onDone)
+        UnityEvent startEvent, Func<bool> isGood, Action<bool> onDone,
+        InspectionLight inspectionLight, Transform inspectionTarget)
     {
         startEvent?.Invoke();
 
+        if (inspectionLight != null)
+            inspectionLight.BeginManual(inspectionTarget, inspectionTime);
+
         yield return new WaitForSeconds(inspectionTime);
 
-        onDone?.Invoke(isGood());
+        bool good = isGood();
+
+        if (inspectionLight != null)
+            inspectionLight.ShowResult(good);
+
+        onDone?.Invoke(good);
     }
 
     // ==========================================
@@ -344,6 +557,9 @@ public class Pr2Controller : MonoBehaviour
     public void StopAllDevices()
     {
         StopAllCoroutines();
+
+        if (iccuInspectionLight != null) iccuInspectionLight.StopManual();
+        if (chassisInspectionLight != null) chassisInspectionLight.StopManual();
 
         if (agv != null) agv.StopMovement();
         if (lift != null) lift.StopMovement();
