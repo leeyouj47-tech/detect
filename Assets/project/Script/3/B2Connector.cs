@@ -6,15 +6,16 @@ public class B2Connector : MXObject
     public B2Program b2Program;
 
     [Header("PLC -> Unity : 시작 신호")]
-    public DeviceAddress B2On = new DeviceAddress("M35");
+    public DeviceAddress B2On = new DeviceAddress("M254");
 
     [Header("Unity -> PLC : 완료 신호")]
-    public DeviceAddress B2Completed = new DeviceAddress("M75");
-    public DeviceAddress B2Start = new DeviceAddress("M79");
+    public DeviceAddress B2Completed = new DeviceAddress("M283");
+    public DeviceAddress B2Start = new DeviceAddress("M289");
+    public DeviceAddress B2Busy = new DeviceAddress("M315");
 
     [Header("로봇팔 제어신호")]
     public DeviceAddress B2PositionNum = new DeviceAddress("position No");
-    public DeviceAddress B2Positioning   = new DeviceAddress("positioning");
+    public DeviceAddress B2Positioning = new DeviceAddress("positioning");
 
     private int positionId;
     private bool needPositioning;
@@ -28,7 +29,14 @@ public class B2Connector : MXObject
 
     private void B2ON(short obj)
     {
-        b2Program.IsOn = obj != 0;
+        if(obj != 0)
+        {
+            b2Program.IsOn = true;
+        }
+        else
+        {
+            b2Program.IsOn = false;
+        }
     }
 
 
@@ -56,17 +64,29 @@ public class B2Connector : MXObject
         if (needPositioning && positionId != 0)
         {
             Debug.Log($"{positionId}번 프로그램 시작");
+            MXRequester.Get.AddSetDeviceRequest(B2Completed.address, 0);
             b2Program.RunProgram(positionId);
             if (B2Start.useDevice)
                 MXRequester.Get.AddSetDeviceRequest(B2Start.address, 1);
+            if (B2Busy.useDevice)
+                MXRequester.Get.AddSetDeviceRequest(B2Busy.address, 1);
 
             needPositioning = false;
         }
     }
-
-    public void B2CompletedCommand()
+    
+    public void B2CompletedCommand(bool isCompleted)
     {
-        MXRequester.Get.AddSetDeviceRequest(B2Completed.address, 1);
+        if (isCompleted)
+        {
+            MXRequester.Get.AddSetDeviceRequest(B2Completed.address, 1);
+            if (B2Busy.useDevice)
+                MXRequester.Get.AddSetDeviceRequest(B2Busy.address, 0);
+        }
+        else
+        {
+            MXRequester.Get.AddSetDeviceRequest(B2Completed.address, 0);
+        }
     }
 
 }

@@ -7,11 +7,12 @@ public class A1Connector : MXObject
     public A1Program a1Program;
 
     [Header("PLC -> Unity : 시작 신호")]
-    public DeviceAddress a1On = new DeviceAddress("M27");
+    public DeviceAddress a1On = new DeviceAddress("M251");
 
     [Header("Unity -> PLC : 완료 신호")]
-    public DeviceAddress a1Completed = new DeviceAddress("M63");
-    public DeviceAddress a1Start = new DeviceAddress("M76");
+    public DeviceAddress a1Completed = new DeviceAddress("M280");
+    public DeviceAddress a1Start = new DeviceAddress("M286");
+    public DeviceAddress a1Busy = new DeviceAddress("M312");
 
     [Header("로봇팔 제어신호")]
     public DeviceAddress a1PositionNum = new DeviceAddress("position No");
@@ -29,7 +30,14 @@ public class A1Connector : MXObject
 
     private void A1On(short obj)
     {
-        a1Program.IsOn = obj != 0;
+        if(obj != 0)
+        {
+            a1Program.IsOn = true;
+        }
+        else
+        {
+            a1Program.IsOn = false;
+        }
     }
 
     private void SetPosition(short obj)
@@ -56,16 +64,28 @@ public class A1Connector : MXObject
         if (needPositioning && positionId != 0)
         {
             Debug.Log($"{positionId}번 프로그램 시작");
+            MXRequester.Get.AddSetDeviceRequest(a1Completed.address, 0);
             a1Program.RunProgram(positionId);
             if (a1Start.useDevice)
                 MXRequester.Get.AddSetDeviceRequest(a1Start.address, 1);
+            if (a1Busy.useDevice)
+                MXRequester.Get.AddSetDeviceRequest(a1Busy.address, 1);
 
             needPositioning = false;
         }
     }
 
-    public void A1CompletedCommand()
+    public void A1CompletedCommand(bool isCompleted)
     {
-        MXRequester.Get.AddSetDeviceRequest(a1Completed.address, 1);
+        if (isCompleted)
+        {
+            MXRequester.Get.AddSetDeviceRequest(a1Completed.address, 1);
+            if (a1Busy.useDevice)
+                MXRequester.Get.AddSetDeviceRequest(a1Busy.address, 0);
+        }
+        else
+        {
+            MXRequester.Get.AddSetDeviceRequest(a1Completed.address, 0);
+        }
     }
 }
