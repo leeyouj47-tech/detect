@@ -12,6 +12,26 @@ public class BatteryPackVisibility : MonoBehaviour
     [Header("M524 ON일 때 표시 여부")]
     public bool showWhenM524On = true;
 
+    // Apply the initial state in Awake so it is hidden before the first frame.
+    // An AGV cloned by AGVFiller also starts hidden even if the source AGV's cover was already shown.
+    // Start may run later (first time the hidden object is shown), so the
+    // initial state is applied only once here. Otherwise Start would hide it again.
+    private bool initialApplied;
+
+    private void Awake()
+    {
+        ApplyInitialState();
+    }
+
+    private void ApplyInitialState()
+    {
+        if (initialApplied || targetObject == null)
+            return;
+
+        initialApplied = true;
+        targetObject.SetActive(initialVisible);
+    }
+
     private void Start()
     {
         if (targetObject == null)
@@ -22,8 +42,8 @@ public class BatteryPackVisibility : MonoBehaviour
             return;
         }
 
-        // 게임 시작 시 초기 상태 적용
-        targetObject.SetActive(initialVisible);
+        // 게임 시작 시 초기 상태 적용 (Awake에서 이미 적용했으면 다시 숨기지 않음)
+        ApplyInitialState();
 
         Debug.Log(
             $"[{gameObject.name}] 초기 표시 상태: {initialVisible}"
@@ -35,6 +55,7 @@ public class BatteryPackVisibility : MonoBehaviour
         if (targetObject == null)
             return;
 
+        initialApplied = true;
         bool visible = showWhenM524On ? isOn : !isOn;
 
         targetObject.SetActive(visible);
