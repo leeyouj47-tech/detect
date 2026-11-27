@@ -52,9 +52,12 @@ public class C2Program : OfflineProgram
         this.MoveC(waypoints[18], waypoints[19]);
         this.MoveL(waypoints[20]);
         this.MoveL(waypoints[21]);
-        this.MoveL(waypoints[4]);
-        this.Wait(5000);
-        this.MoveL(waypoints[5]);        
+        this.MoveL(waypoints[4]);   
+    }
+
+    public void Program2()
+    {
+        this.MoveL(waypoints[5]);
         this.Action(false);
         this.Wait(100);
         this.MoveL(waypoints[22]);

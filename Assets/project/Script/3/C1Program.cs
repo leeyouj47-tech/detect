@@ -54,14 +54,11 @@ public class C1Program : OfflineProgram
         this.MoveL(waypoints[17]);
         this.MoveJ(waypoints[18]);
         this.MoveJ(waypoints[19]);        
-        this.MoveL(waypoints[4]);
-        this.Wait(5000);
-
-        
+        this.MoveL(waypoints[4]);        
     }
     public void Program2()
     {
-        this.MoveL(waypoints[21]);
+        //this.MoveL(waypoints[21]);
         this.MoveL(waypoints[5]);
         this.Action(false, 500);
         this.MoveL(waypoints[20]);

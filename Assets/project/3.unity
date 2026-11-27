@@ -16933,14 +16933,6 @@ MonoBehaviour:
     address: M318
     description: M23
     comment: 
-  programStart:
-    useDevice: 1
-    useDoubleWord: 0
-    isLocked: 1
-    label: 
-    address: M319
-    description: M48
-    comment: 
   glassCompleted:
     useDevice: 1
     useDoubleWord: 0
@@ -16949,13 +16941,13 @@ MonoBehaviour:
     address: M320
     description: M63
     comment: 
-  glassStarted:
+  glassStart:
     useDevice: 1
     useDoubleWord: 0
-    isLocked: 1
+    isLocked: 0
     label: 
     address: M321
-    description: M321
+    description: M319
     comment: 
   glassBusy:
     useDevice: 1
@@ -16964,6 +16956,22 @@ MonoBehaviour:
     label: 
     address: M322
     description: M322
+    comment: 
+  glassPositionNum:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: D16
+    description: position No
+    comment: 
+  glassPositioning:
+    useDevice: 1
+    useDoubleWord: 0
+    isLocked: 0
+    label: 
+    address: M319
+    description: positioning
     comment: 
 --- !u!1 &466210617
 GameObject:
@@ -18128,18 +18136,18 @@ MonoBehaviour:
   _showFrame: 0
   _showName: 0
   _offset:
-    e00: 1
-    e01: 1.671425e-14
-    e02: 0.000000018465833
-    e03: 0.0000006632158
-    e10: 1.40326085e-14
+    e00: 1.0000001
+    e01: 3.5526527e-15
+    e02: 9.769956e-15
+    e03: 0.00000042442974
+    e10: -1.5098942e-14
     e11: 1
-    e12: 1.8285442e-15
-    e13: 0.24000016
-    e20: 0.000000015319282
-    e21: 6.1558187e-15
-    e22: 0.99999994
-    e23: -0.0000004745409
+    e12: -7.105424e-15
+    e13: 0.24000026
+    e20: 5.328996e-15
+    e21: -7.993583e-15
+    e22: 1
+    e23: -0.00000007641816
     e30: 0
     e31: 0
     e32: 0
@@ -31187,18 +31195,18 @@ MonoBehaviour:
   _showFrame: 0
   _showName: 0
   _offset:
-    e00: 1.0000001
-    e01: 7.144638e-16
-    e02: 0.0000000014760705
-    e03: 0.0000009473809
-    e10: 1.6851304e-14
+    e00: 1
+    e01: -1.0658175e-14
+    e02: 9.769971e-15
+    e03: 0.00000030924787
+    e10: -4.440843e-15
     e11: 1
-    e12: -2.4411415e-14
-    e13: 0.24000002
-    e20: 0.000000005541794
-    e21: -3.353497e-14
+    e12: -1.0658165e-14
+    e13: 0.24000007
+    e20: -2.131634e-14
+    e21: -7.993595e-15
     e22: 1
-    e23: -0.000000054512306
+    e23: -0.00000008684725
     e30: 0
     e31: 0
     e32: 0
@@ -40682,7 +40690,7 @@ MonoBehaviour:
         _r3: 0
         _r4: 0
         _r5: 0
-        _r6: -22.486
+        _r6: -34.529
       _extJoint:
         _e1: 0
         _e2: 0
@@ -40708,17 +40716,17 @@ MonoBehaviour:
   _poseObserver:
     _flange:
       _value:
-        e00: -0.92397314
+        e00: -0.8238396
         e01: -0.00000031391656
-        e02: -0.38245738
+        e02: -0.56682307
         e03: -0.000000248801
-        e10: -0.38245738
+        e10: -0.56682307
         e11: -0.0000003139164
-        e12: 0.92397314
+        e12: 0.8238396
         e13: 2.0524292
-        e20: -0.00000041011012
+        e20: -0.00000043655194
         e21: 1
-        e22: 0.00000016999059
+        e22: 0.000000080681595
         e23: 2.3850005
         e30: 0
         e31: 0
@@ -40726,17 +40734,17 @@ MonoBehaviour:
         e33: 1
     _toolCenterPointBase:
       _value:
-        e00: -0.92397314
-        e01: -0.0000003139166
-        e02: -0.38245738
-        e03: -0.00000075544295
-        e10: -0.38245738
+        e00: -0.8238397
+        e01: -0.00000031391656
+        e02: -0.56682307
+        e03: -0.00000063048753
+        e10: -0.5668231
         e11: -0.0000003139164
-        e12: 0.9239731
-        e13: 2.0524285
-        e20: -0.0000004101101
+        e12: 0.8238396
+        e13: 2.0524287
+        e20: -0.000000436552
         e21: 1
-        e22: 0.00000016999057
+        e22: 0.00000008068159
         e23: 2.6250007
         e30: 0
         e31: 0
@@ -40744,35 +40752,35 @@ MonoBehaviour:
         e33: 1
     _toolCenterPointWorld:
       _value:
-        e00: 0.00000052025644
+        e00: 0.0000005347615
         e01: -1.0000004
-        e02: -0.00000012439816
+        e02: -0.000000013111025
         e03: 1.3467276
-        e10: -0.38245738
+        e10: -0.5668231
         e11: -0.0000003139164
-        e12: 0.9239731
-        e13: 2.0524285
-        e20: -0.9239735
-        e21: -0.00000043312602
-        e22: -0.38245752
-        e23: 23.999998
+        e12: 0.8238396
+        e13: 2.0524287
+        e20: -0.82384
+        e21: -0.000000433126
+        e22: -0.56682324
+        e23: 24
         e30: 0
         e31: 0
         e32: 0
         e33: 1
     _toolCenterPointFrame:
       _value:
-        e00: -0.92397314
-        e01: -0.0000003139166
-        e02: -0.38245738
-        e03: -0.0000030215647
-        e10: -0.38245738
+        e00: -0.8238397
+        e01: -0.00000031391656
+        e02: -0.56682307
+        e03: -0.0000011142167
+        e10: -0.5668231
         e11: -0.0000003139164
-        e12: 0.9239731
-        e13: 2.0524285
-        e20: -0.0000004101101
+        e12: 0.8238396
+        e13: 2.0524287
+        e20: -0.00000043655197
         e21: 1
-        e22: 0.00000016999059
+        e22: 0.00000008068159
         e23: 2.6250007
         e30: 0
         e31: 0
@@ -43540,7 +43548,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1254845649}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.00029619216, y: -0.00029619227, z: 0.70710665, w: 0.7071069}
+  m_LocalRotation: {x: -0, y: -0, z: 0.70710665, w: 0.7071069}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -43562,7 +43570,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Preliy.Flange::Preliy.Flange.TransformJoint
   _position:
-    _value: 0.048
+    _value: 0
   _config:
     _name: 
     _type: 0
@@ -48363,8 +48371,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1362817583}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.70678276, y: 0.7067829, z: 0.021402745, w: -0.021402752}
-  m_LocalPosition: {x: -0, y: 1.95, z: -0}
+  m_LocalRotation: {x: 0, y: -0, z: -0.70710665, w: 0.7071069}
+  m_LocalPosition: {x: -0, y: 1.95, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -48385,7 +48393,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Preliy.Flange::Preliy.Flange.TransformJoint
   _position:
-    _value: 176.531
+    _value: 0
   _config:
     _name: 
     _type: 0
@@ -52171,7 +52179,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1453887229}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.683985, y: 0.6839852, z: 0.1793444, w: -0.17934446}
+  m_LocalRotation: {x: -0.7039598, y: 0.70396, z: 0.06663676, w: -0.06663678}
   m_LocalPosition: {x: -0, y: 1.95, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -52193,7 +52201,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Preliy.Flange::Preliy.Flange.TransformJoint
   _position:
-    _value: 150.615
+    _value: 169.185
   _config:
     _name: 
     _type: 0
@@ -53228,7 +53236,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1490112900}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0.246111, z: -0, w: 0.9692417}
+  m_LocalRotation: {x: 0, y: -0.06520285, z: -0, w: 0.99787205}
   m_LocalPosition: {x: -0, y: 0.225, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -53250,7 +53258,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Preliy.Flange::Preliy.Flange.TransformJoint
   _position:
-    _value: 28.495
+    _value: 7.477
   _config:
     _name: 
     _type: 0
@@ -57037,9 +57045,9 @@ MonoBehaviour:
         _r1: 0
         _r2: -0
         _r3: 0
-        _r4: 150.615
+        _r4: 169.185
         _r5: 0.04
-        _r6: 28.495
+        _r6: 7.477
       _extJoint:
         _e1: 0
         _e2: 0
@@ -57065,17 +57073,17 @@ MonoBehaviour:
   _poseObserver:
     _flange:
       _value:
-        e00: 0.9998793
-        e01: -0.0003428699
-        e02: 0.015532349
-        e03: -0.00007732389
-        e10: 0.015532539
-        e11: 0.0006079978
-        e12: -0.99987924
-        e13: 2.052566
-        e20: 0.00033338484
+        e00: 0.9983034
+        e01: -0.00013131004
+        e02: 0.058225747
+        e03: -0.000029722927
+        e10: 0.058225825
+        e11: 0.0006854177
+        e12: -0.9983032
+        e13: 2.0525835
+        e20: 0.00009117827
         e21: 0.99999976
-        e22: 0.0006132501
+        e22: 0.00069190044
         e23: 2.3850005
         e30: 0
         e31: 0
@@ -57083,17 +57091,17 @@ MonoBehaviour:
         e33: 1
     _toolCenterPointBase:
       _value:
-        e00: 0.9998794
-        e01: -0.0003428699
-        e02: 0.015532351
-        e03: -0.00015866625
-        e10: 0.0155325355
-        e11: 0.0006079978
-        e12: -0.99987924
-        e13: 2.052712
-        e20: 0.00033338487
+        e00: 0.9983034
+        e01: -0.00013131004
+        e02: 0.058225747
+        e03: -0.00006093368
+        e10: 0.058225825
+        e11: 0.0006854177
+        e12: -0.9983032
+        e13: 2.052748
+        e20: 0.00009117827
         e21: 0.99999976
-        e22: 0.0006132501
+        e22: 0.00069190044
         e23: 2.6250005
         e30: 0
         e31: 0
@@ -57101,35 +57109,35 @@ MonoBehaviour:
         e33: 1
     _toolCenterPointWorld:
       _value:
-        e00: 0.0003332658
+        e00: 0.00009105929
         e01: 1.0000001
-        e02: 0.00061324844
+        e02: 0.00069189374
         e03: -1.3467278
-        e10: 0.0155325355
-        e11: 0.0006079978
-        e12: -0.99987924
-        e13: 2.062712
-        e20: -0.9998798
-        e21: 0.0003427508
-        e22: -0.015532357
-        e23: 24.030159
+        e10: 0.058225825
+        e11: 0.0006854177
+        e12: -0.9983032
+        e13: 2.062748
+        e20: -0.9983038
+        e21: 0.00013119087
+        e22: -0.05822577
+        e23: 24.030062
         e30: 0
         e31: 0
         e32: 0
         e33: 1
     _toolCenterPointFrame:
       _value:
-        e00: 0.9998794
-        e01: -0.0003428699
-        e02: 0.015532351
-        e03: -0.00015909228
-        e10: 0.0155325355
-        e11: 0.0006079978
-        e12: -0.99987924
-        e13: 2.052712
-        e20: 0.00033338487
+        e00: 0.9983034
+        e01: -0.00013131004
+        e02: 0.058225747
+        e03: -0.00006181754
+        e10: 0.058225825
+        e11: 0.0006854177
+        e12: -0.9983032
+        e13: 2.052748
+        e20: 0.00009117827
         e21: 0.99999976
-        e22: 0.0006132501
+        e22: 0.00069190044
         e23: 2.6250005
         e30: 0
         e31: 0
@@ -61554,16 +61562,16 @@ MonoBehaviour:
         _r1: 0
         _r2: 0
         _r3: 0
-        _r4: 176.531
-        _r5: 0.048
-        _r6: 6.905
+        _r4: 0
+        _r5: 0
+        _r6: 0
       _extJoint:
-        _e1: 0
-        _e2: 0
-        _e3: 0
-        _e4: 0
-        _e5: 0
-        _e6: 0
+        _e1: 9e+9
+        _e2: 9e+9
+        _e3: 9e+9
+        _e4: 9e+9
+        _e5: 9e+9
+        _e6: 9e+9
     _initJointState:
       _robJoint:
         _r1: 0
@@ -61582,17 +61590,17 @@ MonoBehaviour:
   _poseObserver:
     _flange:
       _value:
-        e00: 0.9982023
-        e01: -0.000051005027
-        e02: -0.059934027
-        e03: -0.000011654301
-        e10: -0.05993396
-        e11: 0.000835909
-        e12: -0.99820197
-        e13: 2.0526173
-        e20: 0.00010101271
-        e21: 0.99999964
-        e22: 0.00083134935
+        e00: -1
+        e01: -0.00000031391656
+        e02: 0.00000031391647
+        e03: -0.000000248801
+        e10: 0.00000031391656
+        e11: -0.0000003139164
+        e12: 1
+        e13: 2.0524292
+        e20: -0.00000031391647
+        e21: 1
+        e22: 0.00000031391647
         e23: 2.3850005
         e30: 0
         e31: 0
@@ -61600,17 +61608,17 @@ MonoBehaviour:
         e33: 1
     _toolCenterPointBase:
       _value:
-        e00: 0.9982023
-        e01: -0.000051005027
-        e02: -0.059934027
-        e03: -0.000011654301
-        e10: -0.05993396
-        e11: 0.000835909
-        e12: -0.99820197
-        e13: 2.0526173
-        e20: 0.00010101271
-        e21: 0.99999964
-        e22: 0.00083134935
+        e00: -1
+        e01: -0.00000031391656
+        e02: 0.00000031391647
+        e03: -0.000000248801
+        e10: 0.00000031391656
+        e11: -0.0000003139164
+        e12: 1
+        e13: 2.0524292
+        e20: -0.00000031391647
+        e21: 1
+        e22: 0.00000031391647
         e23: 2.3850005
         e30: 0
         e31: 0
@@ -61618,35 +61626,35 @@ MonoBehaviour:
         e33: 1
     _toolCenterPointWorld:
       _value:
-        e00: 0.00010089375
-        e01: 1
-        e02: 0.0008313568
+        e00: -0.00000019470727
+        e01: 1.0000004
+        e02: 0.00000031391656
         e03: -0.3749989
-        e10: -0.05993396
-        e11: 0.000835909
-        e12: -0.99820197
-        e13: 2.0526173
-        e20: -0.9982027
-        e21: 0.000050885836
-        e22: 0.05993405
-        e23: 26.410011
+        e10: 0.00000031391656
+        e11: -0.0000003139164
+        e12: 1
+        e13: 2.0524292
+        e20: 1.0000004
+        e21: 0.00000019470735
+        e22: -0.00000031391662
+        e23: 26.41
         e30: 0
         e31: 0
         e32: 0
         e33: 1
     _toolCenterPointFrame:
       _value:
-        e00: 0.9982023
-        e01: -0.000051005027
-        e02: -0.059934027
-        e03: -0.000011491175
-        e10: -0.05993396
-        e11: 0.000835909
-        e12: -0.99820197
-        e13: 2.0526173
-        e20: 0.00010101271
-        e21: 0.99999964
-        e22: 0.00083134935
+        e00: -1
+        e01: -0.00000031391656
+        e02: 0.00000031391647
+        e03: -0.000000047087877
+        e10: 0.00000031391656
+        e11: -0.0000003139164
+        e12: 1
+        e13: 2.0524292
+        e20: -0.00000031391647
+        e21: 1
+        e22: 0.00000031391647
         e23: 2.3850005
         e30: 0
         e31: 0
@@ -62263,7 +62271,7 @@ MonoBehaviour:
       e31: 0
       e32: 0
       e33: 1
-  targetWaypointIndex: 1
+  targetWaypointIndex: 5
 --- !u!114 &1765563805
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68951,7 +68959,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1935762357}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.19497047, z: -0, w: 0.98080915}
+  m_LocalRotation: {x: -0, y: 0.2967833, z: -0, w: 0.9549449}
   m_LocalPosition: {x: 0, y: 0.225, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -68973,7 +68981,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Preliy.Flange::Preliy.Flange.TransformJoint
   _position:
-    _value: -22.486
+    _value: -34.529
   _config:
     _name: 
     _type: 0
@@ -74970,7 +74978,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2125045162}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0.060221042, z: -0, w: 0.9981851}
+  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0.225, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -74992,7 +75000,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Preliy.Flange::Preliy.Flange.TransformJoint
   _position:
-    _value: 6.905
+    _value: 0
   _config:
     _name: 
     _type: 0

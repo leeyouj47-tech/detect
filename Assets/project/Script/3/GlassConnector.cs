@@ -1,3 +1,4 @@
+
 using UnityEngine;
 
 public class GlassConnector : MXObject
@@ -7,20 +8,24 @@ public class GlassConnector : MXObject
 
     [Header("PLC -> Unity : 시작 신호")]
     public DeviceAddress glassOn = new DeviceAddress("M318");
-    public DeviceAddress programStart = new DeviceAddress("M319");
 
     [Header("Unity -> PLC : 완료 신호")]
     public DeviceAddress glassCompleted = new DeviceAddress("M320");
-    public DeviceAddress glassStarted = new DeviceAddress("M321");
+    public DeviceAddress glassStart = new DeviceAddress("M321");
     public DeviceAddress glassBusy = new DeviceAddress("M322");
 
-    private const int GlassProgramNumber = 1;
-    private bool needStart;
+    [Header("로봇팔 제어신호")]
+    public DeviceAddress glassPositionNum = new DeviceAddress("position No");
+    public DeviceAddress glassPositioning = new DeviceAddress("positioning");
+
+    private int positionId;
+    private bool needPositioning;
 
     private void Start()
     {
         MXRequester.Get.AddDeviceAddress(glassOn.address, GlassOn);
-        MXRequester.Get.AddDeviceAddress(programStart.address, ProgramStart);
+        MXRequester.Get.AddDeviceAddress(glassPositionNum.address, SetPosition);
+        MXRequester.Get.AddDeviceAddress(glassPositioning.address, StartPositioning);
     }
 
     private void GlassOn(short obj)
@@ -35,32 +40,42 @@ public class GlassConnector : MXObject
         }
     }
 
-    private void ProgramStart(short obj)
+    private void SetPosition(short obj)
+    {
+        positionId = obj;
+        Debug.Log($"{positionId}번으로 설정됨");
+    }
+
+    private void StartPositioning(short obj)
     {
         if (obj != 0)
         {
-            needStart = true;
+            needPositioning = true;
         }
         else
         {
-            if (glassStarted.useDevice)
-                MXRequester.Get.AddSetDeviceRequest(glassStarted.address, obj);
+            if (glassStart.useDevice)
+                MXRequester.Get.AddSetDeviceRequest(glassStart.address, obj);
         }
     }
 
     private void Update()
     {
-        if (needStart)
+        if (needPositioning && positionId != 0)
         {
-            Debug.Log("유리 부착 프로그램 시작");
+            Debug.Log($"{positionId}번 프로그램 시작");
+
             MXRequester.Get.AddSetDeviceRequest(glassCompleted.address, 0);
-            glassProgram.RunProgram(GlassProgramNumber);
-            if (glassStarted.useDevice)
-                MXRequester.Get.AddSetDeviceRequest(glassStarted.address, 1);
+
+            glassProgram.RunProgram(positionId);
+
+            if (glassStart.useDevice)
+                MXRequester.Get.AddSetDeviceRequest(glassStart.address, 1);
+
             if (glassBusy.useDevice)
                 MXRequester.Get.AddSetDeviceRequest(glassBusy.address, 1);
 
-            needStart = false;
+            needPositioning = false;
         }
     }
 
@@ -69,6 +84,7 @@ public class GlassConnector : MXObject
         if (isCompleted)
         {
             MXRequester.Get.AddSetDeviceRequest(glassCompleted.address, 1);
+
             if (glassBusy.useDevice)
                 MXRequester.Get.AddSetDeviceRequest(glassBusy.address, 0);
         }
